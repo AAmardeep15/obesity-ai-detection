@@ -1,0 +1,379 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span>🤖</span>
+            <span>AI-Powered Analysis</span>
+        </div>
+        <h1>
+            Detect Obesity.<br />
+            <span class="gradient-text">Plan Better.</span>
+        </h1>
+        <p class="hero-subtitle">
+            Enter 6 simple inputs. Our ensemble ML model analyzes your data and generates a personalized daily nutrition
+            &amp; exercise plan — entirely on-device, no data sent anywhere.
+        </p>
+        <div class="hero-actions">
+            <a href="/predict" class="btn btn-primary btn-lg">
+                🔍 Get Your Prediction
+            </a>
+            <a href="/statistics" class="btn btn-secondary btn-lg">
+                📊 View Model Stats
+            </a>
+        </div>
+
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="stat-num count-up" data-target="2111">0</span>
+                <span class="stat-label">Training Records</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-num">98%+</span>
+                <span class="stat-label">Model Accuracy</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-num">7</span>
+                <span class="stat-label">Obesity Classes</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-num">3</span>
+                <span class="stat-label">ML Models Ensemble</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="how-section">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-badge">Process</span>
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Four simple steps from input to your personalized nutrition &amp; exercise plan
+            </p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card reveal">
+                <div class="step-number">1</div>
+                <div class="step-icon">📝</div>
+                <div class="step-title">Fill 6 Fields</div>
+                <p class="step-desc">Enter your age, gender, height, weight, physical activity level, and family obesity
+                    history.</p>
+            </div>
+            <div class="step-card reveal">
+                <div class="step-number">2</div>
+                <div class="step-icon">📐</div>
+                <div class="step-title">Auto BMI Calc</div>
+                <p class="step-desc">Your BMI is computed instantly in the browser as you type — no server call
+                    required.</p>
+            </div>
+            <div class="step-card reveal">
+                <div class="step-number">3</div>
+                <div class="step-icon">🤖</div>
+                <div class="step-title">AI Prediction</div>
+                <p class="step-desc">Our VotingClassifier ensemble (RF + LR + GB) runs entirely server-side and
+                    classifies your obesity level.</p>
+            </div>
+            <div class="step-card reveal">
+                <div class="step-number">4</div>
+                <div class="step-icon">🥗</div>
+                <div class="step-title">Nutrition + Exercise</div>
+                <p class="step-desc">Receive a detailed daily meal plan and personalized exercise recommendations for
+                    your classification.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== OBESITY CLASSES ========== -->
+<section>
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-badge">Classification</span>
+            <h2 class="section-title">7 Obesity Classes</h2>
+            <p class="section-subtitle">The model classifies inputs into one of seven standardized obesity categories
+            </p>
+        </div>
+
+        <div class="classes-grid">
+            {% for cls in obesity_classes %}
+            <div class="class-card reveal" style="border-color: {{ cls.color }}22;">
+                <span class="class-emoji">{{ cls.emoji }}</span>
+                <div class="class-label" style="color: {{ cls.color }};">{{ cls.label }}</div>
+                <div class="class-calories">🔥 {{ cls.calories }} kcal/day target</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ========== ML COURSES / W3SCHOOLS ========== -->
+<section class="courses-section">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-badge">Learn More</span>
+            <h2 class="section-title">ML Technologies Used</h2>
+            <p class="section-subtitle">Click any topic to open the official W3Schools or documentation page</p>
+        </div>
+
+        <div class="courses-grid">
+            <div class="course-card reveal">
+                <div class="course-card-icon">🌲</div>
+                <div class="course-card-title">Random Forest</div>
+                <div class="course-card-desc">An ensemble method using multiple decision trees, combined via majority
+                    vote to improve accuracy and reduce overfitting.</div>
+                <div class="course-card-footer">
+                    <a class="course-btn" href="https://www.w3schools.com/ai/ai_random_forest.asp" target="_blank"
+                        rel="noopener">📖 W3Schools</a>
+                    <a class="course-btn" href="https://scikit-learn.org/stable/modules/ensemble.html#forest"
+                        target="_blank" rel="noopener">📘 Scikit-learn</a>
+                </div>
+            </div>
+
+            <div class="course-card reveal">
+                <div class="course-card-icon">📉</div>
+                <div class="course-card-title">Logistic Regression</div>
+                <div class="course-card-desc">A statistical model for binary and multi-class classification using the
+                    sigmoid/softmax function to model probability.</div>
+                <div class="course-card-footer">
+                    <a class="course-btn" href="https://www.w3schools.com/ai/ai_logistic_regression.asp" target="_blank"
+                        rel="noopener">📖 W3Schools</a>
+                    <a class="course-btn"
+                        href="https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression"
+                        target="_blank" rel="noopener">📘 Scikit-learn</a>
+                </div>
+            </div>
+
+            <div class="course-card reveal">
+                <div class="course-card-icon">📈</div>
+                <div class="course-card-title">Gradient Boosting</div>
+                <div class="course-card-desc">A powerful boosting algorithm that builds trees sequentially, each
+                    correcting the errors of the previous one.</div>
+                <div class="course-card-footer">
+                    <a class="course-btn" href="https://www.w3schools.com/ai/ai_gradient_boost.asp" target="_blank"
+                        rel="noopener">📖 W3Schools</a>
+                    <a class="course-btn"
+                        href="https://scikit-learn.org/stable/modules/ensemble.html#gradient-tree-boosting"
+                        target="_blank" rel="noopener">📘 Scikit-learn</a>
+                </div>
+            </div>
+
+            <div class="course-card reveal">
+                <div class="course-card-icon">🗳️</div>
+                <div class="course-card-title">Voting Classifier</div>
+                <div class="course-card-desc">Combines multiple classifiers (soft voting) by averaging predicted class
+                    probabilities for a more robust final prediction.</div>
+                <div class="course-card-footer">
+                    <a class="course-btn" href="https://www.w3schools.com/ai/ai_voting_classifiers.asp" target="_blank"
+                        rel="noopener">📖 W3Schools</a>
+                    <a class="course-btn" href="https://scikit-learn.org/stable/modules/ensemble.html#voting-classifier"
+                        target="_blank" rel="noopener">📘 Scikit-learn</a>
+                </div>
+            </div>
+
+            <div class="course-card reveal">
+                <div class="course-card-icon">🐍</div>
+                <div class="course-card-title">Python & Machine Learning</div>
+                <div class="course-card-desc">Python is the primary language for ML/AI development. Learn data science
+                    fundamentals with pandas, numpy, and scikit-learn.</div>
+                <div class="course-card-footer">
+                    <a class="course-btn" href="https://www.w3schools.com/python/python_ml_getting_started.asp"
+                        target="_blank" rel="noopener">📖 W3Schools</a>
+                    <a class="course-btn" href="https://www.w3schools.com/datascience/default.asp" target="_blank"
+                        rel="noopener">📊 Data Science</a>
+                </div>
+            </div>
+
+            <div class="course-card reveal">
+                <div class="course-card-icon">🧠</div>
+                <div class="course-card-title">Deep Learning & Neural Nets</div>
+                <div class="course-card-desc">Deep learning models use layers of artificial neurons to learn complex
+                    patterns. Foundational for modern AI breakthroughs.</div>
+                <div class="course-card-footer">
+                    <a class="course-btn" href="https://www.w3schools.com/ai/ai_neural_networks.asp" target="_blank"
+                        rel="noopener">📖 W3Schools</a>
+                    <a class="course-btn" href="https://www.w3schools.com/ai/ai_perceptrons.asp" target="_blank"
+                        rel="noopener">🔬 Perceptrons</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== MENTOR ========== -->
+<section class="mentor-section">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-badge">Guided By</span>
+            <h2 class="section-title">Project Mentor</h2>
+        </div>
+
+        <div class="mentor-card reveal">
+            <div class="mentor-avatar">
+                <img src="{{ url_for('static', filename='images/mentor.png') }}" alt="Amiya Kumar Dash"
+                    onerror="this.style.display='none'; this.parentElement.style.setProperty('justify-content','center'); this.parentElement.innerHTML='<span style=\'font-size:2rem;font-weight:800;\'>AKD</span>';" />
+            </div>
+            <div class="mentor-info">
+                <div class="mentor-name">Amiya Kumar Dash</div>
+                <div class="mentor-designation">Assistant Professor</div>
+                <div class="mentor-institution">📍 School of Computer Engineering · KIIT University, Bhubaneswar</div>
+
+                <!-- Contact info -->
+                <div class="mentor-contact">
+                    <a href="mailto:amiya.dasfcs@kiit.ac.in" class="mentor-email-link">
+                        📧 amiya.dasfcs@kiit.ac.in
+                    </a>
+                    <span style="color:var(--text-muted); font-size:0.8rem;">M.Tech (NIT Rourkela, 2015)</span>
+                </div>
+
+                <p class="mentor-desc">
+                    Amiya Kumar Dash completed his M.Tech in 2015 at NIT Rourkela and actively pursues research in
+                    Natural Language Processing, Machine Learning, and Deep Learning with a focus on medical image
+                    analysis. He supervises student projects in AI/ML at KIIT's School of Computer Engineering.
+                </p>
+
+                <div class="mentor-tags">
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">Deep Learning</span>
+                    <span class="tag">NLP</span>
+                    <span class="tag">Medical Image Analysis</span>
+                    <span class="tag">NIT Rourkela MTech 2015</span>
+                </div>
+
+                <!-- Social media links -->
+                <div class="social-links" style="margin-top:1rem;">
+                    <a href="mailto:amiya.dasfcs@kiit.ac.in" class="social-link email" title="Email">📧</a>
+                    <a href="https://www.linkedin.com/in/amiyakumardash" target="_blank" class="social-link linkedin"
+                        title="LinkedIn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://scholar.google.com/scholar?q=Amiya+Kumar+Dash+KIIT" target="_blank"
+                        class="social-link google-scholar" title="Google Scholar">🎓</a>
+                    <a href="https://www.researchgate.net/search?q=Amiya+Kumar+Dash" target="_blank" class="social-link"
+                        title="ResearchGate"
+                        style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);">RG</a>
+                    <a href="https://kiit.ac.in/department/school-of-computer-engineering/" target="_blank"
+                        class="social-link" title="KIIT Profile">🏫</a>
+                </div>
+            </div>
+        </div><!-- /mentor-card -->
+    </div>
+</section>
+
+<!-- ========== TEAM ========== -->
+<section style="padding-bottom: 5rem;">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-badge">Team</span>
+            <h2 class="section-title">Meet the Team</h2>
+            <p class="section-subtitle">Built by Computer Engineering students at KIIT University</p>
+        </div>
+
+        <div class="team-grid">
+            <div class="team-card reveal">
+                <div class="team-avatar" style="background: linear-gradient(135deg, #f97316, #ea580c);">RK</div>
+                <div class="team-name">Rajesh Kumar</div>
+                <div class="team-role">ML Engineer · Backend Dev</div>
+                <div class="team-roll">Roll No: 2205XXX</div>
+                <div class="team-social">
+                    <a href="mailto:rajesh@example.com" class="social-link email" title="Email">📧</a>
+                    <a href="https://linkedin.com" target="_blank" class="social-link linkedin" title="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://github.com" target="_blank" class="social-link github" title="GitHub">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" class="social-link twitter" title="Twitter">🐦</a>
+                </div>
+            </div>
+
+            <div class="team-card reveal">
+                <div class="team-avatar" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">PS</div>
+                <div class="team-name">Priya Sharma</div>
+                <div class="team-role">Frontend Developer</div>
+                <div class="team-roll">Roll No: 2205XXX</div>
+                <div class="team-social">
+                    <a href="mailto:priya@example.com" class="social-link email" title="Email">📧</a>
+                    <a href="https://linkedin.com" target="_blank" class="social-link linkedin" title="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://github.com" target="_blank" class="social-link github" title="GitHub">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="social-link instagram"
+                        title="Instagram">📸</a>
+                </div>
+            </div>
+
+            <div class="team-card reveal">
+                <div class="team-avatar" style="background: linear-gradient(135deg, #22c55e, #15803d);">AM</div>
+                <div class="team-name">Aryan Mohapatra</div>
+                <div class="team-role">Data Analyst · QA</div>
+                <div class="team-roll">Roll No: 2205XXX</div>
+                <div class="team-social">
+                    <a href="mailto:aryan@example.com" class="social-link email" title="Email">📧</a>
+                    <a href="https://linkedin.com" target="_blank" class="social-link linkedin" title="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://github.com" target="_blank" class="social-link github" title="GitHub">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" class="social-link twitter" title="Twitter">🐦</a>
+                </div>
+            </div>
+
+            <div class="team-card reveal">
+                <div class="team-avatar" style="background: linear-gradient(135deg, #a855f7, #7c3aed);">SB</div>
+                <div class="team-name">Sneha Biswal</div>
+                <div class="team-role">UI/UX Designer</div>
+                <div class="team-roll">Roll No: 2205XXX</div>
+                <div class="team-social">
+                    <a href="mailto:sneha@example.com" class="social-link email" title="Email">📧</a>
+                    <a href="https://linkedin.com" target="_blank" class="social-link linkedin" title="LinkedIn">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="social-link instagram"
+                        title="Instagram">📸</a>
+                    <a href="https://github.com" target="_blank" class="social-link github" title="GitHub">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div><!-- /team-grid -->
+    </div>
+</section>
+
+{% endblock %}

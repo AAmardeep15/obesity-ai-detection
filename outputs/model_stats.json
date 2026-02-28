@@ -1,0 +1,38 @@
+{
+  "rf": {
+    "accuracy": 0.9858,
+    "f1": 0.9858,
+    "precision": 0.986,
+    "recall": 0.9858
+  },
+  "lr": {
+    "accuracy": 0.9196,
+    "f1": 0.9188,
+    "precision": 0.9212,
+    "recall": 0.9196
+  },
+  "gb": {
+    "accuracy": 0.9835,
+    "f1": 0.9834,
+    "precision": 0.9837,
+    "recall": 0.9835
+  },
+  "ensemble": {
+    "accuracy": 0.9905,
+    "f1": 0.9905,
+    "precision": 0.9907,
+    "recall": 0.9905
+  },
+  "class_names": [
+    "Insufficient_Weight",
+    "Normal_Weight",
+    "Obesity_Type_I",
+    "Obesity_Type_II",
+    "Obesity_Type_III",
+    "Overweight_Level_I",
+    "Overweight_Level_II"
+  ],
+  "num_features": 17,
+  "train_size": 1688,
+  "test_size": 423
+}

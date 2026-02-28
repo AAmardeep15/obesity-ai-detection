@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+{% block title %}Statistics{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="stats-page">
+    <div class="container" style="max-width:1100px;">
+
+        <!-- Header -->
+        <div class="section-header" style="text-align:left; margin-bottom:2.5rem;">
+            <span class="section-badge">Analytics</span>
+            <h1 class="section-title" style="font-size:2rem;">Model Performance</h1>
+            <p class="section-subtitle" style="text-align:left; max-width:none;">
+                Detailed evaluation metrics for each model in the ensemble — Random Forest, Logistic Regression,
+                Gradient Boosting, and the final Voting Ensemble.
+            </p>
+        </div>
+
+        {% if not stats %}
+        <div class="card text-center" style="max-width:500px; margin:4rem auto; border-color:rgba(234,179,8,0.25);">
+            <span style="font-size:3rem; display:block; margin-bottom:1rem;">📊</span>
+            <h3 style="margin-bottom:0.75rem;">No Statistics Available</h3>
+            <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:1.5rem;">
+                Train the model first to generate performance statistics.
+            </p>
+            <code
+                style="display:block; background:var(--bg); padding:0.75rem; border-radius:8px; color:var(--accent); margin-bottom:1.5rem;">python main.py</code>
+            <a href="/" class="btn btn-secondary">← Go Home</a>
+        </div>
+
+        {% else %}
+
+        <!-- ---- Dataset Overview ---- -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>📁 Dataset Overview</h3>
+                <div class="metric-row"><span class="m-name">Training Samples</span><span class="m-val">{{
+                        stats.train_size }}</span></div>
+                <div class="metric-row"><span class="m-name">Testing Samples</span><span class="m-val">{{
+                        stats.test_size }}</span></div>
+                <div class="metric-row"><span class="m-name">Total Features</span><span class="m-val">{{
+                        stats.num_features }}</span></div>
+                <div class="metric-row"><span class="m-name">Obesity Classes</span><span class="m-val">{{
+                        stats.class_names | length }}</span></div>
+            </div>
+
+            <div class="stat-card">
+                <h3>🏆 Ensemble Performance</h3>
+                <div class="metric-row"><span class="m-name">Accuracy</span><span class="m-val">{{
+                        (stats.ensemble.accuracy * 100) | round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">F1 Score (Weighted)</span><span class="m-val">{{
+                        (stats.ensemble.f1 * 100) | round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">Precision (Weighted)</span><span class="m-val">{{
+                        (stats.ensemble.precision * 100) | round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">Recall (Weighted)</span><span class="m-val">{{
+                        (stats.ensemble.recall * 100) | round(2) }}%</span></div>
+            </div>
+
+            <div class="stat-card">
+                <h3>🌲 Random Forest</h3>
+                <div class="metric-row"><span class="m-name">Accuracy</span><span class="m-val">{{ (stats.rf.accuracy *
+                        100) | round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">F1 Score</span><span class="m-val">{{ (stats.rf.f1 * 100) |
+                        round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">Precision</span><span class="m-val">{{ (stats.rf.precision
+                        * 100) | round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">Recall</span><span class="m-val">{{ (stats.rf.recall * 100)
+                        | round(2) }}%</span></div>
+            </div>
+
+            <div class="stat-card">
+                <h3>📈 Gradient Boosting</h3>
+                <div class="metric-row"><span class="m-name">Accuracy</span><span class="m-val">{{ (stats.gb.accuracy *
+                        100) | round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">F1 Score</span><span class="m-val">{{ (stats.gb.f1 * 100) |
+                        round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">Precision</span><span class="m-val">{{ (stats.gb.precision
+                        * 100) | round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">Recall</span><span class="m-val">{{ (stats.gb.recall * 100)
+                        | round(2) }}%</span></div>
+            </div>
+
+            <div class="stat-card">
+                <h3>📐 Logistic Regression</h3>
+                <div class="metric-row"><span class="m-name">Accuracy</span><span class="m-val">{{ (stats.lr.accuracy *
+                        100) | round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">F1 Score</span><span class="m-val">{{ (stats.lr.f1 * 100) |
+                        round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">Precision</span><span class="m-val">{{ (stats.lr.precision
+                        * 100) | round(2) }}%</span></div>
+                <div class="metric-row"><span class="m-name">Recall</span><span class="m-val">{{ (stats.lr.recall * 100)
+                        | round(2) }}%</span></div>
+            </div>
+
+            <div class="stat-card"
+                style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+                <span style="font-size:3rem; margin-bottom:0.75rem;">🗳️</span>
+                <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.5rem;">Voting Strategy</div>
+                <div style="font-size:1.1rem; font-weight:700; color:var(--accent);">Soft Voting</div>
+                <div style="font-size:0.78rem; color:var(--text-muted); margin-top:0.5rem;">Averages class probabilities
+                    from all 3 base models for the final prediction</div>
+            </div>
+        </div>
+
+        <!-- ---- Accuracy Bar Chart ---- -->
+        <div class="chart-card">
+            <h3>📊 Accuracy Comparison — All Models</h3>
+            <div style="position:relative; height:280px;">
+                <canvas id="accuracyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- ---- F1 Score Chart ---- -->
+        <div class="chart-card">
+            <h3>🎯 F1 Score Comparison (Weighted)</h3>
+            <div style="position:relative; height:280px;">
+                <canvas id="f1Chart"></canvas>
+            </div>
+        </div>
+
+        <!-- ---- Class names ---- -->
+        <div class="chart-card">
+            <h3>🗂️ Target Classes in Dataset</h3>
+            <div style="display:flex; flex-wrap:wrap; gap:0.75rem;">
+                {% for cls in stats.class_names %}
+                <span class="tag" style="font-size:0.85rem; padding:0.4rem 1rem;">{{ cls.replace('_', ' ') }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if stats %}
+<script>
+    // Read actual CSS variable colors (works for both light & dark regardless of load order)
+    function getChartColors() {
+        var bodyEl = document.getElementById('app-body');
+        var cs = getComputedStyle(bodyEl);
+        var light = bodyEl.classList.contains('light-theme');
+        return {
+            primary: light ? '#111827' : '#e6edf3',
+            secondary: light ? '#374151' : '#8b949e',
+            grid: light ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.05)',
+            tooltipBg: light ? '#ffffff' : '#161b22',
+            tooltipTi: light ? '#111827' : '#f0f6fc',
+            tooltipBo: light ? '#374151' : '#8b949e'
+        };
+    }
+
+    function buildChartDefaults(c) {
+        return {
+            plugins: {
+                legend: { labels: { color: c.secondary, font: { family: 'Inter', size: 12 } } },
+                tooltip: {
+                    backgroundColor: c.tooltipBg,
+                    borderColor: 'rgba(128,128,128,0.15)',
+                    borderWidth: 1,
+                    titleColor: c.tooltipTi,
+                    bodyColor: c.tooltipBo,
+                    padding: 10
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: c.grid },
+                    ticks: { color: c.secondary, callback: function (v) { return (v * 100).toFixed(0) + '%'; } },
+                    min: 0, max: 1
+                },
+                y: {
+                    grid: { display: false },
+                    ticks: { color: c.primary, font: { family: 'Inter', size: 13, weight: '700' } }
+                }
+            }
+        };
+    }
+
+    var chartColors = getChartColors();
+    var chartDefaults = buildChartDefaults(chartColors);
+
+    const models = ['Random Forest', 'Logistic Regression', 'Gradient Boosting', 'Ensemble'];
+    const colors = ['rgba(249,115,22,0.85)', 'rgba(59,130,246,0.85)', 'rgba(34,197,94,0.85)', 'rgba(239,68,68,0.85)'];
+
+    var rfAcc = {{ stats.rf.accuracy }};
+    var lrAcc = {{ stats.lr.accuracy }};
+    var gbAcc = {{ stats.gb.accuracy }};
+    var ensAcc = {{ stats.ensemble.accuracy }};
+
+    var rfF1 = {{ stats.rf.f1 }};
+    var lrF1 = {{ stats.lr.f1 }};
+    var gbF1 = {{ stats.gb.f1 }};
+    var ensF1 = {{ stats.ensemble.f1 }};
+
+    var accData = [rfAcc, lrAcc, gbAcc, ensAcc];
+    var f1Data = [rfF1, lrF1, gbF1, ensF1];
+
+    // Accuracy Chart
+    new Chart(document.getElementById('accuracyChart'), {
+        type: 'bar',
+        data: {
+            labels: models,
+            datasets: [{
+                label: 'Accuracy',
+                data: accData,
+                backgroundColor: colors,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: Object.assign({}, chartDefaults.plugins.tooltip, {
+                    callbacks: { label: function (ctx) { return ' Accuracy: ' + (ctx.parsed.x * 100).toFixed(2) + '%'; } }
+                })
+            },
+            scales: chartDefaults.scales
+        }
+    });
+
+    // F1 Chart
+    var f1Chart = new Chart(document.getElementById('f1Chart'), {
+        type: 'bar',
+        data: {
+            labels: models,
+            datasets: [{
+                label: 'F1 Score',
+                data: f1Data,
+                backgroundColor: colors,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: Object.assign({}, chartDefaults.plugins.tooltip, {
+                    callbacks: { label: function (ctx) { return ' F1 Score: ' + (ctx.parsed.x * 100).toFixed(2) + '%'; } }
+                })
+            },
+            scales: chartDefaults.scales
+        }
+    });
+
+    // Live re-color charts on theme toggle
+    document.addEventListener('themechange', function () {
+        var c = getChartColors();
+        var def = buildChartDefaults(c);
+        Chart.helpers.each(Chart.instances, function (chart) {
+            if (!chart.options.scales || !chart.options.scales.y) return;
+            chart.options.scales.x.grid.color = def.scales.x.grid.color;
+            chart.options.scales.x.ticks.color = def.scales.x.ticks.color;
+            chart.options.scales.y.ticks.color = def.scales.y.ticks.color;
+            chart.update();
+        });
+    });
+
+</script>
+{% endif %}
+{% endblock %}
