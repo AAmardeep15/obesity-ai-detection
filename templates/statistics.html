@@ -1,271 +1,500 @@
 {% extends "base.html" %}
-{% block title %}Statistics{% endblock %}
+{% block title %}Model Performance Dashboard{% endblock %}
 
 {% block head %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+    /* Dashboard Specific Styles matching the Dark UI Screenshot */
+    .dash-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem 5rem;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .dash-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .dash-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .dash-title-icon {
+        background: #f97316;
+        color: white;
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+    }
+
+    .dash-subtitle {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+    }
+
+    .notice-banner {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(249, 115, 22, 0.1);
+        border: 1px solid rgba(249, 115, 22, 0.3);
+        color: #fdba74;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-bottom: 2rem;
+    }
+
+    .grid-4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 1024px) {
+        .grid-4 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+
+        .grid-4,
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .dcard {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stat-sup {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-sup-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stat-val {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--accent);
+        margin-bottom: 0.2rem;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+
+    .dcard-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .dcard-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.3rem;
+    }
+
+    .dcard-subtitle {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+
+    .comp-row {
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .comp-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .comp-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .comp-badge {
+        background: var(--accent);
+        color: white;
+        font-size: 0.65rem;
+        padding: 0.1rem 0.4rem;
+        border-radius: 12px;
+        margin-left: 0.5rem;
+    }
+
+    .prog-track {
+        width: 100%;
+        height: 6px;
+        background: var(--bg);
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .prog-fill {
+        height: 100%;
+        background: var(--text-secondary);
+        border-radius: 3px;
+    }
+
+    .prog-fill.best {
+        background: var(--accent);
+    }
+
+    .chart-wrap {
+        position: relative;
+        height: 250px;
+        width: 100%;
+        margin-top: auto;
+    }
+
+    .class-tag-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .class-tag {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.7rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="stats-page">
-    <div class="container" style="max-width:1100px;">
-
-        <!-- Header -->
-        <div class="section-header" style="text-align:left; margin-bottom:2.5rem;">
-            <span class="section-badge">Analytics</span>
-            <h1 class="section-title" style="font-size:2rem;">Model Performance</h1>
-            <p class="section-subtitle" style="text-align:left; max-width:none;">
-                Detailed evaluation metrics for each model in the ensemble — Random Forest, Logistic Regression,
-                Gradient Boosting, and the final Voting Ensemble.
-            </p>
+<div class="dash-container">
+    {% if not stats %}
+    <div class="card text-center" style="max-width:500px; margin:4rem auto; border-color:rgba(234,179,8,0.25);">
+        <span style="font-size:3rem; display:block; margin-bottom:1rem;">📊</span>
+        <h3 style="margin-bottom:0.75rem;">No Statistics Available</h3>
+        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:1.5rem;">
+            Train the model first to generate performance statistics.
+        </p>
+        <code
+            style="display:block; background:var(--bg); padding:0.75rem; border-radius:8px; color:var(--accent); margin-bottom:1.5rem;">python main.py</code>
+        <a href="/" class="btn btn-secondary">← Go Home</a>
+    </div>
+    {% else %}
+    <div class="dash-header">
+        <div class="dash-title">
+            <div class="dash-title-icon">📊</div> Model Performance
         </div>
+        <div class="dash-subtitle">Analytics for all three ML models and the final ensemble</div>
+    </div>
+    <div class="notice-banner">
+        <span>✅</span> Active Model: Ensemble (Voting Classifier) — Live Analytics
+    </div>
 
-        {% if not stats %}
-        <div class="card text-center" style="max-width:500px; margin:4rem auto; border-color:rgba(234,179,8,0.25);">
-            <span style="font-size:3rem; display:block; margin-bottom:1rem;">📊</span>
-            <h3 style="margin-bottom:0.75rem;">No Statistics Available</h3>
-            <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:1.5rem;">
-                Train the model first to generate performance statistics.
-            </p>
-            <code
-                style="display:block; background:var(--bg); padding:0.75rem; border-radius:8px; color:var(--accent); margin-bottom:1.5rem;">python main.py</code>
-            <a href="/" class="btn btn-secondary">← Go Home</a>
+    <div class="grid-4">
+        <div class="dcard">
+            <div class="stat-sup">
+                <div class="stat-sup-icon">🏆</div> BEST MODEL
+            </div>
+            <div class="stat-val">{{ (stats.ensemble.accuracy * 100) | round(1) }}%</div>
+            <div class="stat-label">Ensemble Accuracy</div>
         </div>
+        <div class="dcard">
+            <div class="stat-sup">
+                <div class="stat-sup-icon">⚖️</div> WEIGHTED AVG
+            </div>
+            <div class="stat-val">{{ (stats.ensemble.precision * 100) | round(1) }}%</div>
+            <div class="stat-label">Precision</div>
+        </div>
+        <div class="dcard">
+            <div class="stat-sup">
+                <div class="stat-sup-icon">🔄</div> WEIGHTED AVG
+            </div>
+            <div class="stat-val">{{ (stats.ensemble.recall * 100) | round(1) }}%</div>
+            <div class="stat-label">Recall</div>
+        </div>
+        <div class="dcard">
+            <div class="stat-sup">
+                <div class="stat-sup-icon">🎯</div> WEIGHTED AVG
+            </div>
+            <div class="stat-val">{{ (stats.ensemble.f1 * 100) | round(1) }}%</div>
+            <div class="stat-label">F1 Score</div>
+        </div>
+    </div>
 
-        {% else %}
+    <div class="grid-2">
+        <div class="dcard">
+            <div class="dcard-header">
+                <div class="dcard-title">Model Accuracy Comparison</div>
+                <div class="dcard-subtitle">Higher is better</div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-header"><span>Random Forest</span><span>{{ (stats.rf.accuracy * 100) | round(1)
+                        }}%</span></div>
+                <div class="prog-track">
+                    <div class="prog-fill" style="width: {{ (stats.rf.accuracy * 100) }}%"></div>
+                </div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-header"><span>Logistic Regression</span><span>{{ (stats.lr.accuracy * 100) | round(1)
+                        }}%</span></div>
+                <div class="prog-track">
+                    <div class="prog-fill" style="width: {{ (stats.lr.accuracy * 100) }}%"></div>
+                </div>
+            </div>
+            <div class="comp-row">
+                <div class="comp-header"><span>Gradient Boosting</span><span>{{ (stats.gb.accuracy * 100) | round(1)
+                        }}%</span></div>
+                <div class="prog-track">
+                    <div class="prog-fill" style="width: {{ (stats.gb.accuracy * 100) }}%"></div>
+                </div>
+            </div>
+            <div class="comp-row"
+                style="background: rgba(249,115,22,0.05); padding: 1rem; border-radius: 8px; margin-top: 0.5rem;">
+                <div class="comp-header"><span>Ensemble (Voting) <span class="comp-badge">⭐ Best</span></span><span
+                        style="color:var(--accent);">{{ (stats.ensemble.accuracy * 100) | round(1) }}%</span></div>
+                <div class="prog-track" style="background: rgba(249,115,22,0.2);">
+                    <div class="prog-fill best" style="width: {{ (stats.ensemble.accuracy * 100) }}%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="dcard">
+            <div class="dcard-header">
+                <div class="dcard-title">Accuracy Bar Chart</div>
+                <div class="dcard-subtitle">Visual comparison across models</div>
+            </div>
+            <div class="chart-wrap" style="height: 320px;"><canvas id="accBarChart"></canvas></div>
+        </div>
+    </div>
 
-        <!-- ---- Dataset Overview ---- -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>📁 Dataset Overview</h3>
-                <div class="metric-row"><span class="m-name">Training Samples</span><span class="m-val">{{
+    <div class="grid-3">
+        <div class="dcard">
+            <div class="dcard-header">
+                <div class="dcard-title">Ensemble Performance Radar</div>
+                <div class="dcard-subtitle">All key metrics at a glance</div>
+            </div>
+            <div class="chart-wrap" style="height:260px;"><canvas id="radarChart"></canvas></div>
+        </div>
+        <div class="dcard">
+            <div class="dcard-header">
+                <div class="dcard-title">F1 Score Analysis</div>
+                <div class="dcard-subtitle">Balance of precision & recall</div>
+            </div>
+            <div class="chart-wrap" style="height:260px;"><canvas id="f1BarChart"></canvas></div>
+        </div>
+        <div class="dcard">
+            <div class="dcard-header">
+                <div class="dcard-title">Dataset Distribution</div>
+                <div class="dcard-subtitle">Classes & Data splits</div>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem;"><span
+                        style="color:var(--text-secondary);">Training Samples</span><span style="font-weight:700;">{{
                         stats.train_size }}</span></div>
-                <div class="metric-row"><span class="m-name">Testing Samples</span><span class="m-val">{{
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem;"><span
+                        style="color:var(--text-secondary);">Testing Samples</span><span style="font-weight:700;">{{
                         stats.test_size }}</span></div>
-                <div class="metric-row"><span class="m-name">Total Features</span><span class="m-val">{{
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem;"><span
+                        style="color:var(--text-secondary);">Features Used</span><span style="font-weight:700;">{{
                         stats.num_features }}</span></div>
-                <div class="metric-row"><span class="m-name">Obesity Classes</span><span class="m-val">{{
-                        stats.class_names | length }}</span></div>
             </div>
-
-            <div class="stat-card">
-                <h3>🏆 Ensemble Performance</h3>
-                <div class="metric-row"><span class="m-name">Accuracy</span><span class="m-val">{{
-                        (stats.ensemble.accuracy * 100) | round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">F1 Score (Weighted)</span><span class="m-val">{{
-                        (stats.ensemble.f1 * 100) | round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">Precision (Weighted)</span><span class="m-val">{{
-                        (stats.ensemble.precision * 100) | round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">Recall (Weighted)</span><span class="m-val">{{
-                        (stats.ensemble.recall * 100) | round(2) }}%</span></div>
+            <div class="dcard-subtitle" style="margin-bottom: 0px;">Target Classes ({{ stats.class_names|length }})
             </div>
-
-            <div class="stat-card">
-                <h3>🌲 Random Forest</h3>
-                <div class="metric-row"><span class="m-name">Accuracy</span><span class="m-val">{{ (stats.rf.accuracy *
-                        100) | round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">F1 Score</span><span class="m-val">{{ (stats.rf.f1 * 100) |
-                        round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">Precision</span><span class="m-val">{{ (stats.rf.precision
-                        * 100) | round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">Recall</span><span class="m-val">{{ (stats.rf.recall * 100)
-                        | round(2) }}%</span></div>
-            </div>
-
-            <div class="stat-card">
-                <h3>📈 Gradient Boosting</h3>
-                <div class="metric-row"><span class="m-name">Accuracy</span><span class="m-val">{{ (stats.gb.accuracy *
-                        100) | round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">F1 Score</span><span class="m-val">{{ (stats.gb.f1 * 100) |
-                        round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">Precision</span><span class="m-val">{{ (stats.gb.precision
-                        * 100) | round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">Recall</span><span class="m-val">{{ (stats.gb.recall * 100)
-                        | round(2) }}%</span></div>
-            </div>
-
-            <div class="stat-card">
-                <h3>📐 Logistic Regression</h3>
-                <div class="metric-row"><span class="m-name">Accuracy</span><span class="m-val">{{ (stats.lr.accuracy *
-                        100) | round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">F1 Score</span><span class="m-val">{{ (stats.lr.f1 * 100) |
-                        round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">Precision</span><span class="m-val">{{ (stats.lr.precision
-                        * 100) | round(2) }}%</span></div>
-                <div class="metric-row"><span class="m-name">Recall</span><span class="m-val">{{ (stats.lr.recall * 100)
-                        | round(2) }}%</span></div>
-            </div>
-
-            <div class="stat-card"
-                style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
-                <span style="font-size:3rem; margin-bottom:0.75rem;">🗳️</span>
-                <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.5rem;">Voting Strategy</div>
-                <div style="font-size:1.1rem; font-weight:700; color:var(--accent);">Soft Voting</div>
-                <div style="font-size:0.78rem; color:var(--text-muted); margin-top:0.5rem;">Averages class probabilities
-                    from all 3 base models for the final prediction</div>
-            </div>
-        </div>
-
-        <!-- ---- Accuracy Bar Chart ---- -->
-        <div class="chart-card">
-            <h3>📊 Accuracy Comparison — All Models</h3>
-            <div style="position:relative; height:280px;">
-                <canvas id="accuracyChart"></canvas>
-            </div>
-        </div>
-
-        <!-- ---- F1 Score Chart ---- -->
-        <div class="chart-card">
-            <h3>🎯 F1 Score Comparison (Weighted)</h3>
-            <div style="position:relative; height:280px;">
-                <canvas id="f1Chart"></canvas>
-            </div>
-        </div>
-
-        <!-- ---- Class names ---- -->
-        <div class="chart-card">
-            <h3>🗂️ Target Classes in Dataset</h3>
-            <div style="display:flex; flex-wrap:wrap; gap:0.75rem;">
+            <div class="class-tag-grid">
                 {% for cls in stats.class_names %}
-                <span class="tag" style="font-size:0.85rem; padding:0.4rem 1rem;">{{ cls.replace('_', ' ') }}</span>
+                {% set color = "#f97316" %}
+                {% if "Normal" in cls %}{% set color = "#22c55e" %}{% endif %}
+                {% if "Overweight" in cls %}{% set color = "#eab308" %}{% endif %}
+                {% if "Obesity_Type_I" in cls %}{% set color = "#f97316" %}{% endif %}
+                {% if "Obesity_Type_II" in cls %}{% set color = "#ef4444" %}{% endif %}
+                {% if "Obesity_Type_III" in cls %}{% set color = "#991b1b" %}{% endif %}
+                {% if "Insufficient" in cls %}{% set color = "#3b82f6" %}{% endif %}
+                <div class="class-tag" style="border-color: rgba(255,255,255,0.1);">
+                    <span style="color: {{color}}; margin-right: 0.4rem;">●</span> {{ cls.replace('_', ' ') }}
+                </div>
                 {% endfor %}
             </div>
         </div>
-
-        {% endif %}
-
     </div>
+    {% endif %}
 </div>
+<!-- Export Stats Data to JS securely -->
+{% if stats %}
+<script id="stats-data" type="application/json">
+    {{ stats | tojson }}
+</script>
+{% endif %}
 {% endblock %}
 
 {% block scripts %}
 {% if stats %}
 <script>
-    // Read actual CSS variable colors (works for both light & dark regardless of load order)
+    const dataNode = document.getElementById('stats-data');
+    if (!dataNode) return;
+    const statsData = JSON.parse(dataNode.textContent);
+
     function getChartColors() {
         var bodyEl = document.getElementById('app-body');
-        var cs = getComputedStyle(bodyEl);
         var light = bodyEl.classList.contains('light-theme');
         return {
-            primary: light ? '#111827' : '#e6edf3',
-            secondary: light ? '#374151' : '#8b949e',
-            grid: light ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.05)',
-            tooltipBg: light ? '#ffffff' : '#161b22',
-            tooltipTi: light ? '#111827' : '#f0f6fc',
-            tooltipBo: light ? '#374151' : '#8b949e'
+            text: light ? '#4b5563' : '#8b949e',
+            grid: light ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)',
+            barBg: light ? '#d1d5db' : '#30363d',
+            barAccent: '#f97316',
+            radarLine: '#f97316',
+            radarBg: 'rgba(249, 115, 22, 0.2)'
         };
     }
 
-    function buildChartDefaults(c) {
-        return {
-            plugins: {
-                legend: { labels: { color: c.secondary, font: { family: 'Inter', size: 12 } } },
-                tooltip: {
-                    backgroundColor: c.tooltipBg,
-                    borderColor: 'rgba(128,128,128,0.15)',
-                    borderWidth: 1,
-                    titleColor: c.tooltipTi,
-                    bodyColor: c.tooltipBo,
-                    padding: 10
-                }
-            },
+    const cNames = ['Random Forest', 'Log. Regression', 'Grad. Boosting', 'Ensemble'];
+    const accData = [
+        Math.round(statsData.rf.accuracy * 10000) / 100,
+        Math.round(statsData.lr.accuracy * 10000) / 100,
+        Math.round(statsData.gb.accuracy * 10000) / 100,
+        Math.round(statsData.ensemble.accuracy * 10000) / 100
+    ];
+    const f1Data = [
+        Math.round(statsData.rf.f1 * 10000) / 100,
+        Math.round(statsData.lr.f1 * 10000) / 100,
+        Math.round(statsData.gb.f1 * 10000) / 100,
+        Math.round(statsData.ensemble.f1 * 10000) / 100
+    ];
+
+    let c = getChartColors();
+    let barColors = [c.barBg, c.barBg, c.barBg, c.barAccent];
+
+    const cOptions = {
+        animation: { duration: 0 },
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { padding: 12, cornerRadius: 8 } },
+        scales: {
+            y: { min: 80, max: 100, grid: { color: c.grid }, ticks: { color: c.text, callback: v => v + '%' } },
+            x: { grid: { display: false }, ticks: { color: c.text, font: { size: 11 } } }
+        }
+    };
+
+    var accChart = new Chart(document.getElementById('accBarChart'), {
+        type: 'bar',
+        data: { labels: cNames, datasets: [{ data: accData, backgroundColor: barColors, borderRadius: 6, maxBarThickness: 40 }] },
+        options: cOptions
+    });
+
+    var f1Chart = new Chart(document.getElementById('f1BarChart'), {
+        type: 'bar',
+        data: { labels: cNames, datasets: [{ data: f1Data, backgroundColor: barColors, borderRadius: 6, maxBarThickness: 40 }] },
+        options: cOptions
+    });
+
+    var radarChart = new Chart(document.getElementById('radarChart'), {
+        type: 'radar',
+        data: {
+            labels: ['Accuracy', 'Precision', 'Recall', 'F1 Score'],
+            datasets: [{
+                label: 'Ensemble',
+                data: [
+                    Math.round(statsData.ensemble.accuracy * 10000) / 100,
+                    Math.round(statsData.ensemble.precision * 10000) / 100,
+                    Math.round(statsData.ensemble.recall * 10000) / 100,
+                    Math.round(statsData.ensemble.f1 * 10000) / 100
+                ],
+                backgroundColor: c.radarBg, borderColor: c.radarLine, pointBackgroundColor: c.radarLine, borderWidth: 2
+            }]
+        },
+        options: {
+            animation: { duration: 0 },
+            responsive: true, maintainAspectRatio: false,
             scales: {
-                x: {
-                    grid: { color: c.grid },
-                    ticks: { color: c.secondary, callback: function (v) { return (v * 100).toFixed(0) + '%'; } },
-                    min: 0, max: 1
-                },
-                y: {
-                    grid: { display: false },
-                    ticks: { color: c.primary, font: { family: 'Inter', size: 13, weight: '700' } }
+                r: {
+                    min: 90, max: 100,
+                    grid: { color: c.grid }, angleLines: { color: c.grid },
+                    pointLabels: { color: c.text, font: { size: 11 } },
+                    ticks: { display: false }
                 }
-            }
-        };
-    }
-
-    var chartColors = getChartColors();
-    var chartDefaults = buildChartDefaults(chartColors);
-
-    const models = ['Random Forest', 'Logistic Regression', 'Gradient Boosting', 'Ensemble'];
-    const colors = ['rgba(249,115,22,0.85)', 'rgba(59,130,246,0.85)', 'rgba(34,197,94,0.85)', 'rgba(239,68,68,0.85)'];
-
-    var rfAcc = {{ stats.rf.accuracy }};
-    var lrAcc = {{ stats.lr.accuracy }};
-    var gbAcc = {{ stats.gb.accuracy }};
-    var ensAcc = {{ stats.ensemble.accuracy }};
-
-    var rfF1 = {{ stats.rf.f1 }};
-    var lrF1 = {{ stats.lr.f1 }};
-    var gbF1 = {{ stats.gb.f1 }};
-    var ensF1 = {{ stats.ensemble.f1 }};
-
-    var accData = [rfAcc, lrAcc, gbAcc, ensAcc];
-    var f1Data = [rfF1, lrF1, gbF1, ensF1];
-
-    // Accuracy Chart
-    new Chart(document.getElementById('accuracyChart'), {
-        type: 'bar',
-        data: {
-            labels: models,
-            datasets: [{
-                label: 'Accuracy',
-                data: accData,
-                backgroundColor: colors,
-                borderRadius: 6
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: Object.assign({}, chartDefaults.plugins.tooltip, {
-                    callbacks: { label: function (ctx) { return ' Accuracy: ' + (ctx.parsed.x * 100).toFixed(2) + '%'; } }
-                })
             },
-            scales: chartDefaults.scales
+            plugins: { legend: { display: false } }
         }
     });
 
-    // F1 Chart
-    var f1Chart = new Chart(document.getElementById('f1Chart'), {
-        type: 'bar',
-        data: {
-            labels: models,
-            datasets: [{
-                label: 'F1 Score',
-                data: f1Data,
-                backgroundColor: colors,
-                borderRadius: 6
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: Object.assign({}, chartDefaults.plugins.tooltip, {
-                    callbacks: { label: function (ctx) { return ' F1 Score: ' + (ctx.parsed.x * 100).toFixed(2) + '%'; } }
-                })
-            },
-            scales: chartDefaults.scales
-        }
-    });
-
-    // Live re-color charts on theme toggle
     document.addEventListener('themechange', function () {
-        var c = getChartColors();
-        var def = buildChartDefaults(c);
-        Chart.helpers.each(Chart.instances, function (chart) {
-            if (!chart.options.scales || !chart.options.scales.y) return;
-            chart.options.scales.x.grid.color = def.scales.x.grid.color;
-            chart.options.scales.x.ticks.color = def.scales.x.ticks.color;
-            chart.options.scales.y.ticks.color = def.scales.y.ticks.color;
-            chart.update();
-        });
-    });
+        let newC = getChartColors();
+        let newBarColors = [newC.barBg, newC.barBg, newC.barBg, newC.barAccent];
 
+        [accChart, f1Chart].forEach(ch => {
+            ch.data.datasets[0].backgroundColor = newBarColors;
+            ch.options.scales.y.grid.color = newC.grid;
+            ch.options.scales.x.ticks.color = newC.text;
+            ch.options.scales.y.ticks.color = newC.text;
+            ch.update();
+        });
+
+        radarChart.options.scales.r.grid.color = newC.grid;
+        radarChart.options.scales.r.angleLines.color = newC.grid;
+        radarChart.options.scales.r.pointLabels.color = newC.text;
+        radarChart.update();
+    });
 </script>
 {% endif %}
 {% endblock %}

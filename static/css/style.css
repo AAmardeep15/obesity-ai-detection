@@ -202,10 +202,11 @@ body.light-theme .navbar {
 .hero {
   min-height: 90vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 5rem 2rem;
+  padding: 5rem 2rem 3rem;
   position: relative;
   overflow: hidden;
 }
@@ -2621,4 +2622,348 @@ footer {
   .nav-brand span {
     display: none;
   }
+}
+
+/* =====================================================
+   SCROLL TO TOP BUTTON
+   ===================================================== */
+#scroll-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 500;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease,
+    background 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* JS adds this class after user scrolls 300px */
+#scroll-top-btn.visible {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+#scroll-top-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  box-shadow: 0 6px 24px rgba(249, 115, 22, 0.45);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 640px) {
+  #scroll-top-btn {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+}
+
+/* =====================================================
+   HERO STAT BOXES
+   ===================================================== */
+.hero-stat-boxes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 3rem;
+}
+
+.hero-stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.hero-stat-box:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.hsb-value {
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+
+.hsb-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+  .hero-stat-boxes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hsb-value {
+    font-size: 1.45rem;
+  }
+}
+
+/* =====================================================
+   WHAT WE PREDICT — 2x2 cards
+   ===================================================== */
+.predict-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .predict-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.predict-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.75rem;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.predict-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.predict-card-icon {
+  font-size: 1.8rem;
+}
+
+.predict-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.predict-card-desc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.predict-card-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.predict-card-link:hover {
+  color: var(--accent-hover);
+}
+
+/* =====================================================
+   MENTOR CARD V2
+   ===================================================== */
+.mentor-card-v2 {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 700px) {
+  .mentor-card-v2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mentor-left {
+  background: linear-gradient(160deg, #1a0f06 0%, #2c1808 50%, #1a0f06 100%);
+  padding: 2.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.65rem;
+  border-right: 1px solid rgba(249, 115, 22, 0.15);
+}
+
+.mentor-initials-box {
+  width: 90px;
+  height: 90px;
+  border-radius: 18px;
+  background: rgba(249, 115, 22, 0.18);
+  border: 1px solid rgba(249, 115, 22, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.mentor-left-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #f0f6fc;
+}
+
+.mentor-left-title {
+  font-size: 0.82rem;
+  color: rgba(240, 246, 252, 0.6);
+}
+
+.mentor-left-location {
+  font-size: 0.78rem;
+  color: rgba(240, 246, 252, 0.45);
+}
+
+.mentor-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--accent);
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 0.4rem;
+  transition: var(--transition);
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
+}
+
+.mentor-contact-btn:hover {
+  background: var(--accent-hover);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.mentor-social-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.6rem;
+}
+
+.msocial-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(240, 246, 252, 0.75);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.msocial-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.msocial-rg {
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.mentor-right {
+  background: var(--surface);
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mentor-detail-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.mentor-detail-row:last-of-type {
+  border-bottom: none;
+}
+
+.mdr-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mdr-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.mdr-value {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.mentor-bio {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
 }

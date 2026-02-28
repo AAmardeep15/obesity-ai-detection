@@ -264,3 +264,26 @@ function downloadReport() {
     counters.forEach(animateCounter);
   }
 })();
+
+/* ------------------------------------
+   SCROLL TO TOP BUTTON
+   Shows after scrolling 300px, smooth-scrolls back to top on click
+   ------------------------------------ */
+(function () {
+  var btn = document.getElementById('scroll-top-btn');
+  if (!btn) return;
+
+  // Show or hide based on scroll position
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 300) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }, { passive: true });
+
+  // Scroll to top smoothly on click
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();

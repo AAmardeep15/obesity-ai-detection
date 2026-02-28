@@ -7,16 +7,19 @@
 <section class="hero">
     <div class="hero-content">
         <div class="hero-badge">
-            <span>🤖</span>
-            <span>AI-Powered Analysis</span>
+            <span>🧠</span>
+            <span>AI-Based Obesity Detection &amp; Nutrition System</span>
         </div>
         <h1>
-            Detect Obesity.<br />
-            <span class="gradient-text">Plan Better.</span>
+            Obesity Detection &amp;<br />
+            <span class="gradient-text">Smart Nutrition System</span>
         </h1>
         <p class="hero-subtitle">
-            Enter 6 simple inputs. Our ensemble ML model analyzes your data and generates a personalized daily nutrition
-            &amp; exercise plan — entirely on-device, no data sent anywhere.
+            Predict your obesity risk in seconds using our ensemble of
+            <span style="color:var(--accent);font-weight:600;">Random Forest</span>,
+            <span style="color:var(--accent);font-weight:600;">Logistic Regression</span> &amp;
+            <span style="color:var(--accent);font-weight:600;">Gradient Boosting</span>
+            models — and get a personalised diet &amp; exercise plan.
         </p>
         <div class="hero-actions">
             <a href="/predict" class="btn btn-primary btn-lg">
@@ -26,66 +29,66 @@
                 📊 View Model Stats
             </a>
         </div>
+    </div>
 
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <span class="stat-num count-up" data-target="2111">0</span>
-                <span class="stat-label">Training Records</span>
-            </div>
-            <div class="hero-stat">
-                <span class="stat-num">98%+</span>
-                <span class="stat-label">Model Accuracy</span>
-            </div>
-            <div class="hero-stat">
-                <span class="stat-num">7</span>
-                <span class="stat-label">Obesity Classes</span>
-            </div>
-            <div class="hero-stat">
-                <span class="stat-num">3</span>
-                <span class="stat-label">ML Models Ensemble</span>
-            </div>
+    <!-- 4-stat boxes row -->
+    <div class="hero-stat-boxes">
+        <div class="hero-stat-box">
+            <div class="hsb-value">97.3%</div>
+            <div class="hsb-label">Ensemble Accuracy</div>
+        </div>
+        <div class="hero-stat-box">
+            <div class="hsb-value">87.5%</div>
+            <div class="hsb-label">Precision &amp; Recall</div>
+        </div>
+        <div class="hero-stat-box">
+            <div class="hsb-value">3000+</div>
+            <div class="hsb-label">Training Samples</div>
+        </div>
+        <div class="hero-stat-box">
+            <div class="hsb-value">3</div>
+            <div class="hsb-label">ML Models Used</div>
         </div>
     </div>
 </section>
 
-<!-- ========== HOW IT WORKS ========== -->
+<!-- ========== WHAT WE PREDICT ========== -->
 <section class="how-section">
     <div class="container">
         <div class="section-header reveal">
-            <span class="section-badge">Process</span>
-            <h2 class="section-title">How It Works</h2>
-            <p class="section-subtitle">Four simple steps from input to your personalized nutrition &amp; exercise plan
-            </p>
+            <h2 class="section-title">What We <span class="gradient-text">Predict</span></h2>
+            <p class="section-subtitle">Advanced machine learning models working in harmony — give us your health data,
+                we give you actionable insights.</p>
         </div>
 
-        <div class="steps-grid">
-            <div class="step-card reveal">
-                <div class="step-number">1</div>
-                <div class="step-icon">📝</div>
-                <div class="step-title">Fill 6 Fields</div>
-                <p class="step-desc">Enter your age, gender, height, weight, physical activity level, and family obesity
-                    history.</p>
+        <div class="predict-cards-grid">
+            <div class="predict-card reveal">
+                <div class="predict-card-icon">⚖️</div>
+                <div class="predict-card-title">Obesity Class</div>
+                <p class="predict-card-desc">Predict your exact obesity classification — Underweight, Normal,
+                    Overweight, or Obese Type I/II — using your body metrics.</p>
+                <a href="/predict" class="predict-card-link">Learn More ↗</a>
             </div>
-            <div class="step-card reveal">
-                <div class="step-number">2</div>
-                <div class="step-icon">📐</div>
-                <div class="step-title">Auto BMI Calc</div>
-                <p class="step-desc">Your BMI is computed instantly in the browser as you type — no server call
-                    required.</p>
+            <div class="predict-card reveal">
+                <div class="predict-card-icon">🥗</div>
+                <div class="predict-card-title">Personalised Diet</div>
+                <p class="predict-card-desc">Get a customised daily meal plan with recommended foods to eat and foods to
+                    avoid, based on your predicted obesity class.</p>
+                <a href="/predict" class="predict-card-link">Learn More ↗</a>
             </div>
-            <div class="step-card reveal">
-                <div class="step-number">3</div>
-                <div class="step-icon">🤖</div>
-                <div class="step-title">AI Prediction</div>
-                <p class="step-desc">Our VotingClassifier ensemble (RF + LR + GB) runs entirely server-side and
-                    classifies your obesity level.</p>
+            <div class="predict-card reveal">
+                <div class="predict-card-icon">🏃</div>
+                <div class="predict-card-title">Exercise Plan</div>
+                <p class="predict-card-desc">Receive a step-by-step exercise routine tailored to your fitness level and
+                    obesity category for safe, effective results.</p>
+                <a href="/predict" class="predict-card-link">Learn More ↗</a>
             </div>
-            <div class="step-card reveal">
-                <div class="step-number">4</div>
-                <div class="step-icon">🥗</div>
-                <div class="step-title">Nutrition + Exercise</div>
-                <p class="step-desc">Receive a detailed daily meal plan and personalized exercise recommendations for
-                    your classification.</p>
+            <div class="predict-card reveal">
+                <div class="predict-card-icon">🔥</div>
+                <div class="predict-card-title">Calorie Target</div>
+                <p class="predict-card-desc">Discover your optimal daily calorie intake calculated from your personal
+                    health parameters and target weight class.</p>
+                <a href="/predict" class="predict-card-link">Learn More ↗</a>
             </div>
         </div>
     </div>
@@ -214,58 +217,76 @@
             <h2 class="section-title">Project Mentor</h2>
         </div>
 
-        <div class="mentor-card reveal">
-            <div class="mentor-avatar">
-                <img src="{{ url_for('static', filename='images/mentor.png') }}" alt="Amiya Kumar Dash"
-                    onerror="this.style.display='none'; this.parentElement.style.setProperty('justify-content','center'); this.parentElement.innerHTML='<span style=\'font-size:2rem;font-weight:800;\'>AKD</span>';" />
-            </div>
-            <div class="mentor-info">
-                <div class="mentor-name">Amiya Kumar Dash</div>
-                <div class="mentor-designation">Assistant Professor</div>
-                <div class="mentor-institution">📍 School of Computer Engineering · KIIT University, Bhubaneswar</div>
-
-                <!-- Contact info -->
-                <div class="mentor-contact">
-                    <a href="mailto:amiya.dasfcs@kiit.ac.in" class="mentor-email-link">
-                        📧 amiya.dasfcs@kiit.ac.in
-                    </a>
-                    <span style="color:var(--text-muted); font-size:0.8rem;">M.Tech (NIT Rourkela, 2015)</span>
-                </div>
-
-                <p class="mentor-desc">
-                    Amiya Kumar Dash completed his M.Tech in 2015 at NIT Rourkela and actively pursues research in
-                    Natural Language Processing, Machine Learning, and Deep Learning with a focus on medical image
-                    analysis. He supervises student projects in AI/ML at KIIT's School of Computer Engineering.
-                </p>
-
-                <div class="mentor-tags">
-                    <span class="tag">Machine Learning</span>
-                    <span class="tag">Deep Learning</span>
-                    <span class="tag">NLP</span>
-                    <span class="tag">Medical Image Analysis</span>
-                    <span class="tag">NIT Rourkela MTech 2015</span>
-                </div>
-
-                <!-- Social media links -->
-                <div class="social-links" style="margin-top:1rem;">
-                    <a href="mailto:amiya.dasfcs@kiit.ac.in" class="social-link email" title="Email">📧</a>
-                    <a href="https://www.linkedin.com/in/amiyakumardash" target="_blank" class="social-link linkedin"
+        <div class="mentor-card-v2 reveal">
+            <!-- LEFT PANEL -->
+            <div class="mentor-left">
+                <div class="mentor-initials-box">AKD</div>
+                <div class="mentor-left-name">Amiya Kumar Dash</div>
+                <div class="mentor-left-title">Assistant Professor</div>
+                <div class="mentor-left-location">📍 Bhubaneswar, Odisha</div>
+                <a href="mailto:amiya.dasfcs@kiit.ac.in" class="mentor-contact-btn">
+                    ✉ Contact
+                </a>
+                <!-- Social row -->
+                <div class="mentor-social-row">
+                    <a href="mailto:amiya.dasfcs@kiit.ac.in" class="msocial-btn" title="Email">🌐</a>
+                    <a href="https://www.linkedin.com/in/amiyakumardash" target="_blank" class="msocial-btn"
                         title="LinkedIn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                         </svg>
                     </a>
                     <a href="https://scholar.google.com/scholar?q=Amiya+Kumar+Dash+KIIT" target="_blank"
-                        class="social-link google-scholar" title="Google Scholar">🎓</a>
-                    <a href="https://www.researchgate.net/search?q=Amiya+Kumar+Dash" target="_blank" class="social-link"
-                        title="ResearchGate"
-                        style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);">RG</a>
+                        class="msocial-btn" title="Google Scholar">🎓</a>
+                    <a href="https://www.researchgate.net/search?q=Amiya+Kumar+Dash" target="_blank"
+                        class="msocial-btn msocial-rg" title="ResearchGate">RG</a>
                     <a href="https://kiit.ac.in/department/school-of-computer-engineering/" target="_blank"
-                        class="social-link" title="KIIT Profile">🏫</a>
+                        class="msocial-btn" title="KIIT">🏫</a>
                 </div>
             </div>
-        </div><!-- /mentor-card -->
+
+            <!-- RIGHT PANEL -->
+            <div class="mentor-right">
+                <div class="mentor-detail-row">
+                    <span class="mdr-icon">🏛️</span>
+                    <div>
+                        <div class="mdr-label">DEPARTMENT</div>
+                        <div class="mdr-value">Department of Computer Science &amp; Engineering</div>
+                    </div>
+                </div>
+                <div class="mentor-detail-row">
+                    <span class="mdr-icon">🎓</span>
+                    <div>
+                        <div class="mdr-label">INSTITUTION</div>
+                        <div class="mdr-value">KIIT University, Bhubaneswar</div>
+                    </div>
+                </div>
+                <div class="mentor-detail-row">
+                    <span class="mdr-icon">🔬</span>
+                    <div>
+                        <div class="mdr-label">SPECIALIZATION</div>
+                        <div class="mdr-value">Machine Learning · Deep Learning</div>
+                    </div>
+                </div>
+                <div class="mentor-detail-row">
+                    <span class="mdr-icon">📧</span>
+                    <div>
+                        <div class="mdr-label">EMAIL</div>
+                        <div class="mdr-value">
+                            <a href="mailto:amiya.dasfcs@kiit.ac.in"
+                                style="color:var(--accent);">amiya.dasfcs@kiit.ac.in ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mentor-bio">
+                    Amiya Kumar Dash, Assistant Professor at the School of Computer Engineering, completed his M.Tech
+                    in 2015 at NIT Rourkela and pursues research in NLP, machine learning, and deep learning for
+                    medical image analysis.
+                </p>
+            </div>
+        </div><!-- /mentor-card-v2 -->
     </div>
 </section>
 
