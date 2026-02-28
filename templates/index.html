@@ -15,18 +15,18 @@
             <span class="gradient-text">Smart Nutrition System</span>
         </h1>
         <p class="hero-subtitle">
-            Predict your obesity risk in seconds using our ensemble of
+            An intelligent ensemble method using
             <span style="color:var(--accent);font-weight:600;">Random Forest</span>,
             <span style="color:var(--accent);font-weight:600;">Logistic Regression</span> &amp;
             <span style="color:var(--accent);font-weight:600;">Gradient Boosting</span>
-            models — and get a personalised diet &amp; exercise plan.
+            for highly accurate obesity classification and health insights.
         </p>
         <div class="hero-actions">
             <a href="/predict" class="btn btn-primary btn-lg">
-                🔍 Get Your Prediction
+                Start Prediction ➔
             </a>
             <a href="/statistics" class="btn btn-secondary btn-lg">
-                📊 View Model Stats
+                📊 View Dashboard
             </a>
         </div>
     </div>
@@ -52,69 +52,9 @@
     </div>
 </section>
 
-<!-- ========== WHAT WE PREDICT ========== -->
-<section class="how-section">
-    <div class="container">
-        <div class="section-header reveal">
-            <h2 class="section-title">What We <span class="gradient-text">Predict</span></h2>
-            <p class="section-subtitle">Advanced machine learning models working in harmony — give us your health data,
-                we give you actionable insights.</p>
-        </div>
 
-        <div class="predict-cards-grid">
-            <div class="predict-card reveal">
-                <div class="predict-card-icon">⚖️</div>
-                <div class="predict-card-title">Obesity Class</div>
-                <p class="predict-card-desc">Predict your exact obesity classification — Underweight, Normal,
-                    Overweight, or Obese Type I/II — using your body metrics.</p>
-                <a href="/predict" class="predict-card-link">Learn More ↗</a>
-            </div>
-            <div class="predict-card reveal">
-                <div class="predict-card-icon">🥗</div>
-                <div class="predict-card-title">Personalised Diet</div>
-                <p class="predict-card-desc">Get a customised daily meal plan with recommended foods to eat and foods to
-                    avoid, based on your predicted obesity class.</p>
-                <a href="/predict" class="predict-card-link">Learn More ↗</a>
-            </div>
-            <div class="predict-card reveal">
-                <div class="predict-card-icon">🏃</div>
-                <div class="predict-card-title">Exercise Plan</div>
-                <p class="predict-card-desc">Receive a step-by-step exercise routine tailored to your fitness level and
-                    obesity category for safe, effective results.</p>
-                <a href="/predict" class="predict-card-link">Learn More ↗</a>
-            </div>
-            <div class="predict-card reveal">
-                <div class="predict-card-icon">🔥</div>
-                <div class="predict-card-title">Calorie Target</div>
-                <p class="predict-card-desc">Discover your optimal daily calorie intake calculated from your personal
-                    health parameters and target weight class.</p>
-                <a href="/predict" class="predict-card-link">Learn More ↗</a>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- ========== OBESITY CLASSES ========== -->
-<section>
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-badge">Classification</span>
-            <h2 class="section-title">7 Obesity Classes</h2>
-            <p class="section-subtitle">The model classifies inputs into one of seven standardized obesity categories
-            </p>
-        </div>
 
-        <div class="classes-grid">
-            {% for cls in obesity_classes %}
-            <div class="class-card reveal" style="border-color: {{ cls.color }}22;">
-                <span class="class-emoji">{{ cls.emoji }}</span>
-                <div class="class-label" style="color: {{ cls.color }};">{{ cls.label }}</div>
-                <div class="class-calories">🔥 {{ cls.calories }} kcal/day target</div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
 
 <!-- ========== ML COURSES / W3SCHOOLS ========== -->
 <section class="courses-section">
@@ -122,87 +62,143 @@
         <div class="section-header reveal">
             <span class="section-badge">Learn More</span>
             <h2 class="section-title">ML Technologies Used</h2>
-            <p class="section-subtitle">Click any topic to open the official W3Schools or documentation page</p>
+            <p class="section-subtitle">Official resources and documentation</p>
         </div>
 
-        <div class="courses-grid">
-            <div class="course-card reveal">
-                <div class="course-card-icon">🌲</div>
-                <div class="course-card-title">Random Forest</div>
-                <div class="course-card-desc">An ensemble method using multiple decision trees, combined via majority
-                    vote to improve accuracy and reduce overfitting.</div>
-                <div class="course-card-footer">
+        <div class="courses-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div class="course-card reveal" style="padding: 1.5rem; text-align: center;">
+                <div class="course-card-icon" style="margin: 0 auto 0.5rem; font-size: 2rem;">🌲</div>
+                <div class="course-card-title" style="margin-bottom: 1rem;">Random Forest</div>
+
+                <div class="course-card-footer" style="flex-direction: column; gap: 0.5rem;">
                     <a class="course-btn" href="https://www.w3schools.com/ai/ai_random_forest.asp" target="_blank"
-                        rel="noopener">📖 W3Schools</a>
+                        rel="noopener" style="width: 100%; justify-content: center;">📖 W3Schools</a>
                     <a class="course-btn" href="https://scikit-learn.org/stable/modules/ensemble.html#forest"
-                        target="_blank" rel="noopener">📘 Scikit-learn</a>
+                        target="_blank" rel="noopener" style="width: 100%; justify-content: center;">📘 Scikit-learn</a>
                 </div>
             </div>
 
-            <div class="course-card reveal">
-                <div class="course-card-icon">📉</div>
-                <div class="course-card-title">Logistic Regression</div>
-                <div class="course-card-desc">A statistical model for binary and multi-class classification using the
-                    sigmoid/softmax function to model probability.</div>
-                <div class="course-card-footer">
+            <div class="course-card reveal" style="padding: 1.5rem; text-align: center;">
+                <div class="course-card-icon" style="margin: 0 auto 0.5rem; font-size: 2rem;">📉</div>
+                <div class="course-card-title" style="margin-bottom: 1rem;">Logistic Regression</div>
+
+                <div class="course-card-footer" style="flex-direction: column; gap: 0.5rem;">
                     <a class="course-btn" href="https://www.w3schools.com/ai/ai_logistic_regression.asp" target="_blank"
-                        rel="noopener">📖 W3Schools</a>
+                        rel="noopener" style="width: 100%; justify-content: center;">📖 W3Schools</a>
                     <a class="course-btn"
                         href="https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression"
-                        target="_blank" rel="noopener">📘 Scikit-learn</a>
+                        target="_blank" rel="noopener" style="width: 100%; justify-content: center;">📘 Scikit-learn</a>
                 </div>
             </div>
 
-            <div class="course-card reveal">
-                <div class="course-card-icon">📈</div>
-                <div class="course-card-title">Gradient Boosting</div>
-                <div class="course-card-desc">A powerful boosting algorithm that builds trees sequentially, each
-                    correcting the errors of the previous one.</div>
-                <div class="course-card-footer">
+            <div class="course-card reveal" style="padding: 1.5rem; text-align: center;">
+                <div class="course-card-icon" style="margin: 0 auto 0.5rem; font-size: 2rem;">📈</div>
+                <div class="course-card-title" style="margin-bottom: 1rem;">Gradient Boosting</div>
+
+                <div class="course-card-footer" style="flex-direction: column; gap: 0.5rem;">
                     <a class="course-btn" href="https://www.w3schools.com/ai/ai_gradient_boost.asp" target="_blank"
-                        rel="noopener">📖 W3Schools</a>
+                        rel="noopener" style="width: 100%; justify-content: center;">📖 W3Schools</a>
                     <a class="course-btn"
                         href="https://scikit-learn.org/stable/modules/ensemble.html#gradient-tree-boosting"
-                        target="_blank" rel="noopener">📘 Scikit-learn</a>
+                        target="_blank" rel="noopener" style="width: 100%; justify-content: center;">📘 Scikit-learn</a>
                 </div>
             </div>
 
-            <div class="course-card reveal">
-                <div class="course-card-icon">🗳️</div>
-                <div class="course-card-title">Voting Classifier</div>
-                <div class="course-card-desc">Combines multiple classifiers (soft voting) by averaging predicted class
-                    probabilities for a more robust final prediction.</div>
-                <div class="course-card-footer">
+            <div class="course-card reveal" style="padding: 1.5rem; text-align: center;">
+                <div class="course-card-icon" style="margin: 0 auto 0.5rem; font-size: 2rem;">🗳️</div>
+                <div class="course-card-title" style="margin-bottom: 1rem;">Voting Classifier</div>
+
+                <div class="course-card-footer" style="flex-direction: column; gap: 0.5rem;">
                     <a class="course-btn" href="https://www.w3schools.com/ai/ai_voting_classifiers.asp" target="_blank"
-                        rel="noopener">📖 W3Schools</a>
+                        rel="noopener" style="width: 100%; justify-content: center;">📖 W3Schools</a>
                     <a class="course-btn" href="https://scikit-learn.org/stable/modules/ensemble.html#voting-classifier"
-                        target="_blank" rel="noopener">📘 Scikit-learn</a>
+                        target="_blank" rel="noopener" style="width: 100%; justify-content: center;">📘 Scikit-learn</a>
                 </div>
             </div>
 
-            <div class="course-card reveal">
-                <div class="course-card-icon">🐍</div>
-                <div class="course-card-title">Python & Machine Learning</div>
-                <div class="course-card-desc">Python is the primary language for ML/AI development. Learn data science
-                    fundamentals with pandas, numpy, and scikit-learn.</div>
-                <div class="course-card-footer">
+            <div class="course-card reveal" style="padding: 1.5rem; text-align: center;">
+                <div class="course-card-icon" style="margin: 0 auto 0.5rem; font-size: 2rem;">🐍</div>
+                <div class="course-card-title" style="margin-bottom: 1rem;">Python ML</div>
+
+                <div class="course-card-footer" style="flex-direction: column; gap: 0.5rem;">
                     <a class="course-btn" href="https://www.w3schools.com/python/python_ml_getting_started.asp"
-                        target="_blank" rel="noopener">📖 W3Schools</a>
+                        target="_blank" rel="noopener" style="width: 100%; justify-content: center;">📖 W3Schools</a>
                     <a class="course-btn" href="https://www.w3schools.com/datascience/default.asp" target="_blank"
-                        rel="noopener">📊 Data Science</a>
+                        rel="noopener" style="width: 100%; justify-content: center;">📊 Data Science</a>
                 </div>
             </div>
 
-            <div class="course-card reveal">
-                <div class="course-card-icon">🧠</div>
-                <div class="course-card-title">Deep Learning & Neural Nets</div>
-                <div class="course-card-desc">Deep learning models use layers of artificial neurons to learn complex
-                    patterns. Foundational for modern AI breakthroughs.</div>
-                <div class="course-card-footer">
+            <div class="course-card reveal" style="padding: 1.5rem; text-align: center;">
+                <div class="course-card-icon" style="margin: 0 auto 0.5rem; font-size: 2rem;">🧠</div>
+                <div class="course-card-title" style="margin-bottom: 1rem;">Deep Learning</div>
+
+                <div class="course-card-footer" style="flex-direction: column; gap: 0.5rem;">
                     <a class="course-btn" href="https://www.w3schools.com/ai/ai_neural_networks.asp" target="_blank"
-                        rel="noopener">📖 W3Schools</a>
+                        rel="noopener" style="width: 100%; justify-content: center;">📖 W3Schools</a>
                     <a class="course-btn" href="https://www.w3schools.com/ai/ai_perceptrons.asp" target="_blank"
-                        rel="noopener">🔬 Perceptrons</a>
+                        rel="noopener" style="width: 100%; justify-content: center;">🔬 Perceptrons</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== HOW IT WORKS (3 STEPS) ========== -->
+<section style="background: var(--surface-2); padding: 5rem 0;">
+    <div class="container" style="max-width: 800px;">
+        <div class="section-header reveal">
+            <span class="section-badge"
+                style="background: rgba(249, 115, 22, 0.1); color: var(--accent);">Process</span>
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Get your personalized results in just three simple steps.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem; position: relative;">
+            <!-- Vertical Line -->
+            <div
+                style="position: absolute; left: 24px; top: 24px; bottom: 24px; width: 2px; background: rgba(249, 115, 22, 0.2); z-index: 0;">
+            </div>
+
+            <!-- Step 1 -->
+            <div class="reveal" style="display: flex; gap: 1.5rem; z-index: 1;">
+                <div
+                    style="width: 50px; height: 50px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 800; color: var(--accent); flex-shrink: 0; box-shadow: 0 0 0 4px var(--surface-2);">
+                    1</div>
+                <div
+                    style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; flex: 1; box-shadow: var(--shadow);">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
+                        Enter health details</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Provide your basic
+                        body metrics and lifestyle factors through our simple, secure prediction form.</p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="reveal" style="display: flex; gap: 1.5rem; z-index: 1;">
+                <div
+                    style="width: 50px; height: 50px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 800; color: var(--accent); flex-shrink: 0; box-shadow: 0 0 0 4px var(--surface-2);">
+                    2</div>
+                <div
+                    style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; flex: 1; box-shadow: var(--shadow);">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
+                        ML model analyzes</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Our ensemble of
+                        powerful machine learning models processes your data instantly to accurately determine your
+                        obesity risk.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="reveal" style="display: flex; gap: 1.5rem; z-index: 1;">
+                <div
+                    style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 800; flex-shrink: 0; box-shadow: 0 0 0 4px var(--surface-2), 0 0 15px rgba(249, 115, 22, 0.4);">
+                    3</div>
+                <div
+                    style="background: var(--surface); border: 1px solid var(--accent); border-radius: 12px; padding: 1.5rem; flex: 1; box-shadow: 0 4px 20px rgba(249, 115, 22, 0.1);">
+                    <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
+                        Get obesity class + diet plan</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Receive your results
+                        immediately along with a highly personalized daily nutrition and exercise roadmap.</p>
                 </div>
             </div>
         </div>
