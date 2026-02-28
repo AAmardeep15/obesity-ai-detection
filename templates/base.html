@@ -18,16 +18,20 @@
   <!-- ======= NAVBAR ======= -->
   <nav class="navbar">
     <a href="/" class="nav-brand">
-      <span class="brand-icon">🎯</span>
+      <span class="brand-icon" style="color: white; font-size: 1.2rem;">🧠</span>
       <span>ObesityAI</span>
     </a>
-    <ul class="nav-links" id="nav-links">
+    <ul class="nav-links" id="nav-links" style="gap: 1.2rem;">
       <li><a href="/" id="nav-home">Home</a></li>
       <li><a href="/predict" id="nav-predict">Predict</a></li>
       <li><a href="/statistics" id="nav-stats">Statistics</a></li>
-      <li><a href="/educate" id="nav-educate">Learn</a></li>
+      <li><a href="/#mentor" id="nav-mentor">Mentor</a></li>
+      <li><a href="/#team" id="nav-team">Team</a></li>
     </ul>
     <div style="display:flex; align-items:center; gap:0.5rem;">
+      <a href="/predict" class="btn btn-primary"
+        style="padding: 0.55rem 1.35rem; font-size: 0.9rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.35); font-weight: 600; text-transform: none; margin-right: 0.5rem;"
+        id="nav-start-btn">Start Prediction</a>
       <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -70,7 +74,8 @@
         <div class="footer-brand">
           <div class="footer-brand-name"
             style="font-size: 1.2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-            <span style="color:var(--accent);">🎯</span> ObesityAI</div>
+            <span style="color:var(--accent);">🎯</span> ObesityAI
+          </div>
           <div class="footer-brand-desc"
             style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; max-width: 250px;">An AI-based
             obesity detection &amp; personalized nutrition recommendation
