@@ -16,6 +16,7 @@ import os
 import sys
 import json
 import pickle
+from datetime import datetime
 
 # Make sure the project root is on Python's path (needed when running main.py)
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -125,6 +126,22 @@ def train():
     gb_stats  = evaluate_model(gb,       X_test, y_test, "Gradient Boosting")
     ens_stats = evaluate_model(ensemble, X_test, y_test, "Ensemble (Voting)")
 
+    # ── Step 3.5: Generate detailed stats for Dashboard ────────────────────────
+    from sklearn.metrics import confusion_matrix
+    import numpy as np
+
+    # Confusion Matrix for Ensemble
+    y_pred_ens = ensemble.predict(X_test)
+    cm = confusion_matrix(y_test, y_pred_ens)
+    
+    # Feature Importance (using Random Forest as representative)
+    importances = rf.feature_importances_
+    feature_importance = [
+        {'feature': col, 'importance': round(float(imp), 4)}
+        for col, imp in zip(feature_cols, importances)
+    ]
+    feature_importance = sorted(feature_importance, key=lambda x: x['importance'], reverse=True)
+
     # Collect all stats
     stats = {
         'rf':        rf_stats,
@@ -135,6 +152,9 @@ def train():
         'num_features': len(feature_cols),
         'train_size':   int(X_train.shape[0]),
         'test_size':    int(X_test.shape[0]),
+        'confusion_matrix': cm.tolist(),
+        'feature_importance': feature_importance,
+        'last_updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
 
     # ── Step 4: Save model files ───────────────────────────────────────────────

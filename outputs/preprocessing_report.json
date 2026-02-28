@@ -30,39 +30,10 @@
     "Overweight_Level_I",
     "Overweight_Level_II"
   ],
-  "imputation_log": {},
-  "outlier_log": {
-    "Age": {
-      "Q1": 19.9472,
-      "Q3": 26.0,
-      "IQR": 6.0528,
-      "lower_bound": 10.868,
-      "upper_bound": 35.0792,
-      "outliers_capped": 168
-    },
-    "Height": {
-      "Q1": 1.63,
-      "Q3": 1.7685,
-      "IQR": 0.1385,
-      "lower_bound": 1.4223,
-      "upper_bound": 1.9762,
-      "outliers_capped": 1
-    },
-    "Weight": {
-      "Q1": 65.4733,
-      "Q3": 107.4307,
-      "IQR": 41.9573,
-      "lower_bound": 2.5373,
-      "upper_bound": 170.3667,
-      "outliers_capped": 1
-    },
-    "NCP": {
-      "Q1": 2.6587,
-      "Q3": 3.0,
-      "IQR": 0.3413,
-      "lower_bound": 2.1468,
-      "upper_bound": 3.5119,
-      "outliers_capped": 579
-    }
+  "outliers_capped": {
+    "Age": 168,
+    "Height": 1,
+    "Weight": 1,
+    "NCP": 579
   }
 }

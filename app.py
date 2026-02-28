@@ -19,17 +19,33 @@ from src.exercise import get_exercise_plan
 app = Flask(__name__)
 app.secret_key = 'obesity-detection-secret-2024'
 
-MODEL_EXISTS = os.path.exists(os.path.join('models', 'obesity_model.pkl'))
+MODEL_DIR = os.path.join(os.path.dirname(__file__), 'models')
+MODEL_EXISTS = os.path.exists(os.path.join(MODEL_DIR, 'obesity_model.pkl'))
+
+def update_model_status():
+    global MODEL_EXISTS
+    MODEL_EXISTS = os.path.exists(os.path.join(MODEL_DIR, 'obesity_model.pkl'))
 
 
 @app.route('/')
 def index():
+    update_model_status()
     obesity_classes = [
         {'key': k, 'label': v['label'], 'emoji': v['emoji'], 'color': v['color'],
          'calories': v['daily_calories']}
         for k, v in NUTRITION_PLANS.items()
     ]
-    return render_template('index.html', obesity_classes=obesity_classes, model_exists=MODEL_EXISTS)
+    
+    stats_path = os.path.join('outputs', 'model_stats.json')
+    stats = None
+    if os.path.exists(stats_path):
+        with open(stats_path, 'r') as f:
+            stats = json.load(f)
+            
+    return render_template('index.html', 
+                           obesity_classes=obesity_classes, 
+                           model_exists=MODEL_EXISTS,
+                           stats=stats)
 
 
 @app.route('/predict', methods=['GET', 'POST'])
@@ -206,12 +222,35 @@ def educate():
 
 @app.route('/statistics')
 def statistics():
+    update_model_status()
     stats_path = os.path.join('outputs', 'model_stats.json')
     stats = None
     if os.path.exists(stats_path):
         with open(stats_path, 'r') as f:
             stats = json.load(f)
     return render_template('statistics.html', stats=stats, model_exists=MODEL_EXISTS)
+
+
+@app.route('/train', methods=['POST'])
+def train_model():
+    """
+    Trigger the model training process and return the new stats.
+    Called via AJAX from the Dashboard.
+    """
+    try:
+        from src.train import train
+        bundle, stats = train()
+        update_model_status()
+        return jsonify({
+            'success': True,
+            'message': 'Model trained successfully!',
+            'stats': stats
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f"Training failed: {str(e)}"
+        }), 500
 
 
 if __name__ == '__main__':

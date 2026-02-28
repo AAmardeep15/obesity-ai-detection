@@ -234,11 +234,16 @@ function downloadReport() {
   if (!counters.length) return;
 
   function animateCounter(el) {
-    var target = parseInt(el.getAttribute('data-target'), 10);
+    var rawTarget = parseInt(el.getAttribute('data-target'), 10);
     var suffix = el.getAttribute('data-suffix') || '';
-    // For percentage stats stored as integers (973 → 97.3%, 875 → 87.5%)
-    var isDecimal = (suffix === '%' && target > 100);
-    var displayTarget = isDecimal ? (target / 10) : target;
+    var divide = parseInt(el.getAttribute('data-divide'), 10) || 1;
+
+    // Fallback legacy decimal detection if divide is not set
+    if (divide === 1 && suffix === '%' && rawTarget > 100) {
+      divide = 10;
+    }
+
+    var displayTarget = rawTarget / divide;
     var duration = 1600;
     var step = displayTarget / (duration / 16);
     var current = 0;
@@ -251,7 +256,7 @@ function downloadReport() {
         current = displayTarget;
         clearInterval(timer);
       }
-      if (isDecimal) {
+      if (divide > 1) {
         el.textContent = current.toFixed(1) + suffix;
       } else {
         el.textContent = Math.floor(current).toLocaleString() + suffix;
@@ -279,21 +284,33 @@ function downloadReport() {
    SCROLL TO TOP BUTTON
    Shows after scrolling 300px, smooth-scrolls back to top on click
    ------------------------------------ */
-(function () {
-  var btn = document.getElementById('scroll-top-btn');
+const initScrollBtn = () => {
+  const btn = document.getElementById('scroll-top-btn');
   if (!btn) return;
 
-  // Show or hide based on scroll position
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 300) {
+  const handleScroll = () => {
+    const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollPos > 300) {
       btn.classList.add('visible');
     } else {
       btn.classList.remove('visible');
     }
-  }, { passive: true });
+  };
 
-  // Scroll to top smoothly on click
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
   btn.addEventListener('click', function () {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   });
-})();
+
+  handleScroll();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initScrollBtn);
+} else {
+  initScrollBtn();
+}
