@@ -235,17 +235,27 @@ function downloadReport() {
 
   function animateCounter(el) {
     var target = parseInt(el.getAttribute('data-target'), 10);
-    var duration = 1500;
-    var step = target / (duration / 16);
+    var suffix = el.getAttribute('data-suffix') || '';
+    // For percentage stats stored as integers (973 → 97.3%, 875 → 87.5%)
+    var isDecimal = (suffix === '%' && target > 100);
+    var displayTarget = isDecimal ? (target / 10) : target;
+    var duration = 1600;
+    var step = displayTarget / (duration / 16);
     var current = 0;
+
+    el.textContent = '0' + suffix;
 
     var timer = setInterval(function () {
       current += step;
-      if (current >= target) {
-        current = target;
+      if (current >= displayTarget) {
+        current = displayTarget;
         clearInterval(timer);
       }
-      el.textContent = Math.floor(current).toLocaleString();
+      if (isDecimal) {
+        el.textContent = current.toFixed(1) + suffix;
+      } else {
+        el.textContent = Math.floor(current).toLocaleString() + suffix;
+      }
     }, 16);
   }
 
