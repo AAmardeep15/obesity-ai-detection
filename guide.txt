@@ -1,0 +1,119 @@
+  AI-Based Obesity Detection — Model Training
+============================================================
+=======================================================
+  STEP 1 — Dataset Loaded
+=======================================================
+  Rows    : 2111
+  Columns : 17
+
+  Target class distribution:
+    Obesity_Type_I                  351  (16.6%)
+    Obesity_Type_III                324  (15.3%)
+    Obesity_Type_II                 297  (14.1%)
+    Overweight_Level_I              290  (13.7%)
+    Overweight_Level_II             290  (13.7%)
+    Normal_Weight                   287  (13.6%)
+    Insufficient_Weight             272  (12.9%)
+
+=======================================================
+  STEP 2 — Missing Value Check
+=======================================================
+  No missing values found. Dataset is already clean.
+
+=======================================================
+  STEP 3 — Outlier Detection (IQR Method)
+=======================================================
+  Age           168 outliers capped  (range: 10.87 to 35.08)
+  Height        1 outliers capped  (range: 1.42 to 1.98)
+  Weight        1 outliers capped  (range: 2.54 to 170.37)
+  FCVC          No outliers found
+  NCP           579 outliers capped  (range: 2.15 to 3.51)
+  CH2O          No outliers found
+  FAF           No outliers found
+  TUE           No outliers found
+
+=======================================================
+  STEP 4 — Feature Engineering (Add BMI)
+=======================================================
+  BMI column added.
+  Min BMI  = 13.00
+  Max BMI  = 50.81
+  Mean BMI = 29.70
+
+=======================================================
+  STEP 5 — Label Encoding (Text → Numbers)
+=======================================================
+  Encoded 'Gender'  →  classes: ['Female', 'Male']
+  Encoded 'family_history_with_overweight'  →  classes: ['no', 'yes']
+  Encoded 'FAVC'  →  classes: ['no', 'yes']
+  Encoded 'CAEC'  →  classes: ['Always', 'Frequently', 'Sometimes', 'no']
+  Encoded 'SMOKE'  →  classes: ['no', 'yes']
+  Encoded 'SCC'  →  classes: ['no', 'yes']
+  Encoded 'CALC'  →  classes: ['Always', 'Frequently', 'Sometimes', 'no']
+  Encoded 'MTRANS'  →  classes: ['Automobile', 'Bike', 'Motorbike', 'Public_Transportation', 'Walking']
+
+  Target classes: ['Insufficient_Weight', 'Normal_Weight', 'Obesity_Type_I', 'Obesity_Type_II', 'Obesity_Type_III', 'Overweight_Level_I', 'Overweight_Level_II']
+
+=======================================================
+  STEP 6 & 7 — Scaling + Train/Test Split
+=======================================================
+  Training samples : 1688
+  Test samples     : 423
+  Features used    : 17
+  Scaling          : StandardScaler (mean=0, std=1)
+  Data Leakage     : Prevented (scaler fit on train only)
+
+=======================================================
+  PREPROCESSING COMPLETE
+=======================================================
+
+=======================================================
+  MODEL TRAINING
+=======================================================
+
+  Training Random Forest...
+  Training Logistic Regression...
+  Training Gradient Boosting...
+  Training Ensemble (Soft Voting of all 3 models)...
+
+=======================================================
+  EVALUATION RESULTS (on test set)
+=======================================================
+  Random Forest              Accuracy=98.58%  F1=98.58%
+  Logistic Regression        Accuracy=91.96%  F1=91.88%
+  Gradient Boosting          Accuracy=98.35%  F1=98.34%
+  Ensemble (Voting)          Accuracy=99.05%  F1=99.05%
+
+=======================================================
+  SAVING MODEL FILES
+=======================================================
+  Saved → models/random_forest.pkl
+  Saved → models/logistic_regression.pkl
+  Saved → models/gradient_boosting.pkl
+  Saved → models/ensemble_model.pkl
+  Saved → models/preprocessor.pkl
+  Saved → models/obesity_model.pkl
+  Saved → outputs/model_stats.json
+
+
+============================================================
+✅ Training complete!
+   Ensemble Accuracy : 99.05%
+   Ensemble F1 Score : 99.05%
+============================================================
+
+🚀 You can now run the Flask app:
+   python app.py
+
+
+
+
+
+
+
+
+
+
+
+
+   <img src="{{ url_for('static', filename='images/amardeep.png') }}" alt="Amardeep Maurya" class="team-avatar" style="object-fit: cover; background: white;">

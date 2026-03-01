@@ -133,7 +133,7 @@ A: Bias is error from overly simple assumptions. Variance is error from overly c
 Q24: What is "Data Augmentation"?
 A: It's a technique to create artificial data points. In this project, our dataset already included some synthetic data points created using the SMOTE technique to balance the classes.
 
-25: What is the role of 'Flask' in this project?
+Q25: What is the role of 'Flask' in this project?
 A: Flask is our "Web Wrapper." It takes the user's input from the browser, sends it to our Python ML script, and displays the result back to the user.
 
 Q26: How does the "Feature Importance" chart help a Doctor?
@@ -142,7 +142,7 @@ A: It tells the doctor *why* the AI made a decision—showing that for this pati
 27: What is the "Train-Test Split" ratio?
 A: 80% for Training (building the model) and 20% for Testing (checking if it works on data it has never seen before).
 
-Q28: What if a user enters a Height of 500cm?
+28: What if a user enters a Height of 500cm?
 A: Our preprocessing script includes "Sanity Checks" or Data Capping to handle such invalid inputs and prevent the model from giving a wrong prediction.
 
 29: What is "Categorical Data"?
@@ -150,3 +150,156 @@ A: Data that has labels instead of numbers (e.g., SMOKE: Yes/No). We must encode
 
 30: Why is 'Random Forest' called 'Random'?
 A: Because it uses a random subset of features and a random subset of data samples for each individual tree it builds. This "Randomness" is what makes it so robust.
+
+7. COMPREHENSIVE BEGINNER ML QUESTIONS (50 ADDITIONAL)
+------------------------------------------------------
+
+Q31: What is Supervised vs. Unsupervised Learning?
+A: Supervised has labeled data (targets), Unsupervised finds hidden patterns in unlabeled data (clustering).
+
+Q32: What is a "Target Variable"?
+A: The feature you want to predict (e.g., Obesity Level).
+
+Q33: What is "Regression" vs "Classification"?
+A: Regression predicts continuous numbers (Price); Classification predicts categories (Yes/No, Levels).
+
+Q34: What is the "K-Nearest Neighbors" (KNN) algorithm?
+A: It classifies a data point based on how its neighbors are classified.
+
+Q35: What is "Euclidean Distance"?
+A: A formula to measure the straight-line distance between two points in multidimensional space.
+
+Q36: What is a "Support Vector Machine" (SVM)?
+A: An algorithm that finds the best "Hyperplane" to separate different classes.
+
+Q37: What is "Principal Component Analysis" (PCA)?
+A: A technique for "Dimension Reduction"—reducing the number of features while keeping the most important info.
+
+Q38: What is "Cross-Validation"?
+A: A technique to assess model performance by splitting data into multiple folds and training/testing multiple times.
+
+Q39: What is "Mean Squared Error" (MSE)?
+A: Used in regression; it's the average of the squares of the errors (Predicted - Actual).
+
+Q40: What is "Precision"?
+A: Out of all positive predictions, how many were actually positive? (TP / TP + FP).
+
+Q41: What is "Recall" (Sensitivity)?
+A: Out of all actual positives, how many did the model find? (TP / TP + FN).
+
+Q42: What is a "False Positive"?
+A: When the model predicts "Positive" but it was actually "Negative".
+
+Q43: What is a "False Negative"?
+A: When the model predicts "Negative" but it was actually "Positive".
+
+Q44: What is "Feature Scaling" and why do we need it?
+A: It's bringing all features to a similar range so specific features don't dominate others just because they have larger numbers.
+
+Q45: What is "Linear Regression"?
+A: A basic algorithm that finds a linear relationship between input (X) and output (Y).
+
+Q46: What is "Multiple Linear Regression"?
+A: Linear regression that uses more than one input feature.
+
+Q47: What is an "Outlier"?
+A: An observation that lies an abnormal distance from other values in a random sample.
+
+Q48: How do you handle "Tails" in data distributions?
+A: Using techniques like Log Transformation or Capping.
+
+Q49: What is the "Normal Distribution" (Gaussian)?
+A: A bell-shaped curve where data is symmetrical around the mean.
+
+Q50: What is the "Z-Score"?
+A: A measure of how many standard deviations a data point is from the mean.
+
+Q51: What is "Regularization" (L1 and L2)?
+A: Techniques (Lasso/Ridge) to prevent overfitting by adding a penalty to the complexity of the model.
+
+Q52: What is "Overfitting" vs "Underfitting"?
+A: Overfitting = Model is too complex; Underfitting = Model is too simple.
+
+Q53: What is "Stochastic Gradient Descent" (SGD)?
+A: An optimization algorithm used to find the parameters that minimize the error.
+
+Q54: What is a "Decision Tree"?
+A: A flowchart-like structure where each node represents a test on an attribute.
+
+Q55: What is "Gini Impurity"?
+A: A measurement used in Decision Trees to calculate the "Purity" of a node.
+
+Q56: What is "Entropy"?
+A: A measure of randomness or disorder in the information being processed.
+
+Q57: What is "Information Gain"?
+A: The reduction in entropy after a dataset is split on an attribute.
+
+Q58: What is "Boosting" vs "Bagging"?
+A: Bagging builds models in parallel (Random Forest); Boosting builds models sequentially (Gradient Boosting).
+
+Q59: What is a "Naive Bayes" classifier?
+A: An algorithm based on Bayes' Theorem that assumes features are independent.
+
+Q60: What is "Clustering"?
+A: An unsupervised task that groups similar data points together (e.g., K-Means).
+
+Q61: What is "K-Means Clustering"?
+A: Partitioning data into K distinct clusters based on the distance to the centroid.
+
+Q62: What is the "Elbow Method"?
+A: A heuristic used in determining the number of clusters in K-Means.
+
+Q63: What are "Ensemble Methods"?
+A: Combining multiple models to produce better predictive performance.
+
+Q64: What is "Feature Engineering"?
+A: The process of using domain knowledge to create new features from raw data.
+
+Q65: What is "Feature Selection"?
+A: Choosing the most relevant features to use in model construction.
+
+Q66: What is "Multicollinearity"?
+A: When two or more features are highly correlated with each other.
+
+Q67: What is a "Standard Deviation"?
+A: A measure of the amount of variation or dispersion of a set of values.
+
+Q68: What is the "Root Mean Squared Error" (RMSE)?
+A: The square root of the mean of the squared differences between prediction and actual observation.
+
+Q69: What is "R-Squared" (Coefficient of Determination)?
+A: A statistical measure that represents the proportion of the variance for a dependent variable that's explained by an independent variable.
+
+Q70: What is a "Dataset"?
+A: A collection of data.
+
+Q71: What is "Data Imputation"?
+A: The process of replacing missing data with substituted values.
+
+Q72: What is "Imbalanced Data"?
+A: When one class has much more samples than another (e.g., 90% Normal vs 10% Obese).
+
+Q73: What is "SMOTE"?
+A: Synthetic Minority Over-sampling Technique, used to balance datasets.
+
+Q74: What is an "Epoch"?
+A: One complete pass of the entire training dataset through the algorithm.
+
+Q75: What is the "Learning Rate"?
+A: A hyperparameter that controls how much to change the model in response to the estimated error each time the model weights are updated.
+
+Q76: What is "Data Leakage"?
+A: When information from outside the training dataset is used to create the model.
+
+Q77: What is "Dummy Variables"?
+A: Variables used in regression analysis when a variable is categorical.
+
+Q78: What is the "Central Limit Theorem"?
+A: A theorem that states normalized sums of independent random variables tend toward a normal distribution.
+
+Q79: What is a "Neural Network"?
+A: A series of algorithms that endeavors to recognize underlying relationships in a set of data through a process that mimics the way the human brain operates.
+
+Q80: What is "Deep Learning"?
+A: A subset of machine learning based on artificial neural networks with representation learning.
