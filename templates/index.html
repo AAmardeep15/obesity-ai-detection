@@ -558,18 +558,23 @@
 
             <!-- Right: Form -->
             <div class="contact-form-card reveal">
-                <form action="#">
+                <form action="https://formsubmit.co/mauryaamardeep5264@gmail.com" method="POST">
+                    <!-- Hidden configuration fields for FormSubmit -->
+                    <input type="hidden" name="_subject" value="New message from ObesityAI Contact Form">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+
                     <div class="contact-form-group">
                         <label for="c-name">Your Name</label>
-                        <input type="text" id="c-name" placeholder="John Doe" required>
+                        <input type="text" id="c-name" name="name" placeholder="John Doe" required>
                     </div>
                     <div class="contact-form-group">
                         <label for="c-email">Email Address</label>
-                        <input type="email" id="c-email" placeholder="john@example.com" required>
+                        <input type="email" id="c-email" name="email" placeholder="john@example.com" required>
                     </div>
                     <div class="contact-form-group">
                         <label for="c-msg">Message</label>
-                        <textarea id="c-msg" rows="5" placeholder="Your message..." required></textarea>
+                        <textarea id="c-msg" name="message" rows="5" placeholder="Your message..." required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary"
                         style="width: 100%; padding: 1rem; border-radius: 12px; gap: 10px;">
