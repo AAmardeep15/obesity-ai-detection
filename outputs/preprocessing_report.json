@@ -1,6 +1,6 @@
 {
-  "train_samples": 1688,
-  "test_samples": 423,
+  "train_samples": 8000,
+  "test_samples": 2000,
   "num_features": 17,
   "feature_cols": [
     "Gender",
@@ -31,9 +31,9 @@
     "Overweight_Level_II"
   ],
   "outliers_capped": {
-    "Age": 168,
-    "Height": 1,
-    "Weight": 1,
-    "NCP": 579
+    "Age": 787,
+    "Height": 4,
+    "Weight": 6,
+    "NCP": 2593
   }
 }

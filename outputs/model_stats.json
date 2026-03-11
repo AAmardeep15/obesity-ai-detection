@@ -1,27 +1,27 @@
 {
   "rf": {
-    "accuracy": 0.9858,
-    "f1": 0.9858,
-    "precision": 0.986,
-    "recall": 0.9858
+    "accuracy": 0.8555,
+    "f1": 0.8554,
+    "precision": 0.8561,
+    "recall": 0.8555
   },
   "lr": {
-    "accuracy": 0.9196,
-    "f1": 0.9188,
-    "precision": 0.9212,
-    "recall": 0.9196
+    "accuracy": 0.6925,
+    "f1": 0.6868,
+    "precision": 0.6876,
+    "recall": 0.6925
   },
   "gb": {
-    "accuracy": 0.9835,
-    "f1": 0.9834,
-    "precision": 0.9837,
-    "recall": 0.9835
+    "accuracy": 0.8275,
+    "f1": 0.8272,
+    "precision": 0.8278,
+    "recall": 0.8275
   },
   "ensemble": {
-    "accuracy": 0.9905,
-    "f1": 0.9905,
-    "precision": 0.9907,
-    "recall": 0.9905
+    "accuracy": 0.846,
+    "f1": 0.8458,
+    "precision": 0.8463,
+    "recall": 0.846
   },
   "class_names": [
     "Insufficient_Weight",
@@ -33,142 +33,142 @@
     "Overweight_Level_II"
   ],
   "num_features": 17,
-  "train_size": 1688,
-  "test_size": 423,
+  "train_size": 8000,
+  "test_size": 2000,
   "confusion_matrix": [
     [
-      54,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
+      216,
+      10,
+      11,
+      2,
+      3,
+      9,
+      7
     ],
     [
-      0,
-      58,
-      0,
-      0,
-      0,
-      0,
-      0
+      10,
+      213,
+      11,
+      11,
+      9,
+      12,
+      2
     ],
     [
-      0,
-      0,
-      70,
-      0,
-      0,
-      0,
-      0
+      6,
+      5,
+      295,
+      12,
+      11,
+      2,
+      9
     ],
     [
-      0,
-      0,
-      0,
-      60,
-      0,
-      0,
-      0
+      4,
+      4,
+      8,
+      238,
+      9,
+      8,
+      9
     ],
     [
-      0,
-      0,
-      0,
-      1,
-      64,
-      0,
-      0
+      6,
+      4,
+      9,
+      9,
+      265,
+      6,
+      2
     ],
     [
-      0,
-      1,
-      0,
-      0,
-      0,
-      56,
-      1
+      4,
+      11,
+      5,
+      8,
+      7,
+      238,
+      5
     ],
     [
-      0,
-      0,
-      1,
-      0,
-      0,
-      0,
-      57
+      4,
+      8,
+      11,
+      3,
+      9,
+      13,
+      227
     ]
   ],
   "feature_importance": [
     {
       "feature": "BMI",
-      "importance": 0.4162
+      "importance": 0.3045
     },
     {
       "feature": "Weight",
-      "importance": 0.2078
-    },
-    {
-      "feature": "FCVC",
-      "importance": 0.063
+      "importance": 0.1714
     },
     {
       "feature": "Height",
-      "importance": 0.0517
+      "importance": 0.0718
     },
     {
       "feature": "Age",
-      "importance": 0.0511
+      "importance": 0.0701
     },
     {
-      "feature": "Gender",
-      "importance": 0.0403
-    },
-    {
-      "feature": "NCP",
-      "importance": 0.0255
+      "feature": "FCVC",
+      "importance": 0.0685
     },
     {
       "feature": "CH2O",
-      "importance": 0.0222
+      "importance": 0.0483
+    },
+    {
+      "feature": "NCP",
+      "importance": 0.0482
     },
     {
       "feature": "TUE",
-      "importance": 0.022
+      "importance": 0.0455
+    },
+    {
+      "feature": "Gender",
+      "importance": 0.0444
+    },
+    {
+      "feature": "FAF",
+      "importance": 0.0427
     },
     {
       "feature": "CAEC",
       "importance": 0.0218
     },
     {
-      "feature": "FAF",
-      "importance": 0.021
+      "feature": "CALC",
+      "importance": 0.0185
     },
     {
       "feature": "family_history_with_overweight",
-      "importance": 0.0179
-    },
-    {
-      "feature": "CALC",
-      "importance": 0.0163
-    },
-    {
-      "feature": "FAVC",
-      "importance": 0.0099
+      "importance": 0.0157
     },
     {
       "feature": "MTRANS",
-      "importance": 0.0092
+      "importance": 0.0126
+    },
+    {
+      "feature": "FAVC",
+      "importance": 0.0107
     },
     {
       "feature": "SCC",
-      "importance": 0.0031
+      "importance": 0.0038
     },
     {
       "feature": "SMOKE",
-      "importance": 0.0009
+      "importance": 0.0014
     }
   ],
-  "last_updated": "2026-03-06 02:54:25"
+  "last_updated": "2026-03-11 23:32:00"
 }
