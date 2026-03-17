@@ -21,7 +21,7 @@ python main.py
 ```bash
 python app.py
 ```
-Open your browser and navigate to: **`http://localhost:5000`**
+Open your browser and navigate  to: **`http://localhost:5000`**
 
 ---
 
