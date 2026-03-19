@@ -21,7 +21,7 @@ python main.py
 ```bash
 python app.py
 ```
-Open your browser and navigate  to: **`http://localhost:5000`**
+Open your browser and navigate to: **`http://localhost:5000`**
 
 ---
 
@@ -108,4 +108,4 @@ The dataset utilizes a 10,000-row synthetically augmented dataset designed speci
 ---
 
 ## Mentor
-**Prof. Amiya Das** — School of Computer Engineering, KIIT University, Bhubaneswar
+**Prof. Amiya Kumar Das** — School of Computer Engineering, KIIT University, Bhubaneswar
