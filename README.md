@@ -107,5 +107,5 @@ The dataset utilizes a 10,000-row synthetically augmented dataset designed speci
 
 ---
 
-## Mentor
+## Mentor Details
 **Prof. Amiya Kumar Das** — School of Computer Engineering, KIIT University, Bhubaneswar
