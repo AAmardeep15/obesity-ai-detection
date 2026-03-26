@@ -16,6 +16,7 @@ import os
 import sys
 import json
 import pickle
+import hashlib
 from datetime import datetime
 
 # Make sure the project root is on Python's path (needed when running main.py)
@@ -83,6 +84,7 @@ def train():
     feature_encoders = info['feature_encoders']
     target_encoder   = info['label_encoder']
     feature_cols     = info['feature_cols']
+    inference_defaults = info.get('inference_defaults', {})
 
     # ── Step 2: Train the 3 base models ───────────────────────────────────────
     print("=" * 55)
@@ -177,8 +179,17 @@ def train():
         'feature_encoders': feature_encoders,
         'label_encoder':    target_encoder,
         'feature_cols':     feature_cols,
+        'inference_defaults': inference_defaults,
     }
     save_pkl(preprocessor, 'preprocessor.pkl')
+
+    schema_payload = {
+        'feature_cols': feature_cols,
+        'class_names': list(target_encoder.classes_),
+        'num_features': len(feature_cols),
+        'inference_defaults_keys': sorted(list(inference_defaults.keys())),
+    }
+    schema_hash = hashlib.sha256(json.dumps(schema_payload, sort_keys=True).encode('utf-8')).hexdigest()
 
     # Save the full bundle that the Flask app uses (model + preprocessor together)
     full_bundle = {
@@ -187,6 +198,13 @@ def train():
         'label_encoder':    target_encoder,
         'feature_encoders': feature_encoders,
         'feature_cols':     feature_cols,
+        'inference_defaults': inference_defaults,
+        'metadata': {
+            'schema_version': 1,
+            'model_version': datetime.now().strftime('%Y%m%d_%H%M%S'),
+            'created_at': datetime.now().isoformat(timespec='seconds'),
+            'schema_hash': schema_hash,
+        },
         'stats':            stats,
     }
     save_pkl(full_bundle, 'obesity_model.pkl')

@@ -17,14 +17,56 @@ from src.nutrition import get_nutrition_plan, NUTRITION_PLANS
 from src.exercise import get_exercise_plan
 
 app = Flask(__name__)
-app.secret_key = 'obesity-detection-secret-2024'
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'dev-only-change-me')
 
 MODEL_DIR = os.path.join(os.path.dirname(__file__), 'models')
 MODEL_EXISTS = os.path.exists(os.path.join(MODEL_DIR, 'obesity_model.pkl'))
 
+VALID_GENDERS = {'Male', 'Female'}
+VALID_PHYSICAL_ACTIVITY = {
+    'Sedentary', 'Light', 'Moderate', 'Active', 'Very Active'
+}
+VALID_FAMILY_HISTORY = {'Yes', 'No'}
+
+
+def parse_prediction_form(form):
+    """Parse and validate prediction form fields from request.form."""
+    age = int(form.get('age', 25))
+    gender = form.get('gender', 'Male')
+    height_cm = float(form.get('height', 170))
+    weight_kg = float(form.get('weight', 70))
+    physical_activity = form.get('physical_activity', 'Moderate')
+    family_history = form.get('family_history', 'No')
+
+    if not (10 <= age <= 80):
+        raise ValueError('Age must be between 10 and 80 years.')
+    if gender not in VALID_GENDERS:
+        raise ValueError("Gender must be 'Male' or 'Female'.")
+    if not (100.0 <= height_cm <= 220.0):
+        raise ValueError('Height must be between 100 and 220 cm.')
+    if not (20.0 <= weight_kg <= 250.0):
+        raise ValueError('Weight must be between 20 and 250 kg.')
+    if physical_activity not in VALID_PHYSICAL_ACTIVITY:
+        raise ValueError('Physical activity level is invalid.')
+    if family_history not in VALID_FAMILY_HISTORY:
+        raise ValueError("Family history must be 'Yes' or 'No'.")
+
+    return {
+        'age': age,
+        'gender': gender,
+        'height_cm': height_cm,
+        'weight_kg': weight_kg,
+        'physical_activity': physical_activity,
+        'family_history': family_history,
+    }
+
 def update_model_status():
     global MODEL_EXISTS
-    MODEL_EXISTS = os.path.exists(os.path.join(MODEL_DIR, 'obesity_model.pkl'))
+    try:
+        from src.predict import get_model_health
+        MODEL_EXISTS = get_model_health()[0]
+    except Exception:
+        MODEL_EXISTS = os.path.exists(os.path.join(MODEL_DIR, 'obesity_model.pkl'))
 
 
 @app.route('/')
@@ -62,20 +104,15 @@ def predict_view():
             try:
                 from src.predict import predict as run_predict
 
-                age = int(request.form.get('age', 25))
-                gender = request.form.get('gender', 'Male')
-                height_cm = float(request.form.get('height', 170))
-                weight_kg = float(request.form.get('weight', 70))
-                physical_activity = request.form.get('physical_activity', 'Moderate')
-                family_history = request.form.get('family_history', 'No')
+                parsed = parse_prediction_form(request.form)
 
                 result = run_predict(
-                    age=age,
-                    gender=gender,
-                    height_cm=height_cm,
-                    weight_kg=weight_kg,
-                    physical_activity=physical_activity,
-                    family_history=family_history
+                    age=parsed['age'],
+                    gender=parsed['gender'],
+                    height_cm=parsed['height_cm'],
+                    weight_kg=parsed['weight_kg'],
+                    physical_activity=parsed['physical_activity'],
+                    family_history=parsed['family_history']
                 )
 
                 plan_meta = NUTRITION_PLANS.get(result['class_label'], {})
@@ -101,6 +138,46 @@ def predict_view():
     )
 
 
+@app.route('/advance', methods=['GET', 'POST'])
+def advance_view():
+    result = None
+    nutrition = None
+    exercise = None
+    error = None
+
+    if request.method == 'POST':
+        if not MODEL_EXISTS:
+            error = "Model not found. Please run `python main.py` first to train the model."
+        else:
+            try:
+                from src.predict import predict_advanced as run_predict_advanced
+
+                form_data = request.form.to_dict(flat=True)
+                result = run_predict_advanced(form_data)
+
+                plan_meta = NUTRITION_PLANS.get(result['class_label'], {})
+                result['color'] = plan_meta.get('color', '#f97316')
+                result['label'] = plan_meta.get('label', result['class_label'].replace('_', ' '))
+                result['emoji'] = plan_meta.get('emoji', '🎯')
+
+                nutrition = get_nutrition_plan(result['class_label'])
+                exercise = get_exercise_plan(result['class_label'])
+
+            except ValueError as e:
+                error = f"Invalid input values: {e}"
+            except Exception as e:
+                error = f"Prediction error: {e}"
+
+    return render_template(
+        'advance.html',
+        result=result,
+        nutrition=nutrition,
+        exercise=exercise,
+        error=error,
+        model_exists=MODEL_EXISTS
+    )
+
+
 @app.route('/api/exercise')
 def api_exercise():
     """Return exercise recommendations for a given obesity class."""
@@ -118,18 +195,23 @@ def download_report():
       - Exercise plan summary
     """
     try:
-        from src.predict import predict as run_predict
+        mode = request.form.get('mode', 'basic')
+        parsed = parse_prediction_form(request.form)
 
-        # Read the same form values as the predict route
-        age               = int(request.form.get('age', 25))
-        gender            = request.form.get('gender', 'Male')
-        height_cm         = float(request.form.get('height', 170))
-        weight_kg         = float(request.form.get('weight', 70))
-        physical_activity = request.form.get('physical_activity', 'Moderate')
-        family_history    = request.form.get('family_history', 'No')
+        if mode == 'advanced':
+            from src.predict import predict_advanced as run_predict_advanced
+            result = run_predict_advanced(request.form.to_dict(flat=True))
+        else:
+            from src.predict import predict as run_predict
+            result = run_predict(
+                parsed['age'],
+                parsed['gender'],
+                parsed['height_cm'],
+                parsed['weight_kg'],
+                parsed['physical_activity'],
+                parsed['family_history']
+            )
 
-        # Run prediction
-        result    = run_predict(age, gender, height_cm, weight_kg, physical_activity, family_history)
         nutrition = get_nutrition_plan(result['class_label'])
         exercise  = get_exercise_plan(result['class_label'])
 
@@ -143,13 +225,13 @@ def download_report():
 
         # Section 1 — User Details
         writer.writerow(['=== USER DETAILS ==='])
-        writer.writerow(['Age',              age])
-        writer.writerow(['Gender',           gender])
-        writer.writerow(['Height (cm)',       height_cm])
-        writer.writerow(['Weight (kg)',       weight_kg])
+        writer.writerow(['Age',              parsed['age']])
+        writer.writerow(['Gender',           parsed['gender']])
+        writer.writerow(['Height (cm)',      parsed['height_cm']])
+        writer.writerow(['Weight (kg)',      parsed['weight_kg']])
         writer.writerow(['BMI',              result['bmi']])
-        writer.writerow(['Physical Activity', physical_activity])
-        writer.writerow(['Family History',    family_history])
+        writer.writerow(['Physical Activity', parsed['physical_activity']])
+        writer.writerow(['Family History',    parsed['family_history']])
         writer.writerow([])
 
         # Section 2 — Prediction Result
@@ -220,6 +302,12 @@ def educate():
     return render_template('educate.html')
 
 
+@app.route('/learn')
+def learn():
+    """Formal obesity learning page with prevention and management guidance."""
+    return render_template('learn.html')
+
+
 @app.route('/statistics')
 def statistics():
     update_model_status()
@@ -254,4 +342,7 @@ def train_model():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    debug_mode = os.getenv('FLASK_DEBUG', '0').strip().lower() in {'1', 'true', 'yes'}
+    host = os.getenv('FLASK_HOST', '0.0.0.0')
+    port = int(os.getenv('FLASK_PORT', '5000'))
+    app.run(debug=debug_mode, host=host, port=port)

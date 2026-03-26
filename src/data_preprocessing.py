@@ -41,6 +41,23 @@ NUMERIC_COLS = ['Age', 'Height', 'Weight', 'FCVC', 'NCP', 'CH2O', 'FAF', 'TUE']
 # This is the column we want to predict
 TARGET_COL = 'NObeyesdad'
 
+# Defaults for features not collected from the web form.
+# Strategy values:
+#   - 'mode': use most frequent value
+#   - 'median': use median value
+INFERENCE_DEFAULT_STRATEGY = {
+    'FAVC': 'mode',
+    'FCVC': 'median',
+    'NCP': 'median',
+    'CAEC': 'mode',
+    'SMOKE': 'mode',
+    'CH2O': 'median',
+    'SCC': 'mode',
+    'TUE': 'median',
+    'CALC': 'mode',
+    'MTRANS': 'mode',
+}
+
 
 # ── Step 1: Load Dataset ──────────────────────────────────────────────────────
 
@@ -265,6 +282,23 @@ def scale_and_split(df, feature_cols):
     return X_train, X_test, y_train, y_test, scaler
 
 
+def compute_inference_defaults(df):
+    """
+    Compute defaults for form-missing features from encoded training data.
+    These defaults are later stored in the model bundle for inference use.
+    """
+    defaults = {}
+    for col, strategy in INFERENCE_DEFAULT_STRATEGY.items():
+        if col not in df.columns:
+            continue
+        if strategy == 'median':
+            defaults[col] = float(df[col].median())
+        else:
+            mode_series = df[col].mode()
+            defaults[col] = float(mode_series.iloc[0]) if not mode_series.empty else float(df[col].iloc[0])
+    return defaults
+
+
 # ── Main Pipeline ─────────────────────────────────────────────────────────────
 
 def load_and_preprocess():
@@ -284,6 +318,8 @@ def load_and_preprocess():
     df                          = add_bmi(df)
     df, encoders, target_encoder = encode_labels(df)
 
+    inference_defaults = compute_inference_defaults(df)
+
     # All columns except the target become features
     feature_cols = [col for col in df.columns if col != TARGET_COL]
 
@@ -295,6 +331,7 @@ def load_and_preprocess():
         'feature_encoders': encoders,
         'label_encoder':    target_encoder,
         'feature_cols':     feature_cols,
+        'inference_defaults': inference_defaults,
     }
 
     # Save a simple preprocessing report to outputs/
@@ -305,6 +342,7 @@ def load_and_preprocess():
         'feature_cols':  feature_cols,
         'class_names':   list(target_encoder.classes_),
         'outliers_capped': outlier_report,
+        'inference_defaults': inference_defaults,
     }
     os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
     with open(REPORT_PATH, 'w') as f:
