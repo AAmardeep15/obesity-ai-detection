@@ -350,6 +350,7 @@
 {# Hidden form: submits user inputs to /download-report to generate a CSV file #}
 {% if result %}
 <form id="download-form" method="POST" action="/download-report" style="display:none;">
+    <input type="hidden" name="mode" value="basic">
     <input type="hidden" name="age" value="{{ request.form.get('age', '') }}">
     <input type="hidden" name="gender" value="{{ request.form.get('gender', '') }}">
     <input type="hidden" name="height" value="{{ request.form.get('height', '') }}">

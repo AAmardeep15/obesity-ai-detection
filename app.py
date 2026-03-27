@@ -28,6 +28,25 @@ VALID_PHYSICAL_ACTIVITY = {
 }
 VALID_FAMILY_HISTORY = {'Yes', 'No'}
 
+ADVANCED_REPORT_FIELDS = [
+    ('Age', 'age'),
+    ('Gender', 'gender'),
+    ('Height (cm)', 'height'),
+    ('Weight (kg)', 'weight'),
+    ('Family History of Obesity', 'family_history'),
+    ('Physical Activity (FAF)', 'physical_activity'),
+    ('Frequent High-Calorie Food (FAVC)', 'favc'),
+    ('Vegetable Frequency (FCVC)', 'fcvc'),
+    ('Main Meals Per Day (NCP)', 'ncp'),
+    ('Eating Between Meals (CAEC)', 'caec'),
+    ('Smoking (SMOKE)', 'smoke'),
+    ('Water Intake (CH2O)', 'ch2o'),
+    ('Calorie Monitoring (SCC)', 'scc'),
+    ('Technology Use (TUE)', 'tue'),
+    ('Alcohol Intake (CALC)', 'calc'),
+    ('Primary Transport (MTRANS)', 'mtrans'),
+]
+
 
 def parse_prediction_form(form):
     """Parse and validate prediction form fields from request.form."""
@@ -223,15 +242,20 @@ def download_report():
         writer.writerow(['Generated on', datetime.now().strftime('%Y-%m-%d %H:%M')])
         writer.writerow([])
 
-        # Section 1 — User Details
-        writer.writerow(['=== USER DETAILS ==='])
-        writer.writerow(['Age',              parsed['age']])
-        writer.writerow(['Gender',           parsed['gender']])
-        writer.writerow(['Height (cm)',      parsed['height_cm']])
-        writer.writerow(['Weight (kg)',      parsed['weight_kg']])
-        writer.writerow(['BMI',              result['bmi']])
-        writer.writerow(['Physical Activity', parsed['physical_activity']])
-        writer.writerow(['Family History',    parsed['family_history']])
+        # Section 1 — Input Features (mode-specific)
+        writer.writerow(['=== INPUT FEATURES ==='])
+        if mode == 'advanced':
+            advanced_form = request.form.to_dict(flat=True)
+            for label, key in ADVANCED_REPORT_FIELDS:
+                writer.writerow([label, advanced_form.get(key, '')])
+            writer.writerow(['BMI', result['bmi']])
+        else:
+            writer.writerow(['Age', parsed['age']])
+            writer.writerow(['Gender', parsed['gender']])
+            writer.writerow(['Height (cm)', parsed['height_cm']])
+            writer.writerow(['Weight (kg)', parsed['weight_kg']])
+            writer.writerow(['Physical Activity', parsed['physical_activity']])
+            writer.writerow(['Family History of Obesity', parsed['family_history']])
         writer.writerow([])
 
         # Section 2 — Prediction Result
