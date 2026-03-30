@@ -1,574 +1,159 @@
-{% extends "base.html" %} {% block title %}Learn{% endblock %} {% block content
-%}
-<div style="padding: 3rem 1rem 5rem; max-width: 1100px; margin: 0 auto">
-  <div class="section-header" style="margin-bottom: 2.5rem">
-    <span class="section-badge">📚 Learn Hub</span>
-    <h1 class="section-title">Complete Guide to Obesity</h1>
-    <p class="section-subtitle">
-      A formal and practical reference for understanding obesity, its types,
-      risk factors, treatment options, and prevention strategies for long-term
-      health.
-    </p>
-  </div>
+{% extends "base.html" %}
+{% block title %}Learn About Obesity{% endblock %}
 
-  <div
-    class="card"
-    style="
-      padding: 1.25rem;
-      margin-bottom: 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.7rem;
-    "
-  >
-    <a
-      href="#what"
-      class="btn btn-secondary"
-      style="padding: 0.4rem 0.9rem; font-size: 0.85rem"
-      >What Is Obesity</a
-    >
-    <a
-      href="#types"
-      class="btn btn-secondary"
-      style="padding: 0.4rem 0.9rem; font-size: 0.85rem"
-      >Types</a
-    >
-    <a
-      href="#causes"
-      class="btn btn-secondary"
-      style="padding: 0.4rem 0.9rem; font-size: 0.85rem"
-      >Causes</a
-    >
-    <a
-      href="#complications"
-      class="btn btn-secondary"
-      style="padding: 0.4rem 0.9rem; font-size: 0.85rem"
-      >Complications</a
-    >
-    <a
-      href="#management"
-      class="btn btn-secondary"
-      style="padding: 0.4rem 0.9rem; font-size: 0.85rem"
-      >How To Cure / Manage</a
-    >
-    <a
-      href="#prevention"
-      class="btn btn-secondary"
-      style="padding: 0.4rem 0.9rem; font-size: 0.85rem"
-      >Prevention</a
-    >
-    <a
-      href="#checklist"
-      class="btn btn-secondary"
-      style="padding: 0.4rem 0.9rem; font-size: 0.85rem"
-      >Daily Checklist</a
-    >
-  </div>
-
-  <section id="what" style="margin-bottom: 2rem">
-    <div class="card" style="padding: 1.8rem">
-      <h2 style="font-size: 1.5rem; margin-bottom: 0.9rem">What Is Obesity?</h2>
-      <p
-        style="
-          color: var(--text-secondary);
-          line-height: 1.8;
-          margin-bottom: 0.8rem;
-        "
-      >
-        Obesity is a chronic medical condition in which excess body fat
-        increases the risk of serious health problems. It is not only a cosmetic
-        concern; it is a metabolic and cardiovascular risk condition.
+{% block content %}
+<div style="background-color: var(--bg); color: var(--text-primary); padding: 4rem 1rem 6rem;">
+  <article style="max-width: 850px; margin: 0 auto; line-height: 2;">
+    
+    <!-- Formal Header -->
+    <header style="text-align: center; margin-bottom: 4rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border);">
+      <h1 style="font-size: 2.8rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 1.5rem;">An In-Depth Clinical Overview of Obesity</h1>
+      <p style="font-size: 1.25rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto; font-style: italic;">
+        A comprehensive examination of obesity's etiology, clinical classification, associated sequelae, and evidence-based paradigms for long-term health management.
       </p>
-      <div
-        style="
-          background: var(--bg);
-          border: 1px solid var(--border);
-          border-radius: 10px;
-          padding: 1rem;
-          text-align: center;
-        "
-      >
-        <strong>BMI = Weight (kg) / Height (m)^2</strong>
-      </div>
-      <p
-        style="
-          color: var(--text-secondary);
-          line-height: 1.8;
-          margin-top: 0.8rem;
-        "
-      >
-        BMI is a screening tool. Clinical decisions should also consider waist
-        circumference, body composition, blood markers, family history, and
-        lifestyle.
-      </p>
-    </div>
-  </section>
+    </header>
 
-  <section id="types" style="margin-bottom: 2rem">
-    <div class="card" style="padding: 1.8rem">
-      <h2 style="font-size: 1.5rem; margin-bottom: 0.9rem">
-        Types of Obesity (Clinical Classes)
-      </h2>
-      <div style="overflow-x: auto">
-        <table
-          style="width: 100%; border-collapse: collapse; font-size: 0.92rem"
-        >
+    <!-- Definition Section -->
+    <section style="margin-bottom: 4rem;">
+      <h2 style="font-size: 1.8rem; border-left: 4px solid var(--accent); padding-left: 1rem; margin-bottom: 1.5rem;">Understanding the Epidemic</h2>
+      <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-indent: 2rem;">
+        <span style="font-size: 2.8rem; float: left; line-height: 0.8; margin-right: 0.5rem; color: var(--text-primary); font-weight: bold;">O</span>besity is increasingly recognized not merely as a consequence of lifestyle choices, but as a complex, multifactorial chronic disease. Characterized by an excessive or abnormal accumulation of body fat, it presents significant risks to an individual's metabolic and cardiovascular health. It is a condition that pervades global healthcare systems, fundamentally altering the trajectory of public health in the 21st century. The World Health Organization defines the condition fundamentally using the Body Mass Index (BMI), an accessible clinical calculation achieved by dividing an individual's weight in kilograms by the square of their height in meters. 
+      </p>
+      <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+        While BMI provides a universally scalable metric for population screening, it remains an imperfect tool. It inherently fails to distinguish between visceral fat, subcutaneous fat, and lean muscle mass. Therefore, modern clinical diagnostics increasingly emphasize corresponding indicators such as waist circumference, body fat percentage, endocrine profiling, and profound familial medical histories to establish an accurate assessment of an individual's metabolic health. 
+      </p>
+      
+      <blockquote style="margin: 2rem 0; padding: 1.5rem 2rem; background-color: var(--surface-1); border-left: 4px solid var(--text-primary); font-size: 1.2rem; font-style: italic; color: var(--text-muted);">
+        "Obesity transcends aesthetic concerns; it is an intricate interplay of genetic predispositions, neuroendocrine disruptions, and obesogenic environments that fundamentally re-engineer human physiology."
+      </blockquote>
+    </section>
+
+    <!-- Clinical Classification -->
+    <section style="margin-bottom: 4rem;">
+      <h2 style="font-size: 1.8rem; border-left: 4px solid var(--accent); padding-left: 1rem; margin-bottom: 1.5rem;">Clinical Classifications and Risk</h2>
+      <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2rem;">
+        To effectively address the scale of obesity, healthcare professionals universally rely on structured categorizations based on BMI. These ranges represent clinical thresholds correlating to an escalating probability of mortality and morbidity. According to established global medical guidance, standard adult classifications generally fall into specific strata, dictating the intensity of necessary medical intervention.
+      </p>
+      
+      <!-- Minimalist Formal Table -->
+      <div style="overflow-x: auto; margin-bottom: 2rem; background-color: var(--surface-1); padding: 1.5rem; border-radius: 8px;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
           <thead>
-            <tr style="background: var(--bg); text-align: left">
-              <th
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Category
-              </th>
-              <th
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                BMI Range
-              </th>
-              <th
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Risk Level
-              </th>
-              <th
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Priority Action
-              </th>
+            <tr style="border-bottom: 2px solid var(--text-primary);">
+              <th style="padding: 1rem 0; font-weight: 700;">Diagnostic Classification</th>
+              <th style="padding: 1rem 0; font-weight: 700;">BMI Range (kg/m²)</th>
+              <th style="padding: 1rem 0; font-weight: 700;">Associated Health Risk</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Insufficient Weight
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                &lt; 18.5
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Low BMI risk
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Nutritional improvement
-              </td>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 1rem 0;">Normal Weight</td>
+              <td style="padding: 1rem 0; color: var(--text-muted);">18.5 – 24.9</td>
+              <td style="padding: 1rem 0; color: #16a34a; font-weight: 600;">Baseline / Minimal</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 1rem 0;">Overweight (Pre-obesity)</td>
+              <td style="padding: 1rem 0; color: var(--text-muted);">25.0 – 29.9</td>
+              <td style="padding: 1rem 0; color: #ca8a04; font-weight: 600;">Elevated</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 1rem 0;">Class I Obesity</td>
+              <td style="padding: 1rem 0; color: var(--text-muted);">30.0 – 34.9</td>
+              <td style="padding: 1rem 0; color: #dc2626; font-weight: 600;">High</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 1rem 0;">Class II Obesity</td>
+              <td style="padding: 1rem 0; color: var(--text-muted);">35.0 – 39.9</td>
+              <td style="padding: 1rem 0; color: #dc2626; font-weight: 600;">Very High</td>
             </tr>
             <tr>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Normal Weight
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                18.5 to 24.9
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Baseline
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Maintain habits
-              </td>
-            </tr>
-            <tr>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Overweight Level I
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                25.0 to 27.4
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Mild
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Structured diet + cardio
-              </td>
-            </tr>
-            <tr>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Overweight Level II
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                27.5 to 29.9
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Moderate
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Clinical follow-up advised
-              </td>
-            </tr>
-            <tr>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Obesity Type I
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                30.0 to 34.9
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                High
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Comprehensive plan
-              </td>
-            </tr>
-            <tr>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Obesity Type II
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                35.0 to 39.9
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Very High
-              </td>
-              <td
-                style="padding: 0.7rem; border-bottom: 1px solid var(--border)"
-              >
-                Medical supervision
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 0.7rem">Obesity Type III</td>
-              <td style="padding: 0.7rem">40.0+</td>
-              <td style="padding: 0.7rem">Severe</td>
-              <td style="padding: 0.7rem">Urgent specialist care</td>
+              <td style="padding: 1rem 0;">Class III (Severe) Obesity</td>
+              <td style="padding: 1rem 0; color: var(--text-muted);">≥ 40.0</td>
+              <td style="padding: 1rem 0; color: #991b1b; font-weight: 600;">Extremely High / Urgent</td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div>
-  </section>
-
-  <section id="causes" style="margin-bottom: 2rem">
-    <div class="card" style="padding: 1.8rem">
-      <h2 style="font-size: 1.5rem; margin-bottom: 0.9rem">
-        Main Causes and Risk Factors
-      </h2>
-      <div
-        style="
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-          gap: 1rem;
-        "
-      >
-        <div
-          style="
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem;
-          "
-        >
-          <strong>Diet</strong>
-          <p style="color: var(--text-secondary); margin-top: 0.4rem">
-            Frequent ultra-processed foods, sugary drinks, and oversized
-            portions.
-          </p>
-        </div>
-        <div
-          style="
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem;
-          "
-        >
-          <strong>Inactivity</strong>
-          <p style="color: var(--text-secondary); margin-top: 0.4rem">
-            Low daily movement, prolonged sitting, and irregular exercise.
-          </p>
-        </div>
-        <div
-          style="
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem;
-          "
-        >
-          <strong>Genetics</strong>
-          <p style="color: var(--text-secondary); margin-top: 0.4rem">
-            Family history and hormone-regulation differences can increase risk.
-          </p>
-        </div>
-        <div
-          style="
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem;
-          "
-        >
-          <strong>Sleep & Stress</strong>
-          <p style="color: var(--text-secondary); margin-top: 0.4rem">
-            Sleep deprivation and chronic stress alter appetite control and
-            behavior.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="complications" style="margin-bottom: 2rem">
-    <div class="card" style="padding: 1.8rem">
-      <h2 style="font-size: 1.5rem; margin-bottom: 0.9rem">
-        Complications You Should Know
-      </h2>
-      <ul
-        style="
-          color: var(--text-secondary);
-          line-height: 1.9;
-          padding-left: 1.4rem;
-          margin: 0;
-        "
-      >
-        <li>Type 2 diabetes, insulin resistance, and fatty liver disease</li>
-        <li>High blood pressure, heart disease, and stroke risk</li>
-        <li>Sleep apnea, joint pain, and reduced physical capacity</li>
-        <li>Hormonal disorders and fertility problems</li>
-        <li>Anxiety, low self-esteem, and reduced quality of life</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="management" style="margin-bottom: 2rem">
-    <div class="card" style="padding: 1.8rem">
-      <h2 style="font-size: 1.5rem; margin-bottom: 0.9rem">
-        How To Cure / Manage Obesity (Evidence-Based)
-      </h2>
-      <p
-        style="
-          color: var(--text-secondary);
-          line-height: 1.8;
-          margin-bottom: 0.9rem;
-        "
-      >
-        In clinical practice, obesity is usually managed, not "instantly cured."
-        Sustainable progress comes from consistent nutrition, exercise, sleep,
-        and medical guidance.
+      <p style="font-size: 1.1rem; color: var(--text-secondary);">
+        Our internal machine learning ensemble actively predicts these specific classifications based on deeply contextualized lifestyle features, extending its precision far beyond a simple unweighted height and weight calculation. By incorporating metabolic habits, dietary consumption frequencies, and hereditary vectors, the model produces a robust diagnostic profile.
       </p>
-      <div
-        style="
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-          gap: 1rem;
-        "
-      >
-        <div
-          style="
-            background: var(--bg);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            padding: 1rem;
-          "
-        >
-          <strong>Nutrition Therapy</strong>
-          <p style="color: var(--text-secondary); margin-top: 0.4rem">
-            Create a calorie deficit with balanced protein, fiber, and
-            hydration.
-          </p>
+    </section>
+
+    <!-- Etiology and Causes -->
+    <section style="margin-bottom: 4rem;">
+      <h2 style="font-size: 1.8rem; border-left: 4px solid var(--accent); padding-left: 1rem; margin-bottom: 1.5rem;">The Etiology of Adiposity</h2>
+      <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+        The genesis of obesity is almost never attributable to a singular cause. It arises from an intricate nexus of genetic predisposition and environmental triggers. Scientifically, weight gain occurs due to a sustained positive energy balance, indicating a state where caloric intake supersedes energy expenditure over prolonged periods. However, the regulatory mechanisms managing human appetite, satiety, and energy usage are continuously besieged by modern lifestyle factors.
+      </p>
+      
+      <!-- Formal Nested Layout structure instead of basic cards -->
+      <div style="display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem;">
+        
+        <div style="display: flex; gap: 1.5rem; align-items: stretch;">
+          <div style="flex-shrink: 0; width: 4px; background-color: var(--text-muted); border-radius: 2px;"></div>
+          <div style="padding: 0.5rem 0;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">1. Dietary and Behavioral Paradigms</h3>
+            <p style="font-size: 1.05rem; color: var(--text-secondary); margin: 0;">
+              The ubiquity of hyper-palatable, highly processed foods fundamentally disrupts intrinsic satiety signals. Modern diets replete with refined carbohydrates, hidden sugars, and industrially manufactured trans fats promote rapid assimilation and massive spikes in insulin—an incredibly potent hormone responsible for localized and widespread lipid storage and an instigator of chronic metabolic resistance.
+            </p>
+          </div>
         </div>
-        <div
-          style="
-            background: var(--bg);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            padding: 1rem;
-          "
-        >
-          <strong>Exercise Plan</strong>
-          <p style="color: var(--text-secondary); margin-top: 0.4rem">
-            Combine cardio and strength training; progress gradually and safely.
-          </p>
+
+        <div style="display: flex; gap: 1.5rem; align-items: stretch;">
+          <div style="flex-shrink: 0; width: 4px; background-color: var(--text-muted); border-radius: 2px;"></div>
+          <div style="padding: 0.5rem 0;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">2. Genetic Trajectories and Hormonal Influence</h3>
+            <p style="font-size: 1.05rem; color: var(--text-secondary); margin: 0;">
+              Inherited genetic traits profoundly shape human thermodynamics. Research reveals that genetics can articulate the efficacy of metabolic conversion and how adipose tissues respond to hormonal stimuli—such as ghrelin (the hunger hormone) and leptin. Furthermore, systemic factors like hypothyroidism, Cushing’s syndrome, or Polycystic Ovary Syndrome (PCOS) actively precipitate weight gain entirely independently of an individual's voluntary diet.
+            </p>
+          </div>
         </div>
-        <div
-          style="
-            background: var(--bg);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            padding: 1rem;
-          "
-        >
-          <strong>Behavior Change</strong>
-          <p style="color: var(--text-secondary); margin-top: 0.4rem">
-            Meal timing, stress control, sleep hygiene, and habit tracking.
-          </p>
-        </div>
-        <div
-          style="
-            background: var(--bg);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            padding: 1rem;
-          "
-        >
-          <strong>Medical Care</strong>
-          <p style="color: var(--text-secondary); margin-top: 0.4rem">
-            For severe obesity, seek physician-guided medications or specialist
-            care.
-          </p>
+
+        <div style="display: flex; gap: 1.5rem; align-items: stretch;">
+          <div style="flex-shrink: 0; width: 4px; background-color: var(--text-muted); border-radius: 2px;"></div>
+          <div style="padding: 0.5rem 0;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">3. Environmental Sedentism</h3>
+            <p style="font-size: 1.05rem; color: var(--text-secondary); margin: 0;">
+              Modern technological conveniences consistently engineer movement out of the daily routine. The drastic decline in Occupational Physical Activity (OPA), synchronized with increased screen time and motorized transit, generates environments where maintaining baseline skeletal-muscular exertion requires dedicated, conscious behavioral intervention.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="prevention" style="margin-bottom: 2rem">
-    <div class="card" style="padding: 1.8rem">
-      <h2 style="font-size: 1.5rem; margin-bottom: 0.9rem">
-        Prevention Strategy
-      </h2>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
-        <ul
-          style="
-            color: var(--text-secondary);
-            line-height: 1.9;
-            padding-left: 1.4rem;
-            margin: 0;
-          "
-        >
-          <li>Prefer whole foods over packaged foods</li>
-          <li>Control portion size and avoid sugary drinks</li>
-          <li>Target 150 to 300 minutes activity per week</li>
-          <li>Sleep at least 7 hours consistently</li>
-        </ul>
-        <ul
-          style="
-            color: var(--text-secondary);
-            line-height: 1.9;
-            padding-left: 1.4rem;
-            margin: 0;
-          "
-        >
-          <li>Track weight, waist, and food intake weekly</li>
-          <li>Reduce stress with breathing or mindfulness</li>
-          <li>Build family support and healthy routines</li>
-          <li>Consult professionals early if weight rises steadily</li>
+    <!-- Management and Evidence Based Cures -->
+    <section style="margin-bottom: 4rem;">
+      <h2 style="font-size: 1.8rem; border-left: 4px solid var(--accent); padding-left: 1rem; margin-bottom: 1.5rem;">Evidence-Based Management and Prevention</h2>
+      <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Addressing obesity scientifically requires dispensing with the concept of rapid "cures" in favor of sustainable, multi-disciplinary management. Long-term amelioration inherently demands a structural shift traversing dietetics, psychology, pharmacology, and potentially surgery, scaled appropriately to a patient's BMI and associated comorbidities.
+      </p>
+      <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+        The foundational tier of any intervention mandates rigorous <strong>Nutrition Therapy and Behavioral Modification.</strong> Eliciting a manageable caloric deficit while drastically improving the micronutrient profile ensures sustained lipid utilization without sacrificing lean muscle mass. This is supplemented aggressively by an exercise regimen pairing cardiovascular endurance work with vital somatic resistance training.
+      </p>
+      <p style="font-size: 1.1rem; color: var(--text-secondary);">
+        In advanced classes of obesity (Class II and III), physicians frequently introduce <strong>Pharmacotherapy.</strong> Revolutionary GLP-1 receptor agonists dramatically suppress appetite by slowing gastric emptying and regulating insulin. In the most severe instances, invasive but highly efficacious <strong>Bariatric Surgery</strong> (like Roux-en-Y gastric bypasses) fundamentally alters the digestive tract physiology, securing profound, long-term remission of both weight and comorbid diseases like Type 2 Diabetes.
+      </p>
+      
+      <!-- List Formal styling -->
+      <div style="margin-top: 3rem; background-color: var(--bg); padding: 2.5rem; border: 1px solid var(--border); border-top: 4px solid var(--text-primary); border-radius: 8px;">
+        <h3 style="font-size: 1.4rem; margin-bottom: 1.5rem;">Daily Preventative Directives</h3>
+        <ul style="list-style-type: square; padding-left: 1.5rem; font-size: 1.05rem; color: var(--text-secondary); line-height: 2; margin: 0;">
+          <li>Prioritize the consumption of unprocessed, whole foods inherently wealthy in dietary fiber and essential micronutrients.</li>
+          <li>Enforce deliberate hydration strategies, targeting upwards of 2.5 to 3 liters of water independently of meal consumption.</li>
+          <li>Commit to obtaining 7 to 8 hours of uninterrupted rest to regulate the circadian rhythm and mitigate cortisol spikes associated with metabolic suppression.</li>
+          <li>Incorporate a minimum of 150 minutes of moderate-to-vigorous aerobic activity weekly, synchronized with bi-weekly resistance-based mechanical loading.</li>
+          <li>Audit behavioral triggers surrounding food, aggressively seeking mindfulness practices to disconnect emotional stressors from caloric intake.</li>
         </ul>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="checklist" style="margin-bottom: 2rem">
-    <div class="card" style="padding: 1.8rem">
-      <h2 style="font-size: 1.5rem; margin-bottom: 0.9rem">
-        Daily Practical Checklist
-      </h2>
-      <div
-        style="
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-          gap: 0.8rem;
-        "
-      >
-        <div
-          style="
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            padding: 0.8rem;
-          "
-        >
-          [ ] 8 to 10 glasses of water
-        </div>
-        <div
-          style="
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            padding: 0.8rem;
-          "
-        >
-          [ ] 30 to 45 min movement
-        </div>
-        <div
-          style="
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            padding: 0.8rem;
-          "
-        >
-          [ ] 1 protein-rich meal each major meal
-        </div>
-        <div
-          style="
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            padding: 0.8rem;
-          "
-        >
-          [ ] No late-night high-calorie snacks
-        </div>
-        <div
-          style="
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            padding: 0.8rem;
-          "
-        >
-          [ ] 7+ hours quality sleep
-        </div>
-        <div
-          style="
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            padding: 0.8rem;
-          "
-        >
-          [ ] 5 minutes stress reset practice
-        </div>
-      </div>
-      <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.86rem">
-        Note: This page is educational. For diagnosis and treatment decisions,
-        consult a qualified healthcare professional.
+    <!-- Standard Disclaimer -->
+    <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px dashed var(--border); text-align: center;">
+      <p style="font-size: 0.9rem; color: var(--text-muted);">
+        Disclaimer: The information encapsulated within this document is intended strictly for supplementary educational purposes. It does not replace, nor strictly constitute, qualified professional medical diagnosis or clinical treatment.
       </p>
-    </div>
-  </section>
+    </footer>
+
+  </article>
 </div>
 {% endblock %}

@@ -320,11 +320,6 @@ def download_report():
         return f"Error generating report: {e}", 500
 
 
-@app.route('/educate')
-def educate():
-    """Education page — facts about obesity, causes, consequences, prevention."""
-    return render_template('educate.html')
-
 
 @app.route('/learn')
 def learn():
