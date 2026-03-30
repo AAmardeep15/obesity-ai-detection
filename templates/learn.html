@@ -1,150 +1,396 @@
 {% extends "base.html" %}
 {% block title %}Learn About Obesity{% endblock %}
 
+{% block head %}
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --accent-light: #818cf8;
+        --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+
+    .article-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        font-family: 'Inter', -apple-system, sans-serif;
+        line-height: 1.7;
+    }
+
+    .hero-section {
+        text-align: center;
+        padding: 5rem 2rem;
+        background: var(--primary-gradient);
+        border-radius: 24px;
+        color: white;
+        margin-bottom: 4rem;
+        box-shadow: var(--card-shadow);
+    }
+
+    .hero-section h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        letter-spacing: -0.05em;
+    }
+
+    .hero-section p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .content-section {
+        margin-bottom: 5rem;
+        padding: 2rem;
+        background: var(--glass-bg);
+        border-radius: 20px;
+        border: 1px solid var(--border);
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--text-primary);
+    }
+
+    .section-title i { color: var(--accent); }
+
+    .highlight-card {
+        background: var(--surface-1);
+        padding: 1.5rem;
+        border-radius: 16px;
+        border-left: 4px solid var(--accent);
+        margin-bottom: 1.5rem;
+    }
+
+    /* BMI Classification Table */
+    .bmi-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+        margin: 1.5rem 0;
+    }
+
+    .bmi-table th {
+        padding: 1rem;
+        text-align: left;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+    }
+
+    .bmi-table td {
+        padding: 1.2rem 1rem;
+        background: var(--surface-2);
+    }
+
+    .bmi-table tr td:first-child { border-radius: 12px 0 0 12px; font-weight: 600; }
+    .bmi-table tr td:last-child { border-radius: 0 12px 12px 0; }
+
+    .risk-low { color: #10b981; }
+    .risk-med { color: #f59e0b; }
+    .risk-high { color: #ef4444; }
+    .risk-extreme { color: #991b1b; }
+
+    /* Case Study Box */
+    .case-box {
+        background: linear-gradient(to bottom right, var(--surface-1), var(--surface-2));
+        border: 2px dashed var(--border);
+        border-radius: 20px;
+        padding: 2rem;
+        position: relative;
+    }
+
+    .case-box::before {
+        content: 'CASE STUDY';
+        position: absolute;
+        top: -12px;
+        right: 20px;
+        background: var(--accent);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 800;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    .stat-card {
+        background: var(--surface-1);
+        padding: 2rem;
+        border-radius: 20px;
+        text-align: center;
+        border: 1px solid var(--border);
+        transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover { transform: translateY(-5px); }
+
+    .stat-value { font-size: 3rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem; }
+
+    /* Prevention Age Groups */
+    .age-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .age-grid { grid-template-columns: 1fr; }
+        .hero-section h1 { font-size: 2.5rem; }
+    }
+
+    .age-card {
+        background: var(--surface-1);
+        padding: 1.5rem;
+        border-radius: 16px;
+        text-align: center;
+    }
+
+    .age-card h4 { margin-bottom: 1rem; color: var(--accent); }
+
+    .footer-note {
+        text-align: center;
+        padding: 3rem 0;
+        border-top: 1px solid var(--border);
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div style="background-color: var(--bg); color: var(--text-primary); padding: 4rem 1rem 6rem;">
-  <article style="max-width: 900px; margin: 0 auto; line-height: 2.2; font-family: 'Inter', system-ui, -apple-system, sans-serif;">
+<div class="article-container">
     
-    <!-- Formal Academic Header -->
-    <header style="text-align: center; margin-bottom: 5rem; padding-bottom: 3rem; border-bottom: 2px double var(--border);">
-      <h1 style="font-size: 3.2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1.5rem; line-height: 1.1;">Academic Synthesis: The Clinical Dimensions of Obesity</h1>
-      <p style="font-size: 1.3rem; color: var(--text-secondary); max-width: 750px; margin: 0 auto; font-style: italic; font-weight: 300;">
-        A comprehensive peer-reviewed overview focusing on pathophysiological etiologies, systemic health consequences, and multifaceted evidence-based therapeutic management.
-      </p>
+    <!-- Hero Header -->
+    <header class="hero-section">
+        <i data-lucide="book-open" style="width: 48px; height: 48px; margin-bottom: 1.5rem;"></i>
+        <h1>The Global Obesity Epidemic</h1>
+        <p>A multi-dimensional approach to understanding the biological, psychological, and clinical complexities of obesity in the modern era.</p>
     </header>
 
-    <!-- SECTION I: FOUNDATIONAL DEFINITION -->
-    <section style="margin-bottom: 5rem;">
-      <h2 style="font-size: 2rem; border-bottom: 1px solid var(--text-primary); display: inline-block; padding-bottom: 0.5rem; margin-bottom: 2rem; letter-spacing: -0.01em;">I. The Foundational Definition</h2>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2rem; text-align: justify;">
-        <span style="font-size: 3.5rem; float: left; line-height: 0.8; margin-right: 0.8rem; color: var(--text-primary); font-weight: 900; font-family: serif;">O</span>besity is fundamentally characterized as a chronic, relapsing, multifactorial disease rather than a static state of body weight. It involves an excessive or abnormal accumulation of adipose tissue that reaches a threshold where it significantly impairs physiological health and psychological well-being. Unlike mere "overweight" status, clinical obesity represents a state of systemic inflammation where fat stores no longer function merely as energy reserves but as active endocrine organs, secreting cytokines and hormones that disrupt baseline metabolic homeostasis. 
-      </p>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2rem; text-align: justify;">
-        The primary diagnostic instrument utilized globally remains the Body Mass Index (BMI). Calculated as weight in kilograms divided by height in meters squared (kg/m²), this metric provides a scalable, standardized screening tool. However, modern clinical practice emphasizes that BMI is a proxy measure; it does not explicitly differentiate between subcutaneous fat, lean muscle mass, or high-risk visceral fat—the metabolically active tissue surrounding internal organs. Thus, an authoritative diagnosis typically incorporates secondary metrics such as waist-to-hip ratios and comprehensive lipid panels to ascertain an individual's true metabolic trajectory.
-      </p>
+    <!-- 1. What is Obesity? -->
+    <section class="content-section">
+        <h2 class="section-title"><i data-lucide="info"></i> Defining Obesity</h2>
+        <p>Obesity is a <strong>chronic disease</strong> characterized by an abnormal or excessive accumulation of body fat that increases health risks. It is not merely a lifestyle choice but a <strong>relapsing multifactorial condition</strong> involving genetic, environmental, and behavioral components.</p>
+        
+        <div class="highlight-card">
+            <p><strong>Primary Diagnostic Tool:</strong> The <strong>Body Mass Index (BMI)</strong> is calculated by dividing an individual's weight (kg) by the square of their height (m²). It serves as a rapid screening metric for population health.</p>
+        </div>
     </section>
 
-    <!-- SECTION II: CLINICAL CLASSIFICATION -->
-    <section style="margin-bottom: 5rem;">
-      <h3 style="font-size: 1.6rem; color: var(--text-primary); margin-bottom: 1.5rem; font-weight: 700;">II. Clinical Classification & Risk Assessment</h3>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2rem; text-align: justify;">
-        To standardize medical communication and intervention protocols, obesity is stratifed into distinct classes. These tiers are not arbitrary; they reflect significant statistical shifts in the probability of developing co-morbidities such as cardiovascular disease or endocrine dysfunction. Our integrated machine learning models utilize these specific WHO-recognized benchmarks to provide predictive analysis for project users.
-      </p>
-      
-      <div style="background-color: var(--surface-1); padding: 2rem; border-radius: 12px; margin-bottom: 2.5rem; border: 1px solid var(--border);">
-        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 1rem;">
-          <thead>
-            <tr style="border-bottom: 2px solid var(--text-primary);">
-              <th style="padding: 1.2rem 0; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Classification Tier</th>
-              <th style="padding: 1.2rem 0; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">BMI Quotient</th>
-              <th style="padding: 1.2rem 0; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Morbidity Risk</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="border-bottom: 1px solid var(--border);">
-              <td style="padding: 1.2rem 0; font-weight: 600;">Normal Physiological Weight</td>
-              <td style="padding: 1.2rem 0; color: var(--text-muted);">18.5 – 24.9</td>
-              <td style="padding: 1.2rem 0; color: #16a34a;">Standard / Controlled</td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--border);">
-              <td style="padding: 1.2rem 0; font-weight: 600;">Overweight (Pre-Obesity)</td>
-              <td style="padding: 1.2rem 0; color: var(--text-muted);">25.0 – 29.9</td>
-              <td style="padding: 1.2rem 0; color: #ca8a04;">Elevated Mortality Risk</td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--border);">
-              <td style="padding: 1.2rem 0; font-weight: 600;">Clinical Obesity (Class I)</td>
-              <td style="padding: 1.2rem 0; color: var(--text-muted);">30.0 – 34.9</td>
-              <td style="padding: 1.2rem 0; color: #dc2626;">High Physiological Strain</td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--border);">
-              <td style="padding: 1.2rem 0; font-weight: 600;">Severe Obesity (Class II)</td>
-              <td style="padding: 1.2rem 0; color: var(--text-muted);">35.0 – 39.9</td>
-              <td style="padding: 1.2rem 0; color: #dc2626;">Very High Mortality Risk</td>
-            </tr>
-            <tr>
-              <td style="padding: 1.2rem 0; font-weight: 600;">Morbid Obesity (Class III)</td>
-              <td style="padding: 1.2rem 0; color: var(--text-muted);">≥ 40.0</td>
-              <td style="padding: 1.2rem 0; color: #991b1b; text-decoration: underline;">Critical Medical Intervention</td>
-            </tr>
-          </tbody>
+    <!-- 2. Classification & BMI -->
+    <section class="content-section">
+        <h2 class="section-title"><i data-lucide="activity"></i> Clinical Classification</h2>
+        <p>The WHO categorizes obesity into tiers to help medical professionals prioritize intervention levels:</p>
+        
+        <table class="bmi-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>BMI Range</th>
+                    <th>Health Risk Level</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Normal Weight</td>
+                    <td>18.5 – 24.9</td>
+                    <td class="risk-low">Minimal Risk</td>
+                </tr>
+                <tr>
+                    <td>Overweight</td>
+                    <td>25.0 – 29.9</td>
+                    <td class="risk-med">High Risk</td>
+                </tr>
+                <tr>
+                    <td>Obesity Class I</td>
+                    <td>30.0 – 34.9</td>
+                    <td class="risk-high">Very High Risk</td>
+                </tr>
+                <tr>
+                    <td>Obesity Class II</td>
+                    <td>35.0 – 39.9</td>
+                    <td class="risk-high">Extreme Risk</td>
+                </tr>
+                <tr>
+                    <td>Obesity Class III</td>
+                    <td>≥ 40.0</td>
+                    <td class="risk-extreme">Critical Risk</td>
+                </tr>
+            </tbody>
         </table>
-      </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); font-style: italic;">*While BMI is effective for general screening, clinical diagnosis should also consider waist circumference and metabolic blood markers.*</p>
     </section>
 
-    <!-- SECTION III: ETIOLOGY -->
-    <section style="margin-bottom: 5rem;">
-      <h3 style="font-size: 1.6rem; color: var(--text-primary); margin-bottom: 1.5rem; font-weight: 700;">III. The Multifactorial Etiology</h3>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2rem; text-align: justify;">
-        The development of obesity is rarely the result of singular behavioral failings; it is an outcome of an intricate synergy between genetic susceptibility, neurobiological dysfunction, and an obesogenic environment. While the fundamental equation of weight gain is a positive energy balance—consuming more kilocalories than the body expends—the internal mechanisms regulating this balance are highly complex.
-      </p>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2rem; text-align: justify;">
-        Genetically, an individual's inheritance dictates nearly 40% to 70% of their body weight variability. Genetic markers influence metabolic efficiency, the distribution of adipose tissue, and the sensitivity of central satiety receptors. Hormonally, disruptions in the secretion and reception of <strong>Leptin</strong> (the satiety signaling hormone) and <strong>Ghrelin</strong> (the hunger-stimulating peptide) create a "defended fat mass" where the body actively resists weight loss. Furthermore, environmental factors—such as the availability of hyper-palatable ultra-processed foods and increasingly sedentary work environments—exploit these biological vulnerabilities, leading to the sustained expansion of fat stores.
-      </p>
-    </section>
-
-    <!-- SECTION IV: CONSEQUENCES (NEW) -->
-    <section style="margin-bottom: 5rem; padding: 2.5rem; border: 1px solid rgba(220, 38, 38, 0.2); background-color: rgba(220, 38, 38, 0.02); border-radius: 12px;">
-      <h3 style="font-size: 1.6rem; color: #dc2626; margin-bottom: 1.5rem; font-weight: 700;">IV. Systemic Health Consequences</h3>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: justify;">
-        The clinical impact of obesity extends to virtually every organ system in the human body. Chronically elevated adiposity acts as a driver for over 200 physical and mental health conditions. Specifically, excess weight exacerbates <strong>Systemic Insulin Resistance</strong>, which is the primary precursor to Type 2 Diabetes. The accumulation of visceral fat promotes the release of pro-inflammatory cytokines, leading to Atherosclerosis, Chronic Hypertension, and an significantly increased incidence of Myocardial Infarction (heart attack) and Stroke.
-      </p>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: justify;">
-        Beyond metabolic decay, obesity imposes direct mechanical stress on the skeletal system, leading to degenerative Osteoarthritis in weight-bearing joints. It is also a primary causal factor for Obstructive Sleep Apnea—a dangerous condition where breathing intermittently ceases during sleep—and is definitively linked to at least 13 types of cancer, including breast, colorectal, and pancreatic malignancies. The psychological toll is equally severe, with chronic weight management struggles often correlating with higher rates of Major Depressive Disorder and Social Anxiety due to systemic stigmatization.
-      </p>
-    </section>
-
-    <!-- SECTION V: MANAGEMENT & CURE -->
-    <section style="margin-bottom: 5rem;">
-      <h3 style="font-size: 1.6rem; color: var(--text-primary); margin-bottom: 1.5rem; font-weight: 700;">V. Pathways to Recovery: Management & Therapeutic Intervention</h3>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: justify;">
-        While "curing" obesity is a journey of sustainable management rather than a quick surgical fix, multiple evidence-based pathways exist for long-term weight reduction. The primary intervention tier is <strong>Intensive Behavioral and Nutritional Therapy</strong>. This does not merely involve calorie counting but high-quality dietary restructuring—transitioning to whole-food, high-fiber, and lean-protein diets that stabilize insulin levels. Clinical evidence suggests that even a modest 5% to 10% reduction in total body weight can profoundly mitigate cardiovascular risk and potentially reverse Type 2 Diabetes symptoms.
-      </p>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: justify;">
-        For individuals whose BMI has reached critical thresholds (Class II or III), pharmacological support has become highly standardized. Medications such as GLP-1 receptor agonists (e.g., Semaglutide) have revolutionized the field by mimicking natural satiety hormones to suppress appetite at a neurobiological level. For the most severe cases where lifestyle and medication fail, **Bariatric Surgical Interventions** offer a potent solution. By surgically altering the digestive tract, these procedures limit caloric absorption and fundamentally re-engineer the body's hormonal response to food, often leading to a 50% loss of excess weight and complete remission of metabolic diseases.
-      </p>
-    </section>
-
-    <!-- SECTION VI: PREVENTION -->
-    <section style="margin-bottom: 5rem; padding: 2.5rem; border: 1px solid var(--accent); background-color: var(--surface-1); border-radius: 12px;">
-      <h3 style="font-size: 1.6rem; color: var(--accent); margin-bottom: 1.5rem; font-weight: 700;">VI. Strategic Prevention of Metabolic Decline</h3>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: justify;">
-        Preventing the onset of obesity is significantly more efficacious than treating it once established. A strategic prevention framework focuses on maintaining <strong>Metabolic Integrity</strong> through consistent lifestyle habits. This involves the deliberate exclusion of refined sugars and sugar-sweetened beverages—primary drivers of adipose expansion—and the promotion of a high-satiety nutritional profile.
-      </p>
-      <p style="font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: justify;">
-        Physical activity serves as the second pillar of prevention. Maintaining a baseline of 150 to 300 minutes of moderate aerobic activity per week is essential for sustaining a healthy metabolic rate. Crucially, <strong>Resistance Training</strong> (strength exercises) preserves lean muscle mass, which in turn elevates the body's Basal Metabolic Rate (BMR), making body weight maintenance more autonomous. Furthermore, sleep hygiene and stress management are vital; sleep deprivation increases Ghrelin levels, while chronic stress raises Cortisol—both of which actively promote fat storage in the abdominal region.
-      </p>
-    </section>
-
-    <!-- FORMAL DIRECTIVES LIST -->
-    <section style="margin-bottom: 4rem; padding-top: 2rem; border-top: 1px solid var(--border);">
-      <h4 style="font-size: 1.3rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted);">Summary of Clinical Directives</h4>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
-        <div>
-          <h5 style="font-weight: 800; margin-bottom: 1rem;">Dietary Integrity</h5>
-          <ul style="color: var(--text-secondary); padding-left: 1.2rem; font-size: 1rem;">
-            <li style="margin-bottom: 0.8rem;">Prioritize high-fiber, low-glycemic index carbohydrates to regulate insulin peaks.</li>
-            <li style="margin-bottom: 0.8rem;">Maintain consistent hydration (2-3L/day) to support renal function and satiety.</li>
-            <li style="margin-bottom: 0.8rem;">Utilize 'Mindful Eating' techniques to reconnect with neurobiological satiety cues.</li>
-          </ul>
+    <!-- 3. Stats Section -->
+    <section class="content-section">
+        <h2 class="section-title"><i data-lucide="globe"></i> Statistics: Global & India</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">1.0B+</div>
+                <p><strong>Global Prevalence:</strong> More than 1 billion people worldwide are living with obesity as of 2024.</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">135M</div>
+                <p><strong>India Data:</strong> According to the ICMR, over 135 million Indians are currently living with obesity/overweight.</p>
+            </div>
         </div>
-        <div>
-          <h5 style="font-weight: 800; margin-bottom: 1rem;">Physiological Exertion</h5>
-          <ul style="color: var(--text-secondary); padding-left: 1.2rem; font-size: 1rem;">
-            <li style="margin-bottom: 0.8rem;">Combine aerobic cardiovascular training with bi-weekly mechanical resistance loads.</li>
-            <li style="margin-bottom: 0.8rem;">Optimize Circadian Rhythms by securing 7-9 hours of standard physiological rest.</li>
-            <li style="margin-bottom: 0.8rem;">Actively mitigate sedentary behaviors by utilizing standing or walking durations hourly.</li>
-          </ul>
+        <div class="highlight-card" style="margin-top: 2rem;">
+            <p><strong>Rising Trends:</strong> Child obesity rates in India have seen a sharp <strong>5% annual increase</strong> over the last decade due to urbanization and sedentary lifestyles.</p>
         </div>
-      </div>
     </section>
 
-    <!-- Formal Academic Footer -->
-    <footer style="margin-top: 5rem; padding-top: 3rem; border-top: 2px double var(--border); text-align: center;">
-      <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; max-width: 600px; margin: 0 auto;">
-        *All information provided is synthesized from global clinical standard guidelines (WHO, NIH). This document serves as a supplementary educational resource and should not supersede direct medical consultation for diagnosed pathological conditions.*
-      </p>
-    </footer>
+    <!-- 4. Symptoms & Complications -->
+    <section class="content-section">
+        <h2 class="section-title"><i data-lucide="alert-circle"></i> Symptoms & Clinical Complications</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div>
+                <h4>Common Symptoms</h4>
+                <ul style="padding-left: 1.2rem;">
+                    <li><strong>Breathlessness</strong> (Dyspnea) on minimal exertion.</li>
+                    <li>Increased <strong>fatigue</strong> and daytime sleepiness.</li>
+                    <li>Chronic <strong>joint and back pain</strong>.</li>
+                    <li>Excessive <strong>sweating</strong> and snoring.</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Chronic Complications</h4>
+                <ul style="padding-left: 1.2rem;">
+                    <li><strong>Type 2 Diabetes:</strong> 80% of cases are linked to excess weight.</li>
+                    <li><strong>Cardiovascular Disease:</strong> Elevated risk of hypertension and stroke.</li>
+                    <li><strong>Sleep Apnea:</strong> Interrupted breathing during sleep cycles.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-  </article>
+    <!-- 5. Causes (Etiology) -->
+    <section class="content-section">
+        <h2 class="section-title"><i data-lucide="search"></i> Causes of Obesity (Etiology)</h2>
+        <p>Obesity is rarely caused by a single factor. It is an imbalance of energy intake and expenditure fueled by:</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+            <div class="stat-card" style="padding: 1.5rem;">
+                <i data-lucide="utensils" style="color: var(--accent);"></i>
+                <h5>Dietary Habits</h5>
+                <p style="font-size: 0.85rem;">High intake of calorie-dense, ultra-processed foods.</p>
+            </div>
+            <div class="stat-card" style="padding: 1.5rem;">
+                <i data-lucide="dna" style="color: var(--accent);"></i>
+                <h5>Genetics</h5>
+                <p style="font-size: 0.85rem;">Family history can dictate 40-70% of metabolic variability.</p>
+            </div>
+            <div class="stat-card" style="padding: 1.5rem;">
+                <i data-lucide="moon" style="color: var(--accent);"></i>
+                <h5>Sleep & Stress</h5>
+                <p style="font-size: 0.85rem;">Hormonal spikes in Cortisol and Ghrelin increase fat storage.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Psychological Impact -->
+    <section class="content-section">
+        <h2 class="section-title"><i data-lucide="brain"></i> Psychological Impact</h2>
+        <p>The mental toll of obesity is often as heavy as the physical burden. Chronic weight issues frequently lead to:</p>
+        <ul style="padding-left: 1.5rem;">
+            <li><strong>Major Depressive Disorder:</strong> Linked to social isolation and stigma.</li>
+            <li><strong>Body Dysmorphia:</strong> Distorted self-image leading to low self-esteem.</li>
+            <li><strong>Binge Eating Disorder:</strong> A psychological cycle used to manage emotional stress.</li>
+        </ul>
+    </section>
+
+    <!-- 7. Case Study -->
+    <section class="content-section">
+        <h2 class="section-title"><i data-lucide="clipboard-list"></i> Clinical Case Study</h2>
+        <div class="case-box">
+            <h4 style="margin-bottom: 1rem;">Patient Profiling: Sanjay, 42 years</h4>
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+                <div style="background: var(--surface-2); padding: 1rem; border-radius: 12px; font-size: 0.9rem;">
+                    <strong>Weight:</strong> 112 kg<br>
+                    <strong>Height:</strong> 172 cm<br>
+                    <strong>BMI:</strong> 37.9 (Class II)<br>
+                    <strong>History:</strong> High sedentary desk job.
+                </div>
+                <div>
+                    <p><strong>Primary Complaint:</strong> Persistent knee pain and severe breathlessness after climbing one flight of stairs.</p>
+                    <p><strong>Diagnosis:</strong> Class II Obesity with early-stage hypertension and metabolic syndrome.</p>
+                    <p><strong>Clinical Approach:</strong> Personalized low-glycemic diet, 30-min low-impact walking daily, and behavioral cognitive therapy for stress-eating.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Prevention by Age -->
+    <section class="content-section">
+        <h2 class="section-title"><i data-lucide="shield-check"></i> Prevention Strategies by Age Group</h2>
+        <div class="age-grid">
+            <div class="age-card">
+                <h4>Children</h4>
+                <p style="font-size: 0.9rem;">Restrict sugar-sweetened beverages and encourage 60 mins of outdoor play daily.</p>
+            </div>
+            <div class="age-card">
+                <h4>Adults</h4>
+                <p style="font-size: 0.9rem;">Focus on portion control, consistent strength training, and 7-9 hours of sleep.</p>
+            </div>
+            <div class="age-card">
+                <h4>Elderly</h4>
+                <p style="font-size: 0.9rem;">Maintain lean muscle mass through light resistance work and high-protein nutrition.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Future Scope: AI -->
+    <section class="content-section" style="background: linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);">
+        <h2 class="section-title"><i data-lucide="cpu"></i> Future Scope: AI in Obesity Management</h2>
+        <p>The next frontier of obesity management lies in <strong>Precision Medicine</strong>. Artificial Intelligence, like the model used in this project, allows for:</p>
+        <ul style="padding-left: 1.5rem;">
+            <li><strong>Predictive Risk Assessment:</strong> Identifying high-risk individuals before full-scale metabolic decline.</li>
+            <li><strong>Hyper-Personalization:</strong> AI-driven diet and exercise plans that adapt to a user's biological feedback.</li>
+            <li><strong>Remote Monitoring:</strong> Wearable tech providing real-time data to clinicians for proactive care.</li>
+        </ul>
+    </section>
+
+    <!-- 10. Conclusion -->
+    <section class="content-section">
+        <h2 class="section-title"><i data-lucide="check-circle-2"></i> Conclusion</h2>
+        <p>Obesity is a <strong>manageable and preventable disease</strong> that requires societal and individual action. By combining modern technology (AI) with consistent lifestyle modifications, the global burden of metabolic disorders can be significantly reduced. <strong>Awareness</strong> is the first step toward reclaiming health.</p>
+    </section>
+
+    <!-- 11. References -->
+    <section class="content-section" style="padding: 1.5rem; background: transparent;">
+        <h4 style="margin-bottom: 1rem; color: var(--text-muted);">References & Credentials</h4>
+        <ul style="font-size: 0.85rem; color: var(--text-muted); padding-left: 1rem;">
+            <li>World Health Organization (WHO) — Obesity and Overweight Fact Sheets, 2024.</li>
+            <li>Indian Council of Medical Research (ICMR) — INDIAB-ICMR Study on Metabolic Diseases.</li>
+            <li>The Lancet Diabetes & Endocrinology — Global trends in obesity prevalence.</li>
+            <li>NIH: National Institute of Diabetes and Digestive and Kidney Diseases.</li>
+        </ul>
+    </section>
+
+    <div class="footer-note">
+        &copy; 2024 ObesityAI Research Initiative | Academic Submission | Built with AI Accuracy
+    </div>
+
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+</script>
 {% endblock %}
