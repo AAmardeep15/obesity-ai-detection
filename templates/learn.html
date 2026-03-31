@@ -1,467 +1,112 @@
 {% extends "base.html" %}
 {% block title %}Learn About Obesity{% endblock %}
 
-{% block head %}
-<style>
-    /* Industrial Theme Overrides & Additions */
-    :root {
-        --sidebar-w: 240px;
-        --accent-glow: rgba(249, 115, 22, 0.15);
-        --mono: 'JetBrains Mono', 'Fira Code', monospace;
-    }
-
-    .industrial-wrapper {
-        display: flex;
-        gap: 3.5rem;
-        padding: 4rem 1rem;
-        max-width: 1200px;
-        margin: 0 auto;
-        position: relative;
-    }
-
-    /* Sidebar Navigation */
-    .toc-sidebar {
-        width: var(--sidebar-w);
-        position: sticky;
-        top: 6rem;
-        height: min-content;
-        flex-shrink: 0;
-    }
-
-    @media (max-width: 1000px) {
-        .toc-sidebar { display: none; }
-    }
-
-    .toc-sidebar h5 {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        color: var(--text-muted);
-        margin-bottom: 1.5rem;
-        padding-left: 0.75rem;
-    }
-
-    .toc-link {
-        display: block;
-        padding: 0.65rem 1rem;
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-        border-left: 2px solid transparent;
-        transition: all 0.2s;
-        text-decoration: none;
-    }
-
-    .toc-link:hover {
-        color: var(--accent);
-        background: rgba(249, 115, 22, 0.03);
-    }
-
-    .toc-link.active {
-        color: var(--accent);
-        border-left-color: var(--accent);
-        background: rgba(249, 115, 22, 0.05);
-        font-weight: 600;
-    }
-
-    /* Main Content Styling */
-    .article-main {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .article-header {
-        margin-bottom: 5rem;
-    }
-
-    .article-meta {
-        font-family: var(--mono);
-        font-size: 0.75rem;
-        color: var(--accent);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-top: 1rem;
-    }
-
-    .standard-section {
-        margin-bottom: 6rem;
-        scroll-margin-top: 8rem;
-    }
-
-    .standard-section h2 {
-        font-size: 1.85rem;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        margin-bottom: 2rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        color: var(--text-primary);
-    }
-
-    .info-block {
-        background: #111827;
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 2.25rem;
-        margin: 2rem 0;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .info-block::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; bottom: 0;
-        width: 3px;
-        background: var(--accent);
-    }
-
-    /* Professional Data Visuals (CSS) */
-    .data-viz-box {
-        margin: 2rem 0;
-        padding: 2rem;
-        background: var(--bg-card);
-        border-radius: 16px;
-        border: 1px solid var(--border);
-    }
-
-    .bar-row {
-        margin-bottom: 1.5rem;
-    }
-
-    .bar-label {
-        font-size: 0.8rem;
-        color: var(--text-secondary);
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-    }
-
-    .bar-outer {
-        height: 6px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    .bar-inner {
-        height: 100%;
-        background: linear-gradient(to right, #f97316, #ea580c);
-        border-radius: 10px;
-    }
-
-    /* Classification Grid */
-    .classification-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 1.5rem;
-    }
-
-    .class-item {
-        padding: 1.5rem;
-        background: var(--surface-2);
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        transition: 0.2s;
-    }
-
-    .class-item:hover { border-color: var(--accent); }
-
-    .class-range {
-        font-family: var(--mono);
-        font-size: 0.75rem;
-        color: var(--accent);
-        display: block;
-        margin-bottom: 0.25rem;
-    }
-
-    /* Expert Quote Styles */
-    .expert-insight {
-        background: var(--accent-dim);
-        border: 1px solid rgba(249, 115, 22, 0.2);
-        padding: 1.75rem;
-        border-radius: 14px;
-        color: var(--text-primary);
-        font-size: 0.95rem;
-        margin-top: 3rem;
-    }
-
-    .bold-para {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-        line-height: 1.8;
-    }
-
-    .industrial-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1rem;
-    }
-
-    .industrial-table th {
-        text-align: left;
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        border-bottom: 1px solid var(--border);
-        padding: 0.75rem 0;
-    }
-
-    .industrial-table td {
-        padding: 1rem 0;
-        border-bottom: 1px solid var(--border-lite);
-        font-size: 0.9rem;
-    }
-
-</style>
-{% endblock %}
-
 {% block content %}
-<div class="industrial-wrapper">
-    
-    <!-- Navigation Sidebar -->
-    <aside class="toc-sidebar">
-        <h5>Contents</h5>
-        <a href="#definition" class="toc-link active">01 Definition</a>
-        <a href="#diagnostics" class="toc-link">02 Diagnostics</a>
-        <a href="#analytics" class="toc-link">03 Analytics</a>
-        <a href="#etiology" class="toc-link">04 Etiology</a>
-        <a href="#clinical-risk" class="toc-link">05 Clinical Risk</a>
-        <a href="#intervention" class="toc-link">06 Intervention</a>
-        <a href="#case" class="toc-link">07 Case Study</a>
-    </aside>
+<main style="max-width: 900px; margin: 4rem auto; padding: 2rem; background: var(--bg); color: var(--text-primary); font-family: 'Inter', system-ui, sans-serif; line-height: 1.8;">
+  
+  <header style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 3rem;">
+    <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); letter-spacing: -0.02em;">Understanding Obesity: A Global Challenge</h1>
+    <p style="font-size: 1.15rem; color: var(--text-secondary); margin: 0;">A simple, comprehensive guide to the causes, impacts, prevention, and the future of healthcare technology.</p>
+  </header>
 
-    <!-- Main Clinical Body -->
-    <main class="article-main">
-        
-        <header class="article-header">
-            <span class="hero-badge">Industrial Report v2.4</span>
-            <h1 style="font-size: 3rem; margin-bottom: 1rem;">Obesity Clinical Data <span class="orange-text">& Framework</span></h1>
-            <p class="article-meta">Estimated Reading: 9 Minutes // Ref: OMS-2024-TR // Status: Finalized</p>
-        </header>
+  <article>
+    <!-- Image block -->
+    <div style="margin-bottom: 3.5rem; text-align: center;">
+      <img src="{{ url_for('static', filename='img/ai_healthcare.png') }}" alt="AI and Health Innovation" style="max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border);" />
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.75rem;">The intersection of Artificial Intelligence and global health management.</p>
+    </div>
 
-        <!-- 01: Definition -->
-        <section id="definition" class="standard-section">
-            <h2 class="section-title">Foundational Overview</h2>
-            <div class="bold-para">
-                Obesity is officially classified as a <strong>chronic metabolic disease</strong> spanning global populations. It represents an abnormal expansion of adipose tissue that disrupts neuroendocrine signaling and systemic physiological resilience. 
-            </div>
-            <div class="info-block">
-                <h4 style="margin-bottom: 0.75rem; font-size: 0.95rem;">Abstract on BMI</h4>
-                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
-                    The Body Mass Index (BMI) is the universally accepted standard for screening. It represents a standardized ratio between body weight (kg) and height (m²). While efficient for data-scale analysis, it ignores specialized vectors like muscle density and bone mineral mass.
-                </p>
-            </div>
-        </section>
+    <!-- 1. The Global Challenge -->
+    <section style="margin-bottom: 3.5rem;">
+      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">What is Obesity and Why Does it Matter?</h2>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        Obesity is a major global health challenge. Simply put, it is when a person carries an excessive amount of body fat that can negatively affect their overall health. While people often think of it as just a weight issue, it is actually a complex medical condition. Across the globe, obesity rates have nearly tripled over the past few decades, turning it into a widespread public health crisis. It matters greatly because it is directly tied to a variety of severe physical, mental, and economic consequences that impact millions of individuals and healthcare systems worldwide.
+      </p>
+    </section>
 
-        <!-- 02: Diagnostics -->
-        <section id="diagnostics" class="standard-section">
-            <h2 class="section-title">Diagnostic Classifications</h2>
-            <p style="margin-bottom: 2rem; color: var(--text-secondary);">The following table defines the clinical stratification utilized by our integrated ensemble learning models based on standard WHO BMI tiers:</p>
-            
-            <table class="industrial-table">
-                <thead>
-                    <tr>
-                        <th>Tier</th>
-                        <th>Matrix Range</th>
-                        <th>Risk Assessment</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Physiological Baseline</strong></td>
-                        <td style="font-family: var(--mono);">18.5 - 24.9</td>
-                        <td style="color: var(--success); font-weight: 500;">Optimal</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Pre-Clinical Overweight</strong></td>
-                        <td style="font-family: var(--mono);">25.0 - 29.9</td>
-                        <td style="color: var(--warning); font-weight: 500;">Increased</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Clinical Obesity Class I</strong></td>
-                        <td style="font-family: var(--mono);">30.0 - 34.9</td>
-                        <td style="color: var(--orange); font-weight: 500;">Severe</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Clinical Obesity Class II</strong></td>
-                        <td style="font-family: var(--mono);">35.0 - 39.9</td>
-                        <td style="color: var(--danger); font-weight: 500;">Acute</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Chronic Obesity Class III</strong></td>
-                        <td style="font-family: var(--mono);">> 40.0</td>
-                        <td style="color: #991b1b; font-weight: 800;">Critical</td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- 2. Types & Causes -->
+    <section style="margin-bottom: 3.5rem;">
+      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">Causes and the Types of Obesity We Track</h2>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1.5rem; color: var(--text-secondary);">
+        The primary cause of obesity is an imbalance between the energy we take in (from food and drinks) and the energy we burn (through daily activities and exercise). However, it's rarely that simple. Genetics, the environment we live in, sleep habits, mental health, and certain medications all play huge roles.
+      </p>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1.5rem; color: var(--text-secondary);">
+        In our project, to provide accurate help, we use a standard medical scale called the Body Mass Index (BMI). We categorize weight into distinct and easy-to-understand levels:
+      </p>
+      
+      <div style="padding-left: 1.5rem; border-left: 3px solid var(--border); margin-left: 1rem;">
+        <p style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary);">
+          <strong style="color: var(--text-primary); font-size: 1.1rem;">Insufficient Weight (Underweight):</strong> Weighing less than what is considered healthy, which can lead to low energy and weak immunity.
+        </p>
+        <p style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary);">
+          <strong style="color: var(--text-primary); font-size: 1.1rem;">Normal Weight:</strong> A healthy balance associated with the lowest health risks.
+        </p>
+        <p style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary);">
+          <strong style="color: var(--text-primary); font-size: 1.1rem;">Overweight:</strong> Having extra body weight, indicating an early warning to take action before obesity develops.
+        </p>
+        <p style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary);">
+          <strong style="color: var(--text-primary); font-size: 1.1rem;">Obesity Type I:</strong> Moderate obesity, where health risks like high blood pressure begin to rise noticeably.
+        </p>
+        <p style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary);">
+          <strong style="color: var(--text-primary); font-size: 1.1rem;">Obesity Type II:</strong> Severe obesity, causing heavy stress on joints and bringing major risks for chronic diseases.
+        </p>
+        <p style="margin-bottom: 0; font-size: 1.05rem; color: var(--text-secondary);">
+          <strong style="color: var(--text-primary); font-size: 1.1rem;">Obesity Type III:</strong> Extreme or morbid obesity, which requires urgent, professional medical help due to severe, life-threatening complications.
+        </p>
+      </div>
+    </section>
 
-            <div style="margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
-                <div class="class-item">
-                    <h5 style="margin-bottom: 0.75rem; color: var(--text-primary);">02.1 // Advanced Phenotyping</h5>
-                    <ul style="list-style: none; padding: 0; font-size: 0.85rem; color: var(--text-secondary);">
-                        <li style="margin-bottom: 0.5rem;"><strong style="color: var(--accent);">MHO (Metabolically Healthy Obesity):</strong> Individuals with high BMI but no clinical metabolic abnormalities.</li>
-                        <li style="margin-bottom: 0.5rem;"><strong style="color: var(--accent);">NWO (Normal Weight Obesity):</strong> Individuals with normal BMI but disproportionately high body fat percentage.</li>
-                        <li><strong style="color: var(--accent);">Sarcopenic Obesity:</strong> Characteristic of elderly populations; where low muscle mass coexists with high fat accumulation.</li>
-                    </ul>
-                </div>
-                <div class="class-item">
-                    <h5 style="margin-bottom: 0.75rem; color: var(--text-primary);">02.2 // Anatomical Distribution</h5>
-                    <ul style="list-style: none; padding: 0; font-size: 0.85rem; color: var(--text-secondary);">
-                        <li style="margin-bottom: 0.5rem;"><strong style="color: var(--accent);">Android (Apple-Shaped):</strong> Central/Abdominal fat accumulation. Linked to significantly higher cardiovascular risk and metabolic syndrome.</li>
-                        <li><strong style="color: var(--accent);">Gynoid (Pear-Shaped):</strong> Peripheral fat accumulation around hips and thighs. Associated with lower metabolic risk profiles.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+    <!-- 3. Complications -->
+    <section style="margin-bottom: 3.5rem;">
+      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">The Impact: Medical, Emotional, and Financial</h2>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        <strong>Medical Complications:</strong> Carrying excess body fat puts immense stress on everyday organs. It is a leading risk factor for heart disease, type 2 diabetes, breathing problems like sleep apnea, joint pain (osteoarthritis), and several types of cancer.
+      </p>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        <strong>Psychological Impacts:</strong> The burden isn't only physical. Many individuals face societal stigma, leading to lower self-esteem, deep sadness, anxiety, and depression. The emotional toll can unfortunately create a cycle where stress leads to more overeating.
+      </p>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        <strong>Socioeconomic Consequences:</strong> From a broader view, society pays a heavy price. There are massive direct healthcare costs for treatments, hospital stays, and medications, as well as indirect costs like lower productivity or missed workdays due to illness.
+      </p>
+    </section>
 
-        <!-- 03: Analytics -->
-        <section id="analytics" class="standard-section">
-            <h2 class="section-title">Global Analytics & Impact</h2>
-            <div class="data-viz-box">
-                <h4 style="font-size: 0.9rem; margin-bottom: 2rem;">Prevalence Analysis (Regional & Global)</h4>
-                
-                <div class="bar-row">
-                    <div class="bar-label"><span>Global Adult Population (WHO Data)</span> <span>39.1%</span></div>
-                    <div class="bar-outer"><div class="bar-inner" style="width: 39%;"></div></div>
-                </div>
-                
-                <div class="bar-row">
-                    <div class="bar-label"><span>Indian Subcontinent (Urban Clusters)</span> <span>29.5%</span></div>
-                    <div class="bar-outer"><div class="bar-inner" style="width: 30%;"></div></div>
-                </div>
+    <!-- 4. Global Stats & Policies -->
+    <section style="margin-bottom: 3.5rem;">
+      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">Global Statistics and Public Policies</h2>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        According to modern health organizations, over 1 billion people worldwide are now living with obesity. It touches every region, affecting both wealthy nations and developing countries alike. Let that sink in: it is one of the most visible yet neglected public health problems globally.
+      </p>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        Because of these staggering numbers, governments and public health groups have started taking necessary legislative action. Policies such as higher taxes on sugary drinks, requiring clear nutritional labels on food packaging, and building more public parks and gyms are becoming mainstream strategies to construct healthier environments.
+      </p>
+    </section>
 
-                <div class="bar-row" style="margin-bottom: 0;">
-                    <div class="bar-label"><span>Pediatric Projections (2030)</span> <span>15.2%</span></div>
-                    <div class="bar-outer"><div class="bar-inner" style="width: 15%;"></div></div>
-                </div>
-            </div>
-            <p style="color: var(--text-secondary); font-size: 0.95rem;"><strong>Market Insight:</strong> India is currently undergoing a metabolic shift. Over 135M Indians are now classified under the overweight spectrum, largely driven by refined diet availability and sedentary urbanization patterns.</p>
-        </section>
+    <!-- 5. Prevention, Treatment & AI -->
+    <section style="margin-bottom: 3.5rem;">
+      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">Prevention, Treatments, and the Power of AI</h2>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        <strong>How to Stop It:</strong> Preventing obesity starts with establishing healthy everyday habits. Eating a balanced diet full of vegetables, lean proteins, and whole grains, avoiding heavily processed junk foods, getting enough sleep, and aiming for at least 30 minutes of exercise a day are the best lines of defense.
+      </p>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        <strong>Treatment Options:</strong> If prevention fails, there are many ways to seek help. This starts with guided dieting and behavioral therapy. In more serious cases, doctors might prescribe medications that help control appetite, or even suggest weight-loss surgeries that physically limit how much food the stomach can hold.
+      </p>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        <strong>Emerging AI Technology:</strong> Today, cutting-edge technology—like the AI system running clearly behind the scenes of this project—is revolutionizing how we handle weight issues. Artificial Intelligence can carefully analyze your lifestyle data, detect early risks of developing obesity, and generate personalized nutrition and workout plans tailored just for you. This makes early prevention smarter and highly accessible.
+      </p>
+    </section>
 
-        <!-- 04: Etiology -->
-        <section id="etiology" class="standard-section">
-            <h2 class="section-title">Etiology of Adiposity</h2>
-            <div class="classification-grid">
-                <div class="class-item">
-                    <span class="class-range">V01 // METABOLIC</span>
-                    <h5 style="margin-bottom: 0.5rem;">Energy Imbalance</h5>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Long-term surplus of caloric intake exceeding physiological expenditure.</p>
-                </div>
-                <div class="class-item">
-                    <span class="class-range">V02 // HEREDITARY</span>
-                    <h5 style="margin-bottom: 0.5rem;">Genetic Predisposition</h5>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Polygenic factors influencing satiety signaling and lipid storage capacity.</p>
-                </div>
-                <div class="class-item">
-                    <span class="class-range">V03 // BEHAVIORAL</span>
-                    <h5 style="margin-bottom: 0.5rem;">Circadian Disruption</h5>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Hormonal imbalances (Cortisol/Ghrelin) caused by sleep deprivation.</p>
-                </div>
-            </div>
-        </section>
+    <!-- 6. Ethics & Future -->
+    <section>
+      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">The Future and Ethical Considerations</h2>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        Looking forward, the way we treat obesity is becoming deeply personalized and driven by digital health tools. However, this exciting future holds important ethical duties. We must ensure that everyone has equal access to healthy foods and safe places to exercise, rather than purely blaming individuals for what is fundamentally a very complex biological and environmental issue.
+      </p>
+      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
+        Furthermore, as AI health trackers become popular, protecting patient privacy and keeping medical data completely secure is critical. By combining compassion, smart healthcare technology, and fair public policies, we aim toward a balanced, healthier future where everyone can thrive comfortably and safely.
+      </p>
+    </section>
 
-        <!-- 05: Clinical Risk -->
-        <section id="clinical-risk" class="standard-section">
-            <h2 class="section-title">Systemic Complications</h2>
-            <p style="margin-bottom: 2rem; color: var(--text-secondary);">Chronic adiposity acts as a catalyst for systemic deterioration across multiple physiological systems:</p>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
-                <div>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
-                            <i data-lucide="activity" style="color: var(--accent); flex-shrink: 0; width: 1.25rem;"></i>
-                            <span><strong>Cardiovascular Disease</strong>: Hypertension and severe arterial strain.</span>
-                        </li>
-                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
-                            <i data-lucide="database" style="color: var(--accent); flex-shrink: 0; width: 1.25rem;"></i>
-                            <span><strong>Type 2 Diabetes</strong>: High prevalence of insulin resistance (80%+ cases).</span>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
-                            <i data-lucide="wind" style="color: var(--accent); flex-shrink: 0; width: 1.25rem;"></i>
-                            <span><strong>Sleep Apnea</strong>: Recurrent respiratory pauses affecting systemic oxygenation.</span>
-                        </li>
-                        <li style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;">
-                            <i data-lucide="frown" style="color: var(--accent); flex-shrink: 0; width: 1.25rem;"></i>
-                            <span><strong>Psychological Load</strong>: Correlated with depression and social anxiety.</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+  </article>
 
-        <!-- 06: Intervention -->
-        <section id="intervention" class="standard-section">
-            <h2 class="section-title">Intervention Hierarchy</h2>
-            <div class="bold-para">Standard industrial protocols for obesity management are stratified by severity.</div>
-            
-            <div class="expert-insight">
-                <strong>01. Behavioral Therapy:</strong> Sustained caloric deficit with a focus on micronutrient density. <br><br>
-                <strong>02. Pharmacotherapy:</strong> Utilization of GLP-1 analogues for individuals with BMI > 30. <br><br>
-                <strong>03. Surgical Intervention:</strong> Bariatric procedures for severe obesity with comorbidities.
-            </div>
-        </section>
-
-        <!-- 07: Case Study -->
-        <section id="case" class="standard-section">
-            <h2 class="section-title">Clinical Case Study</h2>
-            <div class="data-viz-box" style="border-left: 4px solid var(--accent);">
-                <div style="font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.5rem;">PATIENT_ID: #OBS_9921</div>
-                <h3 style="margin-bottom: 1rem;">Profile: Male, 42 // Class II Obesity</h3>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.8;">
-                    <strong>Observation:</strong> Subject presented with chronic orthopedic strain in lower extremities and recurring breathlessness. <br>
-                    <strong>Diagnostic:</strong> BMI 37.5. Metabolic panel indicated early insulin resistance. <br>
-                    <strong>Resolution:</strong> Implementation of a 16-week structured metabolic reset program focusing on high-intensity resistance loads and glycogen depletion cycles.
-                </p>
-            </div>
-        </section>
-
-        <!-- Final Industrial Footer -->
-        <footer style="margin-top: 10rem; padding-top: 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-end;">
-            <div>
-                <h5 style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--text-primary);">Data Bibliography</h5>
-                <ul style="list-style: none; padding: 0; font-size: 0.75rem; color: var(--text-muted);">
-                    <li>• WHO Obesity Working Group Findings</li>
-                    <li>• ICMR-INDIAB Clinical Documentation</li>
-                    <li>• Lancet Global Health Analysis 2024</li>
-                </ul>
-            </div>
-            <div style="font-size: 0.6rem; color: var(--text-muted); font-family: var(--mono);">
-                UNCONTROLLED DOCUMENT IF DOWNLOADED // © OBESITY_AI_LABS
-            </div>
-        </footer>
-
-    </main>
-</div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    lucide.createIcons();
-
-    // Standard industrial sidebar tracking logic
-    const sections = document.querySelectorAll('.standard-section');
-    const navLinks = document.querySelectorAll('.toc-link');
-
-    window.addEventListener('scroll', () => {
-        let current = "";
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (pageYOffset >= sectionTop - 120) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
-                link.classList.add('active');
-            }
-        });
-    });
-</script>
+</main>
 {% endblock %}
