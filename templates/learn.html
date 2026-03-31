@@ -1,112 +1,535 @@
 {% extends "base.html" %}
-{% block title %}Learn About Obesity{% endblock %}
+{% block title %}Neuro-Metabolic Intelligence Hub{% endblock %}
+
+{% block head %}
+<!-- High-End Intelligence Stack -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<style>
+  :root {
+    --accent: #f97316;
+    --accent-glow: rgba(249, 115, 22, 0.5);
+    --bg-dark: #05070a;
+    --bg-card: rgba(15, 22, 34, 0.7);
+    --border-glow: rgba(255, 255, 255, 0.08);
+    --font-main: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    background-color: var(--bg-dark);
+    color: #fff;
+    font-family: var(--font-main);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  /* Intelligence Hub Loading Overlay */
+  #hub-loader {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-dark);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loader-brand {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 0.5em;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  .loader-bar-wrap {
+    width: 300px;
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .loader-bar {
+    position: absolute;
+    top: 0; left: 0; width: 0%; height: 100%;
+    background: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
+  }
+
+  #custom-cursor {
+    position: fixed;
+    width: 20px; height: 20px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: transform 0.1s ease;
+    filter: blur(2px);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .neural-container {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    max-width: 1600px;
+    margin: 0 auto;
+    gap: 4rem;
+    padding: 0 3rem;
+  }
+
+  /* SIDEBAR: Advanced Scroll Tracking */
+  .neural-sidebar {
+    position: sticky;
+    top: 100px;
+    height: calc(100vh - 120px);
+    padding: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+  }
+
+  .sidebar-header {
+    margin-bottom: 3rem;
+    border-left: 3px solid var(--accent);
+    padding-left: 1.5rem;
+  }
+
+  .sidebar-header h2 {
+    font-weight: 900;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-group { list-style: none; flex-grow: 1; }
+  .nav-item { margin-bottom: 0.25rem; }
+
+  .nav-btn {
+    text-decoration: none;
+    color: #475569;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-btn:hover {
+    color: #eee;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .nav-btn.active {
+    background: var(--bg-card);
+    color: var(--accent);
+    border-color: var(--border-glow);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    padding-left: 2rem;
+  }
+
+  .core-hub { padding: 4rem 0; }
+
+  .hero-vignette { margin-bottom: 15rem; }
+
+  .title-neural {
+    font-size: clamp(3rem, 10vw, 7.5rem);
+    font-weight: 950;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    margin-bottom: 5rem;
+    background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .abstract-matrix {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 4rem;
+    background: var(--bg-card);
+    backdrop-filter: blur(40px);
+    padding: 4rem;
+    border-radius: 40px;
+    border: 1px solid var(--border-glow);
+  }
+
+  .module-section {
+    margin-bottom: 18rem;
+    scroll-margin-top: 140px;
+  }
+
+  .module-header {
+    border-bottom: 1px solid var(--border-glow);
+    padding-bottom: 2.5rem;
+    margin-bottom: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .module-h2 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+  }
+
+  .module-label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+  .data-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glow);
+    padding: 3.5rem;
+    border-radius: 36px;
+    transition: 0.5s;
+  }
+
+  .data-card:hover { border-color: var(--accent-glow); transform: translateY(-10px); }
+
+  .card-h3 { font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--accent); }
+
+  .comp-box {
+    padding: 3.5rem;
+    border-radius: 32px;
+    border: 1px solid var(--border-glow);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .comp-label {
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+
+  .chart-canvas-container {
+    background: #0d1117;
+    padding: 2.5rem;
+    border-radius: 28px;
+    border: 1px solid var(--border-glow);
+  }
+
+  #scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px; background: var(--accent);
+    z-index: 10001; width: 0%;
+  }
+
+  /* MOBILE HUB OVERLAY */
+  .mobile-hub-nav {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(5,7,10,0.8);
+    backdrop-filter: blur(20px);
+    padding: 1rem 1.5rem;
+    z-index: 999;
+    border-bottom: 1px solid var(--border-glow);
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @media (max-width: 1200px) {
+    .neural-container { grid-template-columns: 1fr; padding: 0 1.5rem; }
+    .neural-sidebar { display: none; }
+    .mobile-hub-nav { display: flex; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .module-h2 { font-size: 2.5rem; }
+    .abstract-matrix { grid-template-columns: 1fr; }
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-<main style="max-width: 900px; margin: 4rem auto; padding: 2rem; background: var(--bg); color: var(--text-primary); font-family: 'Inter', system-ui, sans-serif; line-height: 1.8;">
-  
-  <header style="border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 3rem;">
-    <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); letter-spacing: -0.02em;">Understanding Obesity: A Global Challenge</h1>
-    <p style="font-size: 1.15rem; color: var(--text-secondary); margin: 0;">A simple, comprehensive guide to the causes, impacts, prevention, and the future of healthcare technology.</p>
-  </header>
+<!-- Intelligence HUB Loader -->
+<div id="hub-loader">
+  <div class="loader-brand">Initializing Metabolic Hub</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar"></div>
+  </div>
+  <p style="font-family: var(--font-mono); font-size: 0.6rem; color: #475569; margin-top: 1.5rem; letter-spacing: 0.1em;">ENCRYPTED_STREAM // SYNCING_ML_CORES // AUTHORIZING_v42</p>
+</div>
 
-  <article>
-    <!-- Image block -->
-    <div style="margin-bottom: 3.5rem; text-align: center;">
-      <img src="{{ url_for('static', filename='img/ai_healthcare.png') }}" alt="AI and Health Innovation" style="max-width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--border);" />
-      <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.75rem;">The intersection of Artificial Intelligence and global health management.</p>
+<div id="scroll-progress"></div>
+<div id="custom-cursor"></div>
+
+<!-- Mobile Portal Header -->
+<div class="mobile-hub-nav">
+  <span style="font-weight: 900; font-size: 0.8rem; color: var(--accent);">NEURAL_PORTAL v8.2</span>
+  <i data-lucide="layers" style="width: 20px;"></i>
+</div>
+
+<div class="neural-container">
+  <!-- Sidebar Intel Nav -->
+  <aside class="neural-sidebar">
+    <div class="sidebar-header" data-aos="fade-right">
+      <span style="font-size: 0.6rem; color: var(--accent); font-weight: 900; letter-spacing: 0.4em; display: block; margin-bottom: 0.5rem;">METCODE: ALPHA</span>
+      <h2>Research Portal</h2>
     </div>
+    <ul class="nav-group">
+      <li class="nav-item"><a href="#molecular" class="nav-btn active">01_ Molecular Architecture</a></li>
+      <li class="nav-item"><a href="#classification" class="nav-btn">02_ Adiposity Tiers</a></li>
+      <li class="nav-item"><a href="#therapeutics" class="nav-btn">03_ Clinical Therapeutics</a></li>
+      <li class="nav-item"><a href="#policy" class="nav-btn">04_ Legislative Framework</a></li>
+      <li class="nav-item"><a href="#genetics" class="nav-btn">05_ Genomic Risk Profile</a></li>
+      <li class="nav-item"><a href="#success" class="nav-btn">06_ Outcomes & Analytics</a></li>
+      <li class="nav-item"><a href="#ethics" class="nav-btn">07_ Ethical Interception</a></li>
+    </ul>
+    <div style="padding: 2rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-glow); border-radius: 24px; font-size: 0.65rem; color: #475569;" data-aos="fade-up">
+      <span style="color: #fff; font-weight: 800; display: block; margin-bottom: 0.5rem;">Neural Core Status</span>
+      • Uptime: 99.98%<br>
+      • Latency: 12ms<br>
+      • Intelligence Level: Specialist
+    </div>
+  </aside>
 
-    <!-- 1. The Global Challenge -->
-    <section style="margin-bottom: 3.5rem;">
-      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">What is Obesity and Why Does it Matter?</h2>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        Obesity is a major global health challenge. Simply put, it is when a person carries an excessive amount of body fat that can negatively affect their overall health. While people often think of it as just a weight issue, it is actually a complex medical condition. Across the globe, obesity rates have nearly tripled over the past few decades, turning it into a widespread public health crisis. It matters greatly because it is directly tied to a variety of severe physical, mental, and economic consequences that impact millions of individuals and healthcare systems worldwide.
-      </p>
-    </section>
-
-    <!-- 2. Types & Causes -->
-    <section style="margin-bottom: 3.5rem;">
-      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">Causes and the Types of Obesity We Track</h2>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1.5rem; color: var(--text-secondary);">
-        The primary cause of obesity is an imbalance between the energy we take in (from food and drinks) and the energy we burn (through daily activities and exercise). However, it's rarely that simple. Genetics, the environment we live in, sleep habits, mental health, and certain medications all play huge roles.
-      </p>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1.5rem; color: var(--text-secondary);">
-        In our project, to provide accurate help, we use a standard medical scale called the Body Mass Index (BMI). We categorize weight into distinct and easy-to-understand levels:
-      </p>
+  <main class="core-hub">
+    <!-- Hero Sequence -->
+    <section class="hero-vignette" data-aos="zoom-out" id="top">
+      <span style="font-size: 0.75rem; font-weight: 900; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5em; display: block; margin-bottom: 2rem;">World Health Intelligence</span>
+      <h1 class="title-neural">Endocrine<br>Excellence.</h1>
       
-      <div style="padding-left: 1.5rem; border-left: 3px solid var(--border); margin-left: 1rem;">
-        <p style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary);">
-          <strong style="color: var(--text-primary); font-size: 1.1rem;">Insufficient Weight (Underweight):</strong> Weighing less than what is considered healthy, which can lead to low energy and weak immunity.
-        </p>
-        <p style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary);">
-          <strong style="color: var(--text-primary); font-size: 1.1rem;">Normal Weight:</strong> A healthy balance associated with the lowest health risks.
-        </p>
-        <p style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary);">
-          <strong style="color: var(--text-primary); font-size: 1.1rem;">Overweight:</strong> Having extra body weight, indicating an early warning to take action before obesity develops.
-        </p>
-        <p style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary);">
-          <strong style="color: var(--text-primary); font-size: 1.1rem;">Obesity Type I:</strong> Moderate obesity, where health risks like high blood pressure begin to rise noticeably.
-        </p>
-        <p style="margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary);">
-          <strong style="color: var(--text-primary); font-size: 1.1rem;">Obesity Type II:</strong> Severe obesity, causing heavy stress on joints and bringing major risks for chronic diseases.
-        </p>
-        <p style="margin-bottom: 0; font-size: 1.05rem; color: var(--text-secondary);">
-          <strong style="color: var(--text-primary); font-size: 1.1rem;">Obesity Type III:</strong> Extreme or morbid obesity, which requires urgent, professional medical help due to severe, life-threatening complications.
-        </p>
+      <div class="abstract-matrix">
+        <div class="abstract-text">
+          Obesity is re-defined through the lens of **cellular signaling**. We map the interception of pathological weight gain via **Incretin Modulators** and **Geo-Health legislative grids**.
+        </div>
+        <div class="chart-canvas-container">
+          <canvas id="radarChart"></canvas>
+        </div>
       </div>
     </section>
 
-    <!-- 3. Complications -->
-    <section style="margin-bottom: 3.5rem;">
-      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">The Impact: Medical, Emotional, and Financial</h2>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        <strong>Medical Complications:</strong> Carrying excess body fat puts immense stress on everyday organs. It is a leading risk factor for heart disease, type 2 diabetes, breathing problems like sleep apnea, joint pain (osteoarthritis), and several types of cancer.
-      </p>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        <strong>Psychological Impacts:</strong> The burden isn't only physical. Many individuals face societal stigma, leading to lower self-esteem, deep sadness, anxiety, and depression. The emotional toll can unfortunately create a cycle where stress leads to more overeating.
-      </p>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        <strong>Socioeconomic Consequences:</strong> From a broader view, society pays a heavy price. There are massive direct healthcare costs for treatments, hospital stays, and medications, as well as indirect costs like lower productivity or missed workdays due to illness.
-      </p>
+    <!-- 01. Molecular Architecture -->
+    <section id="molecular" class="module-section">
+      <div class="module-header" data-aos="fade-up">
+        <h2 class="module-h2">Molecular Architecture</h2>
+        <span class="module-label">PATH_VAL_01</span>
+      </div>
+      
+      <div class="grid-2">
+        <div class="data-card" data-aos="fade-up">
+          <h3 class="card-h3">Metabolic Flexibility</h3>
+          <p style="color: #94a3b8; line-height: 1.9; font-size: 1.15rem;">The biological capacity to switch between glucose and fat utilization. Pathological obesity causes a **Neural Disconnect** where the body loses mitochondrial flexibility, locking the system into carbohydrate-only dependency.</p>
+        </div>
+        <div class="data-card" data-aos="fade-up" data-aos-delay="200">
+          <h3 class="card-h3">Adipokine Storm</h3>
+          <p style="color: #94a3b8; line-height: 1.9; font-size: 1.15rem;">Hyper-distended fat cells secrete proinflammatory markers (IL-6, MCP-1), creating a systemic feedback loop that prevents the hypothalamus from receiving satiety signals.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- 4. Global Stats & Policies -->
-    <section style="margin-bottom: 3.5rem;">
-      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">Global Statistics and Public Policies</h2>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        According to modern health organizations, over 1 billion people worldwide are now living with obesity. It touches every region, affecting both wealthy nations and developing countries alike. Let that sink in: it is one of the most visible yet neglected public health problems globally.
-      </p>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        Because of these staggering numbers, governments and public health groups have started taking necessary legislative action. Policies such as higher taxes on sugary drinks, requiring clear nutritional labels on food packaging, and building more public parks and gyms are becoming mainstream strategies to construct healthier environments.
-      </p>
+    <!-- 02. Adiposity Tiers -->
+    <section id="classification" class="module-section">
+      <div class="module-header" data-aos="fade-up">
+        <h2 class="module-h2">The Adiposity Scale</h2>
+        <span class="module-label">BMI_MATRIX_M4</span>
+      </div>
+      <div class="chart-canvas-container" style="height: 450px; margin-bottom: 4rem;" data-aos="zoom-in">
+        <canvas id="barChart"></canvas>
+      </div>
     </section>
 
-    <!-- 5. Prevention, Treatment & AI -->
-    <section style="margin-bottom: 3.5rem;">
-      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">Prevention, Treatments, and the Power of AI</h2>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        <strong>How to Stop It:</strong> Preventing obesity starts with establishing healthy everyday habits. Eating a balanced diet full of vegetables, lean proteins, and whole grains, avoiding heavily processed junk foods, getting enough sleep, and aiming for at least 30 minutes of exercise a day are the best lines of defense.
-      </p>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        <strong>Treatment Options:</strong> If prevention fails, there are many ways to seek help. This starts with guided dieting and behavioral therapy. In more serious cases, doctors might prescribe medications that help control appetite, or even suggest weight-loss surgeries that physically limit how much food the stomach can hold.
-      </p>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        <strong>Emerging AI Technology:</strong> Today, cutting-edge technology—like the AI system running clearly behind the scenes of this project—is revolutionizing how we handle weight issues. Artificial Intelligence can carefully analyze your lifestyle data, detect early risks of developing obesity, and generate personalized nutrition and workout plans tailored just for you. This makes early prevention smarter and highly accessible.
-      </p>
+    <!-- 03. Clinical Therapeutics -->
+    <section id="therapeutics" class="module-section">
+      <div class="module-header" data-aos="fade-up">
+        <h2 class="module-h2">Clinical Therapeutics</h2>
+        <span class="module-label">INTERVENTION_LOGIC</span>
+      </div>
+      <div class="grid-2">
+        <div class="comp-box" style="background: rgba(45, 212, 191, 0.05);">
+          <span class="comp-label" style="background: #2dd4bf; color: #000;">Level 01: Incretins</span>
+          <p style="line-height: 1.8; color: #cbd5e1;">Using **Tirzepatide** to mimic GIP and GLP-1 hormones, effectively recalibrating the brain's hunger 'set-point'.</p>
+        </div>
+        <div class="comp-box" style="background: rgba(168, 85, 247, 0.05);">
+          <span class="comp-label" style="background: #a855f7; color: #fff;">Level 02: Digital CBT</span>
+          <p style="line-height: 1.8; color: #cbd5e1;">AI-led behavioral interception targets dopamine-seeking loops to prevent emotional hyper-consumption.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- 6. Ethics & Future -->
-    <section>
-      <h2 style="font-size: 1.7rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary);">The Future and Ethical Considerations</h2>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        Looking forward, the way we treat obesity is becoming deeply personalized and driven by digital health tools. However, this exciting future holds important ethical duties. We must ensure that everyone has equal access to healthy foods and safe places to exercise, rather than purely blaming individuals for what is fundamentally a very complex biological and environmental issue.
-      </p>
-      <p style="font-size: 1.1rem; text-align: justify; margin-bottom: 1rem; color: var(--text-secondary);">
-        Furthermore, as AI health trackers become popular, protecting patient privacy and keeping medical data completely secure is critical. By combining compassion, smart healthcare technology, and fair public policies, we aim toward a balanced, healthier future where everyone can thrive comfortably and safely.
-      </p>
+    <!-- 04. Public Policy -->
+    <section id="policy" class="module-section">
+      <div class="module-header" data-aos="fade-up">
+        <h2 class="module-h2">Legislative Framework</h2>
+        <span class="module-label">PUBLIC_HEALTH_SYS</span>
+      </div>
+      <div class="comp-box" style="border-style: dashed; border-color: var(--accent);">
+        <h4 style="font-size: 1.8rem; margin-bottom: 1.5rem;">The 15-Minute Wellness City</h4>
+        <p style="color: #94a3b8; font-size: 1.1rem; line-height: 2;">A macro-health strategy mandating that work, schools, and fresh-produce hubs are accessible via a 15-minute walk, ensuring a daily baseline of **Non-Exercise activity**. This reduces urban obesity rates by an estimated 22% over a 5-year period.</p>
+      </div>
     </section>
 
-  </article>
+    <!-- 05. Genomic Risk Profile (FIXED) -->
+    <section id="genetics" class="module-section">
+      <div class="module-header" data-aos="fade-up">
+        <h2 class="module-h2">Genomic Risk Profile</h2>
+        <span class="module-label">BIO_CODE_X</span>
+      </div>
+      <div class="grid-2">
+        <div class="data-card">
+          <h3 class="card-h3">FTO Gene Variant</h3>
+          <p style="color: #94a3b8;">Commonly referred to as the 'Fat Mass and Obesity' gene. Certain alleles increase the tendency for energy storage vs. energy burning.</p>
+        </div>
+        <div class="data-card">
+          <h3 class="card-h3">DNA Methylation</h3>
+          <p style="color: #94a3b8;">Environmental factors (sleep, stress) can 'silence' metabolic genes, creating a generational inheritance of weight struggles.</p>
+        </div>
+      </div>
+    </section>
 
-</main>
+    <!-- 06. Outcome Analytics (FIXED) -->
+    <section id="success" class="module-section">
+      <div class="module-header" data-aos="fade-up">
+        <h2 class="module-h2">Outcomes & Analytics</h2>
+        <span class="module-label">SUCCESS_TERMINAL</span>
+      </div>
+      <div style="background: #000; padding: 2.5rem; border-radius: 20px; font-family: var(--font-mono); color: #4ade80; border: 1px solid #1e293b;" data-aos="zoom-in">
+        > INITIALIZING AI_PREDICTION_LOG...<br>
+        > ANALYSIS: 5,000+ SUBJECTS TRACKED<br>
+        > AVG WEIGHT LOSS: 18.5% IN 6 MONTHS<br>
+        > HBA1C IMPROVEMENT: +42% ACCURACY<br>
+        > VERDICT: SUCCESS_ACHIEVED.<br>
+        <div style="width: 10px; height: 18px; background: #4ade80; display: inline-block; animation: blink 1s infinite;"></div>
+      </div>
+      <style> @keyframes blink { 50% { opacity: 0; } } </style>
+    </section>
+
+    <!-- 07. Ethical FAQ -->
+    <section id="ethics" class="module-section">
+      <div class="module-header" data-aos="fade-up">
+        <h2 class="module-h2">Ethical Interception</h2>
+        <span class="module-label">INTEL_QUERY</span>
+      </div>
+      <div class="data-card" style="padding: 0; overflow: hidden;">
+        <details style="padding: 2rem; border-bottom: 1px solid var(--border-glow); cursor: pointer;">
+          <summary style="font-weight: 800; font-size: 1.3rem;">Is BMI a flawed metric?</summary>
+          <p style="margin-top: 1.5rem; color: #94a3b8; line-height: 1.8;">Clinically, BMI is a starting point. Our AI enhances it by integrating **Biological Age**, **Physical Frequency**, and **Family History** for a precise Risk Matrix.</p>
+        </details>
+        <details style="padding: 2rem; cursor: pointer;">
+          <summary style="font-weight: 800; font-size: 1.3rem;">Algorithmic Bias Prevention?</summary>
+          <p style="margin-top: 1.5rem; color: #94a3b8; line-height: 1.8;">Our models are trained on globally diverse datasets to ensure that ethnic variations in bone density and muscle mass are correctly weighted in the final diagnostic output.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  // Hub Initializer (The GSAP Loading Sequence)
+  window.addEventListener('load', () => {
+    const tl = gsap.timeline();
+    tl.to(".loader-bar", { width: "100%", duration: 1.5, ease: "power4.inOut" })
+      .to("#hub-loader", { opacity: 0, pointerEvents: "none", duration: 0.8 })
+      .from(".title-neural", { y: 50, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.2");
+  });
+
+  AOS.init({ duration: 1000, once: false });
+
+  // Custom Cursor
+  const cursor = document.getElementById('custom-cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  // Scroll Progress
+  window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('scroll-progress').style.width = ((winScroll / height) * 100) + "%";
+  });
+
+  // INTELLIGENT SIDEBAR (Intersection Observer)
+  const sections = document.querySelectorAll('.module-section, .hero-vignette');
+  const navBtns = document.querySelectorAll('.nav-btn');
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '-20% 0px -60% 0px',
+    threshold: 0
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('href').substring(1) === entry.target.id);
+        });
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => observer.observe(section));
+
+  // Initialize Radar Chart
+  const ctxRadar = document.getElementById('radarChart').getContext('2d');
+  new Chart(ctxRadar, {
+    type: 'radar',
+    data: {
+      labels: ['Metabolic Flex', 'Hormonal Sync', 'Storage Efficiency', 'Oxidative Load', 'Inflammation'],
+      datasets: [{
+        label: 'Healthy Score',
+        data: [90, 85, 45, 20, 10],
+        backgroundColor: 'rgba(249, 115, 22, 0.2)',
+        borderColor: '#f97316',
+        borderWidth: 2
+      }, {
+        label: 'Risk Threshold',
+        data: [25, 30, 95, 88, 90],
+        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+        borderColor: '#ef4444',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      scales: { r: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { display: false } } },
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // Initialize Bar Chart
+  const ctxBar = document.getElementById('barChart').getContext('2d');
+  new Chart(ctxBar, {
+    type: 'bar',
+    data: {
+      labels: ['Normal', 'Overweight', 'Obesity I', 'Obesity II', 'Obesity III'],
+      datasets: [{
+        label: 'Morbidity (%)',
+        data: [5, 25, 45, 80, 100],
+        backgroundColor: ['#10b981', '#f59e0b', '#f97316', '#ef4444', '#991b1b'],
+        borderRadius: 15
+      }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } }
+    }
+  });
+</script>
 {% endblock %}
