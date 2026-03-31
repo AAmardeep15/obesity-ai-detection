@@ -1,535 +1,643 @@
 {% extends "base.html" %}
-{% block title %}Neuro-Metabolic Intelligence Hub{% endblock %}
+{% block title %}Understanding Obesity — Information & Prevention Hub{% endblock %}
 
 {% block head %}
-<!-- High-End Intelligence Stack -->
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- High-End Clinical Hub Stack -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
 <style>
-  :root {
-    --accent: #f97316;
-    --accent-glow: rgba(249, 115, 22, 0.5);
-    --bg-dark: #05070a;
-    --bg-card: rgba(15, 22, 34, 0.7);
-    --border-glow: rgba(255, 255, 255, 0.08);
-    --font-main: 'Outfit', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-  }
+    :root {
+        /* Using project variables for theme compatibility */
+        --aws-orange: var(--accent, #ff9900);
+        --aws-orange-dim: var(--accent-dim, rgba(255, 153, 0, 0.1));
+        --page-bg: var(--bg, #0f172a);
+        --page-text: var(--text-primary, #f1f5f9);
+        --page-text-dim: var(--text-secondary, #94a3b8);
+        --page-border: var(--border, rgba(255, 255, 255, 0.06));
+        --card-bg: var(--bg-card, rgba(255, 255, 255, 0.02));
+        --font-heading: 'Public Sans', sans-serif;
+    }
 
-  body {
-    background-color: var(--bg-dark);
-    color: #fff;
-    font-family: var(--font-main);
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-  }
+    body {
+        background-color: var(--page-bg);
+        color: var(--page-text);
+        font-family: var(--font-heading);
+        line-height: 1.6;
+        overflow-x: hidden;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-  /* Intelligence Hub Loading Overlay */
-  #hub-loader {
-    position: fixed;
-    inset: 0;
-    background: var(--bg-dark);
-    z-index: 10000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+    /* Theme-specific Overrides for Light Mode */
+    .light-theme {
+        --page-bg: #ffffff !important;
+        --page-text: #0f172a !important;
+        --page-text-dim: #475569 !important;
+        --page-border: rgba(0, 0, 0, 0.1) !important;
+        --card-bg: #f8fafc !important;
+    }
 
-  .loader-brand {
-    font-size: 1.5rem;
-    font-weight: 900;
-    letter-spacing: 0.5em;
-    color: var(--accent);
-    margin-bottom: 2rem;
-    text-transform: uppercase;
-  }
+    .light-theme body {
+        background-color: var(--page-bg) !important;
+        color: var(--page-text) !important;
+    }
 
-  .loader-bar-wrap {
-    width: 300px;
-    height: 2px;
-    background: rgba(255,255,255,0.1);
-    position: relative;
-    overflow: hidden;
-  }
+    .light-theme .accordion-item {
+        background: #ffffff !important;
+        border-color: rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
 
-  .loader-bar {
-    position: absolute;
-    top: 0; left: 0; width: 0%; height: 100%;
-    background: var(--accent);
-    box-shadow: 0 0 15px var(--accent-glow);
-  }
+    .light-theme .accordion-trigger {
+        color: #0f172a !important;
+    }
 
-  #custom-cursor {
-    position: fixed;
-    width: 20px; height: 20px;
-    background: var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    mix-blend-mode: difference;
-    transition: transform 0.1s ease;
-    filter: blur(2px);
-    box-shadow: 0 0 20px var(--accent-glow);
-  }
+    .light-theme .accordion-content {
+        background: #f1f5f9 !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
 
-  .neural-container {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    max-width: 1600px;
-    margin: 0 auto;
-    gap: 4rem;
-    padding: 0 3rem;
-  }
+    .light-theme .content-inner {
+        color: #334155 !important;
+    }
 
-  /* SIDEBAR: Advanced Scroll Tracking */
-  .neural-sidebar {
-    position: sticky;
-    top: 100px;
-    height: calc(100vh - 120px);
-    padding: 3rem 0;
-    display: flex;
-    flex-direction: column;
-    z-index: 100;
-  }
+    .light-theme .section-label {
+        color: #0f172a !important;
+    }
 
-  .sidebar-header {
-    margin-bottom: 3rem;
-    border-left: 3px solid var(--accent);
-    padding-left: 1.5rem;
-  }
+    .light-theme .hero-portal {
+        background: radial-gradient(circle at 50% 50%, rgba(255, 153, 0, 0.04) 0%, transparent 60%) !important;
+    }
 
-  .sidebar-header h2 {
-    font-weight: 900;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
-  }
+    .light-theme .portal-h1 {
+        color: #0f172a !important;
+    }
 
-  .nav-group { list-style: none; flex-grow: 1; }
-  .nav-item { margin-bottom: 0.25rem; }
+    .light-theme .portal-lead,
+    .light-theme .detail-intro {
+        color: #475569 !important;
+    }
 
-  .nav-btn {
-    text-decoration: none;
-    color: #475569;
-    font-size: 0.8rem;
-    font-weight: 700;
-    padding: 1rem 1.5rem;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid transparent;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+    .light-theme .diet-table {
+        background: #ffffff !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
 
-  .nav-btn:hover {
-    color: #eee;
-    background: rgba(255,255,255,0.03);
-  }
+    .light-theme .diet-table td {
+        color: #334155 !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    }
 
-  .nav-btn.active {
-    background: var(--bg-card);
-    color: var(--accent);
-    border-color: var(--border-glow);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    padding-left: 2rem;
-  }
+    .light-theme .comp-box {
+        background: #ffffff !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
 
-  .core-hub { padding: 4rem 0; }
+    .light-theme .accordion-item:hover {
+        border-color: var(--aws-orange) !important;
+        background: #ffffff !important;
+    }
 
-  .hero-vignette { margin-bottom: 15rem; }
+    /* HERO SECTION */
+    .hero-portal {
+        background: radial-gradient(circle at 50% 50%, rgba(255, 153, 0, 0.08) 0%, transparent 60%);
+        padding: 8rem 0 4rem;
+        text-align: center;
+    }
 
-  .title-neural {
-    font-size: clamp(3rem, 10vw, 7.5rem);
-    font-weight: 950;
-    line-height: 0.9;
-    letter-spacing: -0.06em;
-    margin-bottom: 5rem;
-    background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.2) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+    .portal-badge {
+        color: var(--aws-orange);
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        display: block;
+    }
 
-  .abstract-matrix {
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 4rem;
-    background: var(--bg-card);
-    backdrop-filter: blur(40px);
-    padding: 4rem;
-    border-radius: 40px;
-    border: 1px solid var(--border-glow);
-  }
+    .portal-h1 {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-bottom: 1.5rem;
+    }
 
-  .module-section {
-    margin-bottom: 18rem;
-    scroll-margin-top: 140px;
-  }
+    .portal-lead {
+        font-size: 1.25rem;
+        color: var(--page-text-dim);
+        max-width: 800px;
+        margin: 0 auto;
+        font-weight: 400;
+    }
 
-  .module-header {
-    border-bottom: 1px solid var(--border-glow);
-    padding-bottom: 2.5rem;
-    margin-bottom: 5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
+    /* SECTION STRUCTURE */
+    .section-block {
+        max-width: 1000px;
+        margin: 0 auto 6rem;
+        padding: 0 1.5rem;
+    }
 
-  .module-h2 {
-    font-size: 3.5rem;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-  }
+    .section-label {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 2.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        color: var(--page-text);
+    }
 
-  .module-label {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--accent);
-    font-weight: 700;
-  }
+    .section-label::after {
+        content: '';
+        flex-grow: 1;
+        height: 1px;
+        background: var(--page-border);
+    }
 
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .detail-intro {
+        font-size: 1.1rem;
+        color: var(--page-text-dim);
+        margin-bottom: 2rem;
+        line-height: 1.7;
+    }
 
-  .data-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-glow);
-    padding: 3.5rem;
-    border-radius: 36px;
-    transition: 0.5s;
-  }
+    /* ACCORDION (SMOOTH AWS STYLE) */
+    .accordion-item {
+        border: 1px solid var(--page-border);
+        border-radius: 16px;
+        margin-bottom: 1rem;
+        background: var(--card-bg);
+        overflow: hidden;
+        transition: 0.3s;
+    }
 
-  .data-card:hover { border-color: var(--accent-glow); transform: translateY(-10px); }
+    .accordion-item:hover {
+        border-color: var(--aws-orange);
+        background: rgba(255, 153, 0, 0.04);
+    }
 
-  .card-h3 { font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--accent); }
+    .accordion-trigger {
+        width: 100%;
+        padding: 1.75rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: none;
+        border: none;
+        color: var(--page-text);
+        font-size: 1.15rem;
+        font-weight: 700;
+        cursor: pointer;
+        text-align: left;
+    }
 
-  .comp-box {
-    padding: 3.5rem;
-    border-radius: 32px;
-    border: 1px solid var(--border-glow);
-    background: rgba(255,255,255,0.02);
-  }
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+        background: rgba(0, 0, 0, 0.1);
+    }
 
-  .comp-label {
-    font-weight: 900;
-    text-transform: uppercase;
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
-    padding: 8px 16px;
-    border-radius: 8px;
-    display: inline-block;
-    margin-bottom: 2rem;
-  }
+    .accordion-item.open .accordion-content {
+        max-height: 1500px;
+        transition: max-height 0.8s ease-in;
+    }
 
-  .chart-canvas-container {
-    background: #0d1117;
-    padding: 2.5rem;
-    border-radius: 28px;
-    border: 1px solid var(--border-glow);
-  }
+    .content-inner {
+        padding: 2rem 2.5rem;
+        color: var(--page-text-dim);
+        font-size: 1.05rem;
+        line-height: 1.8;
+    }
 
-  #scroll-progress {
-    position: fixed; top: 0; left: 0; height: 3px; background: var(--accent);
-    z-index: 10001; width: 0%;
-  }
+    /* DIET CHART TABLE */
+    .diet-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5rem;
+        background: var(--card-bg);
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid var(--page-border);
+    }
 
-  /* MOBILE HUB OVERLAY */
-  .mobile-hub-nav {
-    display: none;
-    position: fixed; top: 0; left: 0; right: 0;
-    background: rgba(5,7,10,0.8);
-    backdrop-filter: blur(20px);
-    padding: 1rem 1.5rem;
-    z-index: 999;
-    border-bottom: 1px solid var(--border-glow);
-    justify-content: space-between;
-    align-items: center;
-  }
+    .diet-table th,
+    .diet-table td {
+        padding: 1.25rem;
+        text-align: left;
+        border-bottom: 1px solid var(--page-border);
+    }
 
-  @media (max-width: 1200px) {
-    .neural-container { grid-template-columns: 1fr; padding: 0 1.5rem; }
-    .neural-sidebar { display: none; }
-    .mobile-hub-nav { display: flex; }
-    .grid-2 { grid-template-columns: 1fr; }
-    .module-h2 { font-size: 2.5rem; }
-    .abstract-matrix { grid-template-columns: 1fr; }
-  }
+    .diet-table th {
+        background: var(--aws-orange-dim);
+        color: var(--aws-orange);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+    }
+
+    /* LIST STYLES */
+    .feature-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .feature-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .feature-list li::before {
+        content: '→';
+        color: var(--aws-orange);
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .check-list li::before {
+        content: '✓';
+        color: #22c55e;
+    }
+
+    .cross-list li::before {
+        content: '✕';
+        color: #ef4444;
+    }
+
+    footer {
+        padding: 6rem 0;
+        text-align: center;
+        border-top: 1px solid var(--page-border);
+        opacity: 0.7;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        color: var(--page-text-dim);
+    }
+
+    @media (max-width: 768px) {
+        .portal-h1 {
+            font-size: 2.2rem;
+        }
+
+        .section-label {
+            font-size: 1.7rem;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Intelligence HUB Loader -->
-<div id="hub-loader">
-  <div class="loader-brand">Initializing Metabolic Hub</div>
-  <div class="loader-bar-wrap">
-    <div class="loader-bar"></div>
-  </div>
-  <p style="font-family: var(--font-mono); font-size: 0.6rem; color: #475569; margin-top: 1.5rem; letter-spacing: 0.1em;">ENCRYPTED_STREAM // SYNCING_ML_CORES // AUTHORIZING_v42</p>
-</div>
+<main>
+    <!-- Simple Hero -->
+    <header class="hero-portal" data-aos="fade-down">
+        <span class="portal-badge">Health Intelligence Terminal</span>
+        <h1 class="portal-h1">The Science of Weight.</h1>
+        <p class="portal-lead">A comprehensive guide to understanding obesity classifications, its biological causes,
+            health risks, and professional management strategies.</p>
+    </header>
 
-<div id="scroll-progress"></div>
-<div id="custom-cursor"></div>
+    <!-- 01. Definition & Basics -->
+    <section class="section-block">
+        <h2 class="section-label" data-aos="fade-right">Obesity Overview</h2>
+        <p class="detail-intro" data-aos="fade-up">Understanding weight begins with knowing that obesity is not just a
+            cosmetic concern—it is a chronic medical condition that changes how your body uses energy and stores fat.
+        </p>
 
-<!-- Mobile Portal Header -->
-<div class="mobile-hub-nav">
-  <span style="font-weight: 900; font-size: 0.8rem; color: var(--accent);">NEURAL_PORTAL v8.2</span>
-  <i data-lucide="layers" style="width: 20px;"></i>
-</div>
-
-<div class="neural-container">
-  <!-- Sidebar Intel Nav -->
-  <aside class="neural-sidebar">
-    <div class="sidebar-header" data-aos="fade-right">
-      <span style="font-size: 0.6rem; color: var(--accent); font-weight: 900; letter-spacing: 0.4em; display: block; margin-bottom: 0.5rem;">METCODE: ALPHA</span>
-      <h2>Research Portal</h2>
-    </div>
-    <ul class="nav-group">
-      <li class="nav-item"><a href="#molecular" class="nav-btn active">01_ Molecular Architecture</a></li>
-      <li class="nav-item"><a href="#classification" class="nav-btn">02_ Adiposity Tiers</a></li>
-      <li class="nav-item"><a href="#therapeutics" class="nav-btn">03_ Clinical Therapeutics</a></li>
-      <li class="nav-item"><a href="#policy" class="nav-btn">04_ Legislative Framework</a></li>
-      <li class="nav-item"><a href="#genetics" class="nav-btn">05_ Genomic Risk Profile</a></li>
-      <li class="nav-item"><a href="#success" class="nav-btn">06_ Outcomes & Analytics</a></li>
-      <li class="nav-item"><a href="#ethics" class="nav-btn">07_ Ethical Interception</a></li>
-    </ul>
-    <div style="padding: 2rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-glow); border-radius: 24px; font-size: 0.65rem; color: #475569;" data-aos="fade-up">
-      <span style="color: #fff; font-weight: 800; display: block; margin-bottom: 0.5rem;">Neural Core Status</span>
-      • Uptime: 99.98%<br>
-      • Latency: 12ms<br>
-      • Intelligence Level: Specialist
-    </div>
-  </aside>
-
-  <main class="core-hub">
-    <!-- Hero Sequence -->
-    <section class="hero-vignette" data-aos="zoom-out" id="top">
-      <span style="font-size: 0.75rem; font-weight: 900; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5em; display: block; margin-bottom: 2rem;">World Health Intelligence</span>
-      <h1 class="title-neural">Endocrine<br>Excellence.</h1>
-      
-      <div class="abstract-matrix">
-        <div class="abstract-text">
-          Obesity is re-defined through the lens of **cellular signaling**. We map the interception of pathological weight gain via **Incretin Modulators** and **Geo-Health legislative grids**.
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>Detailed Definitions</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    <p><strong>Simple Definition:</strong> Obesity is a condition where a person has accumulated so much
+                        body fat that it might have a negative effect on their health. It basically means the body is
+                        storing more energy (calories) than it is spending, leading to long-term health challenges.</p>
+                    <hr style="border: 0; border-top: 1px solid var(--page-border); margin: 1.5rem 0;">
+                    <p><strong>Medical Definition:</strong> Clinically, obesity is defined as a chronic, relapsing,
+                        multi-factorial, neurobehavioral disease, wherein an increase in body fat promotes adipose
+                        tissue dysfunction and abnormal physical forces, resulting in metabolic, biomechanical, and
+                        psychosocial health consequences.</p>
+                </div>
+            </div>
         </div>
-        <div class="chart-canvas-container">
-          <canvas id="radarChart"></canvas>
+
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>The 7 Types of Classification</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    <p>Medical experts use the Body Mass Index (BMI) to classify weight into seven distinct categories.
+                        This helps doctors determine the level of health risk and the type of treatment needed.</p>
+                    <ul class="feature-list" style="margin-top: 1.5rem;">
+                        <li><strong>1. Underweight (BMI < 18.5):</strong> Body weight is below the healthy range, which
+                                    can lead to a weakened immune system and bone issues.</li>
+                        <li><strong>2. Normal Weight (BMI 18.5 – 24.9):</strong> This is the ideal clinical range where
+                            the body functions with the least metabolic stress.</li>
+                        <li><strong>3. Overweight (BMI 25 – 29.9):</strong> A warning zone where fat accumulation starts
+                            increasing the risk of future health problems.</li>
+                        <li><strong>4. Obesity Class I (BMI 30 – 34.9):</strong> Low-to-moderate risk obesity; metabolic
+                            changes like high blood sugar may begin here.</li>
+                        <li><strong>5. Obesity Class II (BMI 35 – 39.9):</strong> High-risk obesity; significant strain
+                            is placed on the heart and weight-bearing joints.</li>
+                        <li><strong>6. Obesity Class III (BMI 40 – 49.9):</strong> Often called "Morbid Obesity,"
+                            representing a critical level where lifestyle and mobility are severely impacted.</li>
+                        <li><strong>7. Super Obese (BMI ≥ 50):</strong> The highest clinical classification, requiring
+                            immediate medical or surgical intervention to prevent life-threatening complications.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>Root Causes & Triggers</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    <p>Obesity is rarely caused by a single factor. It is usually a combination of your environment,
+                        your behavior, and your biological makeup interacting over time.</p>
+                    <ul class="feature-list" style="margin-top: 1.5rem;">
+                        <li><strong>Poor Diet:</strong> Regular consumption of ultra-processed foods, high-sugar
+                            beverages, and large portions leads to a caloric surplus.</li>
+                        <li><strong>Lack of Exercise:</strong> Modern sedentary lifestyles mean we burn fewer calories
+                            than previous generations, slowing down our metabolism.</li>
+                        <li><strong>Genetics:</strong> Your DNA can dictate how efficiently you burn energy and where
+                            your body prefers to store fat.</li>
+                        <li><strong>Hormones:</strong> Imbalances in Leptin (fullness hormone) or Ghrelin (hunger
+                            hormone) can make you feel hungry even when you have enough energy.</li>
+                        <li><strong>Lifestyle Habits:</strong> Chronic stress increases cortisol levels, which promotes
+                            belly fat storage, while poor sleep disrupts appetite regulation.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- 01. Molecular Architecture -->
-    <section id="molecular" class="module-section">
-      <div class="module-header" data-aos="fade-up">
-        <h2 class="module-h2">Molecular Architecture</h2>
-        <span class="module-label">PATH_VAL_01</span>
-      </div>
-      
-      <div class="grid-2">
-        <div class="data-card" data-aos="fade-up">
-          <h3 class="card-h3">Metabolic Flexibility</h3>
-          <p style="color: #94a3b8; line-height: 1.9; font-size: 1.15rem;">The biological capacity to switch between glucose and fat utilization. Pathological obesity causes a **Neural Disconnect** where the body loses mitochondrial flexibility, locking the system into carbohydrate-only dependency.</p>
+    <!-- 02. Health Risks & Prevention -->
+    <section class="section-block">
+        <h2 class="section-label" data-aos="fade-right">Health Risks</h2>
+        <p class="detail-intro" data-aos="fade-up">Carrying excess weight acts like a constant stress test for your
+            body. Every organ system, from your heart to your knees, must work harder to maintain daily functions.</p>
+
+        <div class="grid-layout" data-aos="fade-up">
+            <div
+                style="background: var(--card-bg); padding: 2.5rem; border-radius: 20px; border: 1px solid var(--page-border);">
+                <ul class="feature-list">
+                    <li><strong>Cardiovascular Disease:</strong> Obesity increases cholesterol and blood pressure,
+                        significantly raising the risk of heart attacks and strokes.</li>
+                    <li><strong>Type 2 Diabetes:</strong> Excess fat can make your cells resistant to insulin, leading
+                        to high blood sugar levels that damage nerves and kidneys.</li>
+                    <li><strong>Hypertension (High BP):</strong> The heart has to pump blood more forcefully to reach
+                        all the additional tissue, wearing out the arteries over time.</li>
+                    <li><strong>Biomechanical Stress:</strong> Extra weight places immense pressure on the joints
+                        (especially knees and lower back), leading to chronic pain and arthritis.</li>
+                </ul>
+            </div>
         </div>
-        <div class="data-card" data-aos="fade-up" data-aos-delay="200">
-          <h3 class="card-h3">Adipokine Storm</h3>
-          <p style="color: #94a3b8; line-height: 1.9; font-size: 1.15rem;">Hyper-distended fat cells secrete proinflammatory markers (IL-6, MCP-1), creating a systemic feedback loop that prevents the hypothalamus from receiving satiety signals.</p>
+    </section>
+
+    <section class="section-block">
+        <h2 class="section-label" data-aos="fade-right">Prevention & Treatment</h2>
+        <p class="detail-intro" data-aos="fade-up">Modern medicine views obesity as a manageable condition. Whether
+            through simple daily habits or medical intervention, the goal is always sustainable health.</p>
+
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>Prevention Strategies</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    <p>Prevention focuses on creating an environment and a routine that makes healthy choices the
+                        "default" choice in your life.</p>
+                    <ul class="feature-list check-list" style="margin-top: 1.5rem;">
+                        <li><strong>Balanced Nutrition:</strong> Incorporating "whole" foods like lean proteins and
+                            green vegetables to keep you full for longer.</li>
+                        <li><strong>Active Living:</strong> Finding ways to move more during the day, such as taking the
+                            stairs or walking while on the phone.</li>
+                        <li><strong>Recovery:</strong> Prioritizing sleep is the secret weapon of weight management—it
+                            regulates the hormones that control hunger.</li>
+                        <li><strong>Mindfulness:</strong> Learning to distinguish between "physical hunger" and
+                            "emotional boredom" can stop overeating before it starts.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
-    </section>
 
-    <!-- 02. Adiposity Tiers -->
-    <section id="classification" class="module-section">
-      <div class="module-header" data-aos="fade-up">
-        <h2 class="module-h2">The Adiposity Scale</h2>
-        <span class="module-label">BMI_MATRIX_M4</span>
-      </div>
-      <div class="chart-canvas-container" style="height: 450px; margin-bottom: 4rem;" data-aos="zoom-in">
-        <canvas id="barChart"></canvas>
-      </div>
-    </section>
-
-    <!-- 03. Clinical Therapeutics -->
-    <section id="therapeutics" class="module-section">
-      <div class="module-header" data-aos="fade-up">
-        <h2 class="module-h2">Clinical Therapeutics</h2>
-        <span class="module-label">INTERVENTION_LOGIC</span>
-      </div>
-      <div class="grid-2">
-        <div class="comp-box" style="background: rgba(45, 212, 191, 0.05);">
-          <span class="comp-label" style="background: #2dd4bf; color: #000;">Level 01: Incretins</span>
-          <p style="line-height: 1.8; color: #cbd5e1;">Using **Tirzepatide** to mimic GIP and GLP-1 hormones, effectively recalibrating the brain's hunger 'set-point'.</p>
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>Treatment & Surgical Paths</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    <p>When lifestyle changes aren't enough, medical science provides additional tools to help patients
+                        achieve a healthy weight.</p>
+                    <ul class="feature-list">
+                        <li><strong>Clinical Weight Management:</strong> Working with a dietitian to create a medically
+                            supervised calorie deficit.</li>
+                        <li><strong>Pharmacotherapy:</strong> Modern medications (like GLP-1 agonists) can help silence
+                            "food noise" in the brain and improve insulin response.</li>
+                        <li><strong>Bariatric Surgery:</strong> For those in severe obesity classes, procedures like
+                            gastric bypass can reset the body's metabolic "set-point" and fix diabetes.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="comp-box" style="background: rgba(168, 85, 247, 0.05);">
-          <span class="comp-label" style="background: #a855f7; color: #fff;">Level 02: Digital CBT</span>
-          <p style="line-height: 1.8; color: #cbd5e1;">AI-led behavioral interception targets dopamine-seeking loops to prevent emotional hyper-consumption.</p>
+
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>Essential Precautions</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    <p>Managing obesity is a marathon, not a sprint. Taking the right precautions ensures that you lose
+                        weight safely without damaging your metabolism.</p>
+                    <ul class="feature-list check-list" style="margin-top: 1.5rem;">
+                        <li><strong>Regular Monitoring:</strong> Having frequent blood tests ensures that your thyroid
+                            and sugar levels are in the safe zone.</li>
+                        <li><strong>Metabolic Awareness:</strong> Avoid "fad" or "crash" diets that promise quick
+                            results but lead to muscle loss and rebound weight gain.</li>
+                        <li><strong>Sustainable Tracking:</strong> Focus on non-scale victories, such as having more
+                            energy or needing smaller clothes, rather than just the number on the scale.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- 04. Public Policy -->
-    <section id="policy" class="module-section">
-      <div class="module-header" data-aos="fade-up">
-        <h2 class="module-h2">Legislative Framework</h2>
-        <span class="module-label">PUBLIC_HEALTH_SYS</span>
-      </div>
-      <div class="comp-box" style="border-style: dashed; border-color: var(--accent);">
-        <h4 style="font-size: 1.8rem; margin-bottom: 1.5rem;">The 15-Minute Wellness City</h4>
-        <p style="color: #94a3b8; font-size: 1.1rem; line-height: 2;">A macro-health strategy mandating that work, schools, and fresh-produce hubs are accessible via a 15-minute walk, ensuring a daily baseline of **Non-Exercise activity**. This reduces urban obesity rates by an estimated 22% over a 5-year period.</p>
-      </div>
-    </section>
+    <!-- 03. Nutrition Plan -->
+    <section class="section-block">
+        <h2 class="section-label" data-aos="fade-right">Diet & Nutrition Plan</h2>
+        <p class="detail-intro" data-aos="fade-up">A successful nutrition plan isn't about eating less; it's about
+            eating better. Focusing on "nutrient density" ensures your body gets the vitamins it needs while staying in
+            a calorie deficit.</p>
 
-    <!-- 05. Genomic Risk Profile (FIXED) -->
-    <section id="genetics" class="module-section">
-      <div class="module-header" data-aos="fade-up">
-        <h2 class="module-h2">Genomic Risk Profile</h2>
-        <span class="module-label">BIO_CODE_X</span>
-      </div>
-      <div class="grid-2">
-        <div class="data-card">
-          <h3 class="card-h3">FTO Gene Variant</h3>
-          <p style="color: #94a3b8;">Commonly referred to as the 'Fat Mass and Obesity' gene. Certain alleles increase the tendency for energy storage vs. energy burning.</p>
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>Sample Daily Nutrition Chart</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    <p>This sample chart is designed to provide high protein and high fiber, ensuring you feel energized
+                        throughout the day without energy crashes.</p>
+                    <table class="diet-table">
+                        <thead>
+                            <tr>
+                                <th>Meal Type</th>
+                                <th>Recommended Foods</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Breakfast</td>
+                                <td>High-fiber oats with berries OR Two boiled eggs with spinach.</td>
+                            </tr>
+                            <tr>
+                                <td>Lunch</td>
+                                <td>Grilled chicken or tofu with a large bowl of steamed vegetables.</td>
+                            </tr>
+                            <tr>
+                                <td>Evening Snack</td>
+                                <td>One small apple OR a handful of unsalted almonds.</td>
+                            </tr>
+                            <tr>
+                                <td>Dinner</td>
+                                <td>Baked fish or lentil soup with a half-portion of brown rice.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="data-card">
-          <h3 class="card-h3">DNA Methylation</h3>
-          <p style="color: #94a3b8;">Environmental factors (sleep, stress) can 'silence' metabolic genes, creating a generational inheritance of weight struggles.</p>
+
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
+            <div class="comp-box"
+                style="background: rgba(34, 197, 94, 0.05); padding: 2rem; border-radius: 16px; border: 1px solid rgba(34, 197, 94, 0.1);"
+                data-aos="fade-right">
+                <h5 style="color: #22c55e; font-weight: 800; margin-bottom: 1rem;">Daily Do's</h5>
+                <p style="font-size: 0.85rem; color: var(--page-text-dim); margin-bottom: 1.5rem;">Focus on these small
+                    habits to boost your metabolic health every single day.</p>
+                <ul class="feature-list check-list" style="font-size: 0.9rem;">
+                    <li>Hydrate with at least 3 liters of water.</li>
+                    <li>Ensure protein is included in every meal.</li>
+                    <li>Chew slowly to allow satiety signals to reach your brain.</li>
+                </ul>
+            </div>
+            <div class="comp-box"
+                style="background: rgba(239, 68, 68, 0.05); padding: 2rem; border-radius: 16px; border: 1px solid rgba(239, 68, 68, 0.1);"
+                data-aos="fade-left">
+                <h5 style="color: #ef4444; font-weight: 800; margin-bottom: 1rem;">Daily Don'ts</h5>
+                <p style="font-size: 0.85rem; color: var(--page-text-dim); margin-bottom: 1.5rem;">These habits can
+                    silently sabotoge your progress and make weight loss feel impossible.</p>
+                <ul class="feature-list cross-list" style="font-size: 0.9rem;">
+                    <li>Don't drink "liquid calories" like sodas or juices.</li>
+                    <li>Avoid eating while watching screens (distracted eating).</li>
+                    <li>Don't skip meals, as it often leads to binge eating later.</li>
+                </ul>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- 06. Outcome Analytics (FIXED) -->
-    <section id="success" class="module-section">
-      <div class="module-header" data-aos="fade-up">
-        <h2 class="module-h2">Outcomes & Analytics</h2>
-        <span class="module-label">SUCCESS_TERMINAL</span>
-      </div>
-      <div style="background: #000; padding: 2.5rem; border-radius: 20px; font-family: var(--font-mono); color: #4ade80; border: 1px solid #1e293b;" data-aos="zoom-in">
-        > INITIALIZING AI_PREDICTION_LOG...<br>
-        > ANALYSIS: 5,000+ SUBJECTS TRACKED<br>
-        > AVG WEIGHT LOSS: 18.5% IN 6 MONTHS<br>
-        > HBA1C IMPROVEMENT: +42% ACCURACY<br>
-        > VERDICT: SUCCESS_ACHIEVED.<br>
-        <div style="width: 10px; height: 18px; background: #4ade80; display: inline-block; animation: blink 1s infinite;"></div>
-      </div>
-      <style> @keyframes blink { 50% { opacity: 0; } } </style>
-    </section>
+    <!-- 04. FAQ -->
+    <section class="section-block">
+        <h2 class="section-label" data-aos="fade-right">Frequently Asked Questions</h2>
+        <p class="detail-intro" data-aos="fade-up">We've compiled the most common questions from our users to help clear
+            up any confusion about weight management and health.</p>
 
-    <!-- 07. Ethical FAQ -->
-    <section id="ethics" class="module-section">
-      <div class="module-header" data-aos="fade-up">
-        <h2 class="module-h2">Ethical Interception</h2>
-        <span class="module-label">INTEL_QUERY</span>
-      </div>
-      <div class="data-card" style="padding: 0; overflow: hidden;">
-        <details style="padding: 2rem; border-bottom: 1px solid var(--border-glow); cursor: pointer;">
-          <summary style="font-weight: 800; font-size: 1.3rem;">Is BMI a flawed metric?</summary>
-          <p style="margin-top: 1.5rem; color: #94a3b8; line-height: 1.8;">Clinically, BMI is a starting point. Our AI enhances it by integrating **Biological Age**, **Physical Frequency**, and **Family History** for a precise Risk Matrix.</p>
-        </details>
-        <details style="padding: 2rem; cursor: pointer;">
-          <summary style="font-weight: 800; font-size: 1.3rem;">Algorithmic Bias Prevention?</summary>
-          <p style="margin-top: 1.5rem; color: #94a3b8; line-height: 1.8;">Our models are trained on globally diverse datasets to ensure that ethnic variations in bone density and muscle mass are correctly weighted in the final diagnostic output.</p>
-        </details>
-      </div>
-    </section>
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>What BMI is considered obese?</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    Clinically, any BMI of <strong>30.0 or higher</strong> is classified as obese. However, BMI is just
+                    a guide; doctors also look at waist circumference and muscle mass to get a full picture of your
+                    health.
+                </div>
+            </div>
+        </div>
 
-  </main>
-</div>
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>Can obesity be reversed permanently?</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    <strong>Absolutely.</strong> While it takes time and consistency, obesity can be reversed through
+                    long-term lifestyle changes or medical support. The key is finding a sustainable way of living that
+                    you enjoy.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>Is obesity actually genetic?</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    Genetics can provide the "template" for how you store fat, but your <strong>environment and
+                        habits</strong> usually decide the final outcome. You may have a genetic tendency to gain
+                    weight, but it's not a destiny.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item" data-aos="fade-up">
+            <button class="accordion-trigger">
+                <span>How long does weight loss take?</span>
+                <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="accordion-content">
+                <div class="content-inner">
+                    Healthy weight loss is roughly <strong>0.5kg to 1kg per week</strong>. For a significant change,
+                    expect to dedicate at least 3 to 6 months. Remember, the slower you lose it, the easier it is to
+                    keep it off!
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    HEALTH_INTELLIGENCE_PORTAL // 2026_EDITION // OPTIMIZED_FOR_SPECIALISTS
+</footer>
 
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
-  // Hub Initializer (The GSAP Loading Sequence)
-  window.addEventListener('load', () => {
-    const tl = gsap.timeline();
-    tl.to(".loader-bar", { width: "100%", duration: 1.5, ease: "power4.inOut" })
-      .to("#hub-loader", { opacity: 0, pointerEvents: "none", duration: 0.8 })
-      .from(".title-neural", { y: 50, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.2");
-  });
+    AOS.init({ duration: 800, once: true });
+    lucide.createIcons();
 
-  AOS.init({ duration: 1000, once: false });
+    // SMOOTH ACCORDION LOGIC
+    document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const parent = trigger.parentElement;
+            const isOpen = parent.classList.contains('open');
 
-  // Custom Cursor
-  const cursor = document.getElementById('custom-cursor');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-  });
-
-  // Scroll Progress
-  window.addEventListener('scroll', () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById('scroll-progress').style.width = ((winScroll / height) * 100) + "%";
-  });
-
-  // INTELLIGENT SIDEBAR (Intersection Observer)
-  const sections = document.querySelectorAll('.module-section, .hero-vignette');
-  const navBtns = document.querySelectorAll('.nav-btn');
-
-  const observerOptions = {
-    root: null,
-    rootMargin: '-20% 0px -60% 0px',
-    threshold: 0
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navBtns.forEach(btn => {
-          btn.classList.toggle('active', btn.getAttribute('href').substring(1) === entry.target.id);
+            if (!isOpen) {
+                parent.classList.add('open');
+                trigger.querySelector('i').style.transform = 'rotate(180deg)';
+            } else {
+                parent.classList.remove('open');
+                trigger.querySelector('i').style.transform = 'rotate(0deg)';
+            }
         });
-      }
     });
-  }, observerOptions);
-
-  sections.forEach(section => observer.observe(section));
-
-  // Initialize Radar Chart
-  const ctxRadar = document.getElementById('radarChart').getContext('2d');
-  new Chart(ctxRadar, {
-    type: 'radar',
-    data: {
-      labels: ['Metabolic Flex', 'Hormonal Sync', 'Storage Efficiency', 'Oxidative Load', 'Inflammation'],
-      datasets: [{
-        label: 'Healthy Score',
-        data: [90, 85, 45, 20, 10],
-        backgroundColor: 'rgba(249, 115, 22, 0.2)',
-        borderColor: '#f97316',
-        borderWidth: 2
-      }, {
-        label: 'Risk Threshold',
-        data: [25, 30, 95, 88, 90],
-        backgroundColor: 'rgba(239, 68, 68, 0.1)',
-        borderColor: '#ef4444',
-        borderWidth: 2
-      }]
-    },
-    options: {
-      scales: { r: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { display: false } } },
-      plugins: { legend: { display: false } }
-    }
-  });
-
-  // Initialize Bar Chart
-  const ctxBar = document.getElementById('barChart').getContext('2d');
-  new Chart(ctxBar, {
-    type: 'bar',
-    data: {
-      labels: ['Normal', 'Overweight', 'Obesity I', 'Obesity II', 'Obesity III'],
-      datasets: [{
-        label: 'Morbidity (%)',
-        data: [5, 25, 45, 80, 100],
-        backgroundColor: ['#10b981', '#f59e0b', '#f97316', '#ef4444', '#991b1b'],
-        borderRadius: 15
-      }]
-    },
-    options: {
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } }
-    }
-  });
 </script>
 {% endblock %}
