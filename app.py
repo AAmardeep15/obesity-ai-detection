@@ -139,7 +139,22 @@ def predict_view():
                 result['label'] = plan_meta.get('label', result['class_label'].replace('_', ' '))
                 result['emoji'] = plan_meta.get('emoji', '🎯')
 
-                nutrition = get_nutrition_plan(result['class_label'])
+                # Get personalized nutrition plan using the Local AI model
+                faf_map_local = {
+                    'Sedentary': 0.0,
+                    'Light': 0.75,
+                    'Moderate': 1.5,
+                    'Active': 2.25,
+                    'Very Active': 3.0,
+                }
+                user_profile_data = {
+                    'age': parsed['age'],
+                    'gender': parsed['gender'],
+                    'height': parsed['height_cm'],
+                    'weight': parsed['weight_kg'],
+                    'activity': faf_map_local.get(parsed['physical_activity'], 1.5)
+                }
+                nutrition = get_nutrition_plan(result['class_label'], user_profile=user_profile_data)
                 exercise = get_exercise_plan(result['class_label'])
 
             except ValueError as e:
@@ -179,7 +194,22 @@ def advance_view():
                 result['label'] = plan_meta.get('label', result['class_label'].replace('_', ' '))
                 result['emoji'] = plan_meta.get('emoji', '🎯')
 
-                nutrition = get_nutrition_plan(result['class_label'])
+                # Get personalized nutrition plan using the Local AI model (Advanced)
+                faf_map_adv = {
+                    'Sedentary': 0.0,
+                    'Light': 0.75,
+                    'Moderate': 1.5,
+                    'Active': 2.25,
+                    'Very Active': 3.0,
+                }
+                user_profile_adv = {
+                    'age': int(form_data.get('age', 25)),
+                    'gender': form_data.get('gender', 'Male'),
+                    'height': float(form_data.get('height', 170)),
+                    'weight': float(form_data.get('weight', 70)),
+                    'activity': faf_map_adv.get(form_data.get('physical_activity', 'Moderate'), 1.5)
+                }
+                nutrition = get_nutrition_plan(result['class_label'], user_profile=user_profile_adv)
                 exercise = get_exercise_plan(result['class_label'])
 
             except ValueError as e:
@@ -231,7 +261,22 @@ def download_report():
                 parsed['family_history']
             )
 
-        nutrition = get_nutrition_plan(result['class_label'])
+        # Pass profile for AI-powered nutrition in the report
+        faf_map = {
+            'Sedentary': 0.0,
+            'Light': 0.75,
+            'Moderate': 1.5,
+            'Active': 2.25,
+            'Very Active': 3.0,
+        }
+        user_profile = {
+            'age': parsed['age'],
+            'gender': parsed['gender'],
+            'height': parsed['height_cm'],
+            'weight': parsed['weight_kg'],
+            'activity': faf_map.get(parsed['physical_activity'], 1.5)
+        }
+        nutrition = get_nutrition_plan(result['class_label'], user_profile=user_profile)
         exercise  = get_exercise_plan(result['class_label'])
 
         # ── Build CSV in memory ─────────────────────────────────────────────────

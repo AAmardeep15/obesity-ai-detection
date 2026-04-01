@@ -311,14 +311,36 @@
 
         <div class="calorie-target">
             <div>
-                <div class="cal-label">🔥 Daily Calorie Target</div>
-                <div class="cal-unit">Recommended intake</div>
+                <div class="cal-label">
+                    🔥 Daily Calorie Target
+                    {% if nutrition.is_ai_powered %}
+                    <span class="badge" style="background:#3b82f6; font-size:0.6rem; vertical-align:middle; margin-left:0.5rem; color: white; padding: 2px 6px; border-radius: 4px;">AI-POWERED</span>
+                    {% endif %}
+                </div>
+                <div class="cal-unit">Recommended daily intake</div>
             </div>
             <div>
-                <div class="cal-value">{{ nutrition.daily_calories }}</div>
+                <div class="cal-value">{{ "%.0f"|format(nutrition.daily_calories) }}</div>
                 <div class="cal-unit">kcal / day</div>
             </div>
         </div>
+
+        {% if nutrition.protein_g %}
+        <div class="macro-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; margin-bottom:1.5rem;">
+            <div class="macro-box" style="background:rgba(239,68,68,0.1); padding:0.75rem; border-radius:12px; text-align:center; border:1px solid rgba(239,68,68,0.2);">
+                <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:0.25rem;">Protein</div>
+                <div style="font-weight:700; color:#ef4444;">{{ "%.1f"|format(nutrition.protein_g) }}g</div>
+            </div>
+            <div class="macro-box" style="background:rgba(59,130,246,0.1); padding:0.75rem; border-radius:12px; text-align:center; border:1px solid rgba(59,130,246,0.2);">
+                <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:0.25rem;">Carbs</div>
+                <div style="font-weight:700; color:#3b82f6;">{{ "%.1f"|format(nutrition.carbs_g) }}g</div>
+            </div>
+            <div class="macro-box" style="background:rgba(34,197,94,0.1); padding:0.75rem; border-radius:12px; text-align:center; border:1px solid rgba(34,197,94,0.2);">
+                <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:0.25rem;">Fats</div>
+                <div style="font-weight:700; color:#22c55e;">{{ "%.1f"|format(nutrition.fat_g) }}g</div>
+            </div>
+        </div>
+        {% endif %}
 
         <div class="meal-section"><h4>🌅 Breakfast</h4><ul>{% for item in nutrition.breakfast %}<li>{{ item }}</li>{% endfor %}</ul></div>
         <div class="meal-section"><h4>☀️ Lunch</h4><ul>{% for item in nutrition.lunch %}<li>{{ item }}</li>{% endfor %}</ul></div>

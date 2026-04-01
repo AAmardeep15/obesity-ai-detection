@@ -2,6 +2,24 @@
 Nutrition plan logic per obesity class.
 """
 
+import os
+import pickle
+import numpy as np
+
+# Path to the saved nutrition model bundle
+NUTRITION_MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'models', 'nutrition_model.pkl')
+
+_nutrition_bundle = None
+
+def load_nutrition_model():
+    """Load the local nutrition AI bundle if it exists."""
+    global _nutrition_bundle
+    if _nutrition_bundle is None:
+        if os.path.exists(NUTRITION_MODEL_PATH):
+            with open(NUTRITION_MODEL_PATH, 'rb') as f:
+                _nutrition_bundle = pickle.load(f)
+    return _nutrition_bundle
+
 NUTRITION_PLANS = {
     'Insufficient_Weight': {
         'emoji': '🥛',
@@ -256,12 +274,68 @@ NUTRITION_PLANS = {
 }
 
 
-def get_nutrition_plan(obesity_class: str) -> dict:
+def get_nutrition_recommendation(age, gender, height, weight, activity_level, obesity_class):
+    """
+    Predict calories and macros using the local AI model.
+    """
+    bundle = load_nutrition_model()
+    if not bundle:
+        return None
+        
+    model = bundle['model']
+    le = bundle['label_encoder']
+    
+    # 1. Prepare Features
+    gender_val = 1 if gender == 'Male' else 0
+    # Map physical activity (FAF scale 0-3) to the 1.2-1.9 scale used in training
+    activity_map = {0.0: 1.2, 0.75: 1.375, 1.5: 1.55, 2.25: 1.725, 3.0: 1.9}
+    act_val = activity_map.get(activity_level, 1.55)
+    
+    try:
+        class_encoded = le.transform([obesity_class])[0]
+    except:
+        class_encoded = le.transform(['Normal_Weight'])[0]
+        
+    features = np.array([[age, gender_val, height, weight, act_val, class_encoded]])
+    
+    # 2. Predict
+    preds = model.predict(features)[0]
+    
+    return {
+        'calories': int(preds[0]),
+        'protein': float(preds[1]),
+        'carbs': float(preds[2]),
+        'fat': float(preds[3]),
+        'is_ai': True
+    }
+
+
+def get_nutrition_plan(obesity_class: str, user_profile: dict = None) -> dict:
     """
     Get the nutrition plan for a given obesity class.
-    Returns the plan dict or a default plan if class not found.
+    If user_profile (age, gender, height, weight, activity) is provided, 
+    it uses the Local AI model for precise calorie/macro calculation.
     """
-    return NUTRITION_PLANS.get(obesity_class, NUTRITION_PLANS['Normal_Weight'])
+    plan = NUTRITION_PLANS.get(obesity_class, NUTRITION_PLANS['Normal_Weight']).copy()
+    
+    if user_profile:
+        ai_rec = get_nutrition_recommendation(
+            age=user_profile.get('age'),
+            gender=user_profile.get('gender'),
+            height=user_profile.get('height'),
+            weight=user_profile.get('weight'),
+            activity_level=user_profile.get('activity', 1.5),
+            obesity_class=obesity_class
+        )
+        
+        if ai_rec:
+            plan['daily_calories'] = ai_rec['calories']
+            plan['protein_g'] = ai_rec['protein']
+            plan['carbs_g'] = ai_rec['carbs']
+            plan['fat_g'] = ai_rec['fat']
+            plan['is_ai_powered'] = True
+
+    return plan
 
 
 def get_all_classes() -> list:
