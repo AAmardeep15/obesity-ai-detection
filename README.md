@@ -1,76 +1,166 @@
 # AI-Based Obesity Detection & Personalized Nutrition Recommendation System
 
-A machine learning web application that predicts obesity levels and provides personalized nutrition and exercise plans — built entirely with Python Flask. No external APIs are used; all ML inference happens server-side.
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)
+![Flask](https://img.shields.io/badge/Flask-2.3%2B-lightgrey?logo=flask)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.3%2B-orange?logo=scikit-learn)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen)
+
+A machine learning web application that predicts obesity levels and generates personalized nutrition and exercise plans — built entirely with Python Flask. No external APIs are used; **all ML inference runs locally on your machine**.
 
 ---
 
-## 🚀 Quick Setup & Run Guide
+## 📌 Table of Contents
 
-**Step 1 — Install dependencies**
+1. [Problem Statement](#-problem-statement)
+2. [Features](#-features)
+3. [Demo & Screenshots](#-demo--screenshots)
+4. [Prerequisites](#-prerequisites)
+5. [Quick Setup & Run](#-quick-setup--run)
+6. [Tech Stack](#-tech-stack)
+7. [Dataset Details](#-dataset-details)
+8. [Data Preprocessing Pipeline](#-data-preprocessing-pipeline)
+9. [Machine Learning Architecture](#-machine-learning-architecture)
+10. [Model Performance](#-model-performance)
+11. [Project Structure](#-project-structure)
+12. [Web Pages & API Routes](#-web-pages--api-routes)
+13. [Input Validation Rules](#-input-validation-rules)
+14. [Running Tests](#-running-tests)
+15. [Production Deployment](#-production-deployment)
+16. [Troubleshooting](#-troubleshooting)
+17. [Acknowledgements](#-acknowledgements)
+18. [License](#-license)
+19. [Authors](#-authors)
+
+---
+
+## 🎯 Problem Statement
+
+Obesity is a global health crisis affecting over 1 billion people worldwide. Early-stage identification of obesity risk is critical for timely intervention, yet access to clinical tools remains limited. This project bridges that gap by providing:
+
+- **Automated obesity classification** using a trained Ensemble ML model across 7 clinically-defined weight categories.
+- **Personalized, evidence-based nutrition and exercise recommendations** tailored to each individual's biometric profile.
+- **An accessible, browser-based interface** requiring no installation on the user's side.
+
+The system is designed as a screening aid — not a replacement for professional medical diagnosis.
+
+---
+
+## ✨ Features
+
+- 🔍 **Dual Prediction Modes** — a simple 6-input form and a full 16-input advanced clinical form
+- 🤖 **4-model Ensemble** — Random Forest + Logistic Regression + Gradient Boosting fused via Soft Voting
+- 🍽️ **AI-personalized Nutrition Plans** — calorie and macro targets per user profile via a Local AI model
+- 🏃 **Dynamic Exercise Plans** — class-specific workout routines with duration, intensity, and safety notes
+- 📊 **Live Statistics Dashboard** — accuracy metrics, confusion matrix heatmap, radar and bar charts
+- 📥 **CSV Report Export** — downloadable personalized health report post-prediction
+- 📚 **Clinical Education Hub** — the `/learn` page covering obesity types, prevention, and management
+- 🔄 **In-browser Retraining** — model can be retrained via AJAX without leaving the dashboard
+- ✅ **Full Input Validation** — both server-side and client-side validation with clear error messages
+
+---
+
+## 🖼️ Demo & Screenshots
+
+> **Live Demo:** Run locally at `http://localhost:5000` after completing the Quick Setup below.
+
+| Page | Description |
+|---|---|
+| **Home (`/`)** | Model status, obesity class cards, quick overview |
+| **Predict (`/predict`)** | 6-field form → instant prediction with confidence score |
+| **Advanced (`/advance`)** | 16-field clinical form → full-feature prediction |
+| **Statistics (`/statistics`)** | Accuracy metrics, 7×7 confusion matrix, feature importance chart |
+| **Learn (`/learn`)** | Obesity classification guide, prevention tips, clinical precautions |
+
+---
+
+## ✅ Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+| Requirement | Version | Check Command |
+|---|---|---|
+| **Python** | 3.10 or higher | `python --version` |
+| **pip** | Latest | `pip --version` |
+| **Git** | Any | `git --version` |
+
+> **Recommended:** Use a virtual environment to avoid dependency conflicts.
+
+---
+
+## 🚀 Quick Setup & Run
+
+**Step 1 — Clone the repository**
+```bash
+git clone https://github.com/AAmardeep15/obesity-ai-detection.git
+cd obesity-ai-detection
+```
+
+**Step 2 — Create and activate a virtual environment**
+```bash
+# Windows
+python -m venv .venv
+.venv\Scripts\activate
+
+# macOS / Linux
+python -m venv .venv
+source .venv/bin/activate
+```
+
+**Step 3 — Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-**Step 2 — Train the Machine Learning Models (Run Once)**
+**Step 4 — Train the Machine Learning Models** *(Run once)*
 ```bash
 python main.py
 ```
 *This script cleans the data, trains 4 different models on the 10,000-row dataset, and saves the final Ensemble bundle to `models/obesity_model.pkl`.*
 
-**Step 3 — Start the Web Dashboard**
+**Step 5 — Start the Web Application**
 ```bash
 python app.py
 ```
 Open your browser and navigate to: **`http://localhost:5000`**
 
-> **Environment Variables (Optional)**
-> | Variable | Default | Description |
-> |---|---|---|
-> | `FLASK_SECRET_KEY` | `dev-only-change-me` | Flask session secret key |
-> | `FLASK_DEBUG` | `0` | Set to `1` to enable debug mode |
-> | `FLASK_HOST` | `0.0.0.0` | Host address for the Flask server |
-> | `FLASK_PORT` | `5000` | Port for the Flask server |
-
 ---
 
-## What It Does
+### ⚙️ Environment Variables (Optional)
 
-1. User fills a **frictionless 6-field form** (Age, Gender, Height, Weight, Physical Activity, Family History).
-2. The remaining 11 features are **statistically imputed** using dataset modes/medians to maintain a simple User Experience (UX).
-3. A trained **Ensemble ML model** predicts the obesity class with a clinical confidence score.
-4. The system dynamically generates an exportable, **personalized Nutrition Plan** and **Exercise Plan**.
-5. A **Local AI model** (`nutrition_model.pkl`) further personalizes the daily calorie and macronutrient targets based on the user's profile using biometric calculations.
+Create a `.env` file or export these variables to customize the server:
 
-### Two Prediction Modes
-| Mode | Fields | Description |
+| Variable | Default | Description |
 |---|---|---|
-| **Basic (6-input)** | Age, Gender, Height, Weight, Activity, Family History | Fast, user-friendly prediction with imputed defaults |
-| **Advanced (16-input)** | All 16 dataset features | Full clinical-grade prediction using all available features |
+| `FLASK_SECRET_KEY` | `dev-only-change-me` | Flask session secret key — **change this in production** |
+| `FLASK_DEBUG` | `0` | Set to `1` to enable debug mode (never use in production) |
+| `FLASK_HOST` | `0.0.0.0` | Host address for the Flask server |
+| `FLASK_PORT` | `5000` | Port number for the Flask server |
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Backend | Python 3.x, Flask ≥ 2.3.0 |
-| Machine Learning | Scikit-learn ≥ 1.3.0 (Random Forest, Logistic Regression, Gradient Boosting, Voting Ensemble) |
-| Data Processing | Pandas ≥ 2.0.0, NumPy ≥ 1.24.0 |
-| Frontend | HTML5, CSS3, Vanilla JavaScript |
-| Visualizations | Chart.js (Radar charts, Confusion Matrix heatmap, Bar charts) |
-| Production Server | Gunicorn ≥ 21.2.0 |
+| Layer | Technology | Version |
+|-------|-----------|---------|
+| Backend | Python, Flask | 3.10+, ≥ 2.3.0 |
+| Machine Learning | Scikit-learn | ≥ 1.3.0 |
+| Data Processing | Pandas, NumPy | ≥ 2.0.0, ≥ 1.24.0 |
+| Frontend | HTML5, CSS3, Vanilla JavaScript | — |
+| Visualizations | Chart.js | CDN |
+| Production Server | Gunicorn | ≥ 21.2.0 |
 
 ---
 
-## Dataset Details
+## 📂 Dataset Details
 
 | Property | Value |
 |---|---|
-| File | `data/obesity_dataset.csv` |
+| Primary File | `data/obesity_dataset.csv` |
 | Rows | ~10,000 (synthetically augmented) |
-| Columns / Features | 17 (16 input + 1 target) |
-| Target Column | `NObeyesdad` (obesity class label) |
-| Supplementary Data | `data/synthetic_nutrition_data.csv` — used to train the Local Nutrition AI model |
+| Columns / Features | 17 (16 input features + 1 target label) |
+| Target Column | `NObeyesdad` |
+| Supplementary File | `data/synthetic_nutrition_data.csv` — used to train the Local Nutrition AI |
 
 ### The 17 Dataset Features
 
@@ -84,51 +174,58 @@ Open your browser and navigate to: **`http://localhost:5000`**
 | `FAVC` | Categorical | Frequent consumption of high caloric food |
 | `FCVC` | Numeric | Frequency of vegetable consumption (1–3 scale) |
 | `NCP` | Numeric | Number of main meals per day (1–6) |
-| `CAEC` | Categorical | Eating between meals (Always/Frequently/Sometimes/No) |
-| `SMOKE` | Categorical | Smoker (Yes / No) |
+| `CAEC` | Categorical | Eating between meals (Always / Frequently / Sometimes / No) |
+| `SMOKE` | Categorical | Smoker — Yes / No |
 | `CH2O` | Numeric | Daily water intake (0–3 scale) |
-| `SCC` | Categorical | Calorie monitoring (Yes / No) |
+| `SCC` | Categorical | Calorie monitoring — Yes / No |
 | `FAF` | Numeric | Physical Activity Frequency (0–3 scale) |
-| `TUE` | Numeric | Technology use time (0–3 scale) |
+| `TUE` | Numeric | Daily technology use time (0–3 scale) |
 | `CALC` | Categorical | Alcohol consumption frequency |
 | `MTRANS` | Categorical | Primary mode of transportation |
 | `NObeyesdad` | **Target** | Obesity class label (7 classes) |
 
 ### The 7 Obesity Classification Classes
 
-| Class | Label |
-|---|---|
-| `Insufficient_Weight` | Insufficient Weight |
-| `Normal_Weight` | Normal Weight |
-| `Overweight_Level_I` | Overweight Level I |
-| `Overweight_Level_II` | Overweight Level II |
-| `Obesity_Type_I` | Obesity Type I |
-| `Obesity_Type_II` | Obesity Type II |
-| `Obesity_Type_III` | Obesity Type III (Morbid Obesity) |
+| Internal Key | Display Label | Severity |
+|---|---|---|
+| `Insufficient_Weight` | Insufficient Weight | Below Normal |
+| `Normal_Weight` | Normal Weight | Healthy |
+| `Overweight_Level_I` | Overweight Level I | Mild Risk |
+| `Overweight_Level_II` | Overweight Level II | Moderate Risk |
+| `Obesity_Type_I` | Obesity Type I | High Risk |
+| `Obesity_Type_II` | Obesity Type II | Very High Risk |
+| `Obesity_Type_III` | Obesity Type III (Morbid Obesity) | Critical Risk |
 
 ---
 
-## Data Preprocessing Pipeline
+## 🔄 Data Preprocessing Pipeline
 
 The pipeline runs automatically when `python main.py` is executed (via `src/data_preprocessing.py`).
 
-| Step | Action | Details |
+| Step | Action | Method |
 |---|---|---|
-| 1 | **Load Data** | Reads `obesity_dataset.csv` and prints class distribution |
-| 2 | **Fill Missing Values** | Numeric columns → filled with **column mean**; Categorical columns → filled with **column mode** |
-| 3 | **Outlier Capping** | IQR method: values outside `Q1 − 1.5×IQR` / `Q3 + 1.5×IQR` are **capped** (not removed) |
-| 4 | **Feature Engineering** | Computes and appends a **BMI column** (`Weight / Height²`) — a key clinical indicator |
-| 5 | **Label Encoding** | `sklearn.LabelEncoder` converts all categorical columns to integers; encoders are saved for inference |
-| 6 | **Standard Scaling** | `StandardScaler` (mean=0, std=1) applied — fitted on **training data only** to prevent data leakage |
-| 7 | **Train/Test Split** | 80% training / 20% test, stratified to preserve class proportions (`random_state=42`) |
+| 1 | **Load Data** | Reads CSV, prints class distribution |
+| 2 | **Fill Missing Values** | Numeric → column **mean**; Categorical → column **mode** |
+| 3 | **Outlier Capping** | IQR method — values outside `Q1 − 1.5×IQR` / `Q3 + 1.5×IQR` are **capped**, not removed |
+| 4 | **Feature Engineering** | Adds a derived **BMI column** (`Weight / Height²`) as a clinical indicator |
+| 5 | **Label Encoding** | `sklearn.LabelEncoder` converts categorical columns to integers; encoders saved for inference |
+| 6 | **Standard Scaling** | `StandardScaler` (mean=0, std=1) — fitted on **training data only** to prevent data leakage |
+| 7 | **Train/Test Split** | 80% train / 20% test, stratified split with `random_state=42` |
 
-> **Inference Defaults (for Basic Mode):** For the 10 features not asked in the simple 6-field form, defaults are computed from the training dataset. Numeric features use the **median**; categorical features use the **mode**. These defaults are stored inside `obesity_model.pkl` to guarantee consistency between training and inference.
+> **Inference Defaults:** The 10 features not collected via the 6-field basic form are auto-filled using precomputed defaults from training data (numeric → **median**, categorical → **mode**). These are stored in `obesity_model.pkl` for consistency.
 
 ---
 
-## Machine Learning Architecture
+## 🤖 Machine Learning Architecture
 
-### Base Models
+### Two Prediction Modes
+
+| Mode | Input Fields | Description |
+|---|---|---|
+| **Basic** | 6 fields | Age, Gender, Height, Weight, Activity, Family History — remaining 10 features auto-imputed |
+| **Advanced** | 16 fields | All dataset features provided by the user — full clinical-grade prediction |
+
+### Base Models & Hyperparameters
 
 | Model | Configuration |
 |---|---|
@@ -137,149 +234,205 @@ The pipeline runs automatically when `python main.py` is executed (via `src/data
 | **Gradient Boosting** | `n_estimators=200`, `random_state=42` |
 
 ### Ensemble Strategy
-A **Soft Voting Classifier** (`sklearn.ensemble.VotingClassifier`) combines the three models by **averaging their class probability outputs**, then selecting the class with the highest average probability. This reduces individual model variance and improves generalization.
+A **Soft Voting Classifier** (`sklearn.ensemble.VotingClassifier`) averages the class probability outputs of all three models, selecting the class with the highest mean probability. This reduces individual model variance and improves generalization.
 
-### Model Bundle (`obesity_model.pkl`)
-The saved bundle is a single Python dictionary containing everything needed for inference:
-```
+### Model Bundle Schema (`obesity_model.pkl`)
+
+The saved bundle is a single serialized Python dictionary with everything needed for inference:
+
+```python
 {
-  'model'             : Trained VotingClassifier (Ensemble)
-  'scaler'            : Fitted StandardScaler
-  'label_encoder'     : LabelEncoder for the target column
-  'feature_encoders'  : Dict of LabelEncoders per categorical feature
-  'feature_cols'      : Ordered list of feature column names
-  'inference_defaults': Precomputed defaults for the 10 missing form fields
-  'metadata'          : schema_version, model_version, created_at, schema_hash
-  'stats'             : Model evaluation results (accuracy, f1, confusion matrix)
+  'model'             : VotingClassifier (Ensemble of all 3 models),
+  'scaler'            : Fitted StandardScaler,
+  'label_encoder'     : LabelEncoder for the target column,
+  'feature_encoders'  : { col: LabelEncoder } per categorical feature,
+  'feature_cols'      : Ordered list of feature column names,
+  'inference_defaults': Precomputed defaults for the 10 imputed features,
+  'metadata'          : { schema_version, model_version, created_at, schema_hash },
+  'stats'             : { accuracy, f1, confusion_matrix, feature_importance, ... }
 }
 ```
 
 ### Local Nutrition AI Model (`nutrition_model.pkl`)
-A separate ML model trained on `synthetic_nutrition_data.csv` that predicts:
+A separate ML model trained on `data/synthetic_nutrition_data.csv` that predicts personalized macronutrient targets per user:
 - **Daily calorie target (kcal)**
-- **Protein (g), Carbohydrates (g), Fat (g)**
-... based on: Age, Gender, Height, Weight, Activity Level, and predicted Obesity Class.
+- **Protein (g)**, **Carbohydrates (g)**, **Fat (g)**
+
+Inputs: Age, Gender, Height, Weight, Activity Level, Predicted Obesity Class.
 
 ---
 
 ## 📊 Model Performance
 
-The dataset utilizes a 10,000-row synthetically augmented dataset designed specifically to emulate real-world human variant boundaries and clinical reporting errors.
+| Model | Accuracy | F1 Score | Precision | Recall |
+|-------|---------|---------|---------|---------|
+| Random Forest | ~84% | ~84% | ~84% | ~84% |
+| Logistic Regression | ~62% | ~61% | ~62% | ~62% |
+| Gradient Boosting | ~81% | ~81% | ~81% | ~81% |
+| **Ensemble (Soft Voting)** | **~84.5%** | **~84.5%** | **~84.5%** | **~84.5%** |
 
-| Model | Target Accuracy Sweet-Spot | F1 Score |
-|-------|---------|---------| 
-| Random Forest | ~84% | ~84% |
-| Logistic Regression | ~62% | ~61% |
-| Gradient Boosting | ~81% | ~81% |
-| **Ensemble (Voting)** | **~84.5%** | **~84.5%** |
+> *Accuracy is deliberately targeted at ~84.5% as the "Golden Mean" — robust enough for real-world generalization while avoiding overfitting artifacts common in 99%+ accuracy models on synthetic data.*
 
-*Note: The ~84.5% accuracy is deliberately targeted as the "Golden Mean" to demonstrate a highly robust, generalized real-world application resistant to standard overfitting errors (99% artifacts).*
-
-### Evaluation Metrics Tracked
-Per model, the following metrics are computed and saved to `outputs/model_stats.json`:
-- **Accuracy**, **F1 Score** (weighted), **Precision** (weighted), **Recall** (weighted)
-- **Confusion Matrix** (7×7 for the Ensemble model)
-- **Feature Importance** (from Random Forest — top features affecting prediction)
+All metrics are computed on the **held-out 20% test set** and saved automatically to `outputs/model_stats.json` alongside:
+- **7×7 Confusion Matrix** (Ensemble model)
+- **Feature Importance rankings** (from Random Forest)
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
-mini_pro/
+obesity-ai-detection/
 │
-├── app.py                     ← Flask web application (start here)
-├── main.py                    ← Run this to train the models
-├── requirements.txt           ← Python dependency list
-├── test_nutrition_ai.py       ← Unit test for Nutrition AI module
+├── app.py                      ← Flask web application entry point
+├── main.py                     ← Train all ML models (run this first)
+├── requirements.txt            ← Python dependency list
+├── test_nutrition_ai.py        ← Unit tests for the Nutrition AI module
 │
 ├── data/
-│   ├── obesity_dataset.csv            ← Main dataset (10,000 rows, 17 columns)
-│   └── synthetic_nutrition_data.csv   ← Training data for the Local Nutrition AI
+│   ├── obesity_dataset.csv             ← Main dataset (10,000 rows, 17 columns)
+│   └── synthetic_nutrition_data.csv    ← Nutrition AI training data
 │
-├── models/
-│   ├── obesity_model.pkl      ← Full ensemble bundle (used by Flask at runtime)
-│   ├── ensemble_model.pkl     ← Standalone Soft Voting ensemble
-│   ├── random_forest.pkl      ← Standalone Random Forest model
-│   ├── gradient_boosting.pkl  ← Standalone Gradient Boosting model
-│   ├── logistic_regression.pkl← Standalone Logistic Regression model
-│   ├── nutrition_model.pkl    ← Local AI model for calorie/macro recommendations
-│   └── preprocessor.pkl       ← Standalone scaler + encoders bundle
+├── models/                     ← Auto-generated by main.py (not tracked by Git)
+│   ├── obesity_model.pkl       ← Full Ensemble bundle (loaded by Flask at runtime)
+│   ├── ensemble_model.pkl      ← Standalone Soft Voting ensemble
+│   ├── random_forest.pkl       ← Standalone Random Forest
+│   ├── gradient_boosting.pkl   ← Standalone Gradient Boosting
+│   ├── logistic_regression.pkl ← Standalone Logistic Regression
+│   ├── nutrition_model.pkl     ← Local AI for calorie/macro recommendations
+│   └── preprocessor.pkl        ← Standalone scaler + encoders bundle
 │
-├── outputs/
-│   ├── model_stats.json           ← Accuracy, F1, Precision, Recall, Confusion Matrix
-│   └── preprocessing_report.json  ← Preprocessing summarization (outliers, defaults)
+├── outputs/                    ← Auto-generated by main.py
+│   ├── model_stats.json            ← Accuracy, F1, Confusion Matrix, Feature Importance
+│   └── preprocessing_report.json   ← Preprocessing summary (outliers, class counts)
 │
 ├── src/
 │   ├── __init__.py
-│   ├── data_preprocessing.py  ← Full 7-step data preparation pipeline
-│   ├── train.py               ← Model training and Soft-Voting Ensemble compilation
-│   ├── predict.py             ← Real-time inference (Basic & Advanced modes)
-│   ├── nutrition.py           ← Local AI nutrition + static diet plans per obesity class
-│   ├── exercise.py            ← Dynamic workout mappings per obesity class
-│   ├── generate_nutrition_data.py ← Script to generate synthetic nutrition training data
-│   └── train_nutrition.py     ← Script to train the Local Nutrition AI model
+│   ├── data_preprocessing.py   ← Full 7-step data preparation pipeline
+│   ├── train.py                ← Model training + Soft Voting Ensemble compilation
+│   ├── predict.py              ← Real-time inference (Basic & Advanced modes)
+│   ├── nutrition.py            ← Nutrition AI + static meal plans per obesity class
+│   ├── exercise.py             ← Exercise plans and workout mappings per obesity class
+│   ├── generate_nutrition_data.py  ← Generates synthetic nutrition training data
+│   └── train_nutrition.py      ← Trains the Local Nutrition AI model
 │
 ├── static/
-│   ├── css/                   ← Stylesheet files
+│   ├── css/                    ← Stylesheet files
 │   ├── js/
-│   │   └── main.js            ← Core frontend logic (form handling, Chart.js rendering)
-│   ├── images/                ← Project images
-│   └── img/                   ← Additional image assets
+│   │   └── main.js             ← Frontend logic: form handling, Chart.js rendering
+│   ├── images/                 ← Project images
+│   └── img/                    ← Additional image assets
 │
 └── templates/
-    ├── base.html              ← Shared layout / navigation template
-    ├── index.html             ← Home page with model status and obesity class overview
-    ├── predict.html           ← Basic 6-input prediction form + results
-    ├── advance.html           ← Advanced 16-input prediction form + results
-    ├── statistics.html        ← Model stats: accuracy, confusion matrix, radar charts
-    └── learn.html             ← Clinical education: obesity types, prevention, guidelines
+    ├── base.html               ← Shared base layout and navigation
+    ├── index.html              ← Home page: model status + obesity class overview
+    ├── predict.html            ← Basic 6-input prediction form + result display
+    ├── advance.html            ← Advanced 16-input prediction form + result display
+    ├── statistics.html         ← Live stats: confusion matrix, radar & bar charts
+    └── learn.html              ← Clinical education: obesity types, prevention, FAQ
 ```
 
 ---
 
-## Web Pages & API Routes
+## 🌐 Web Pages & API Routes
 
-| Route | Method | Description |
-|-----|-----|----|
-| `/` | GET | Home page — project overview, obesity classes, and ML model status |
-| `/predict` | GET, POST | Basic 6-input prediction → obesity class + nutrition & exercise plan |
-| `/advance` | GET, POST | Advanced 16-input prediction → full clinical prediction |
-| `/statistics` | GET | Live model accuracy metrics, Confusion Matrix, Radar & Bar charts |
-| `/learn` | GET | Clinical education hub — obesity types, prevention, and precautions |
-| `/download-report` | POST | Generate & download a personalized CSV health report |
-| `/train` | POST | Re-trigger model training via AJAX (from the dashboard) |
-| `/api/exercise` | GET | JSON API — returns exercise plan for a given obesity class |
-
----
-
-## Input Validation Rules
-
-| Field | Validation |
-|---|---|
-| Age | Integer, 10 – 80 years |
-| Gender | `Male` or `Female` only |
-| Height | Float, 100 – 220 cm |
-| Weight | Float, 20 – 250 kg |
-| Physical Activity | One of: `Sedentary`, `Light`, `Moderate`, `Active`, `Very Active` |
-| Family History | `Yes` or `No` |
-| FCVC | Float, 1.0 – 3.0 |
-| NCP | Float, 1.0 – 6.0 |
-| CH2O | Float, 0.0 – 3.0 |
-| TUE | Float, 0.0 – 3.0 |
+| Route | Method(s) | Description |
+|-----|-----|-----|
+| `/` | GET | Home page — project overview, obesity class cards, model status badge |
+| `/predict` | GET, POST | Basic 6-input prediction → obesity class, confidence score, nutrition & exercise plan |
+| `/advance` | GET, POST | Advanced 16-input prediction → full clinical-grade prediction |
+| `/statistics` | GET | Live model metrics: accuracy, 7×7 confusion matrix, feature importance chart |
+| `/learn` | GET | Clinical education hub — obesity types, prevention, clinical precautions |
+| `/download-report` | POST | Generate and download a personalized CSV health report |
+| `/train` | POST | Trigger model retraining via AJAX from the dashboard (returns JSON stats) |
+| `/api/exercise` | GET | JSON API — returns the exercise plan for a given `?class=` query parameter |
 
 ---
 
-## CSV Report Download
+## 🛡️ Input Validation Rules
 
-After any prediction, users can download a fully formatted CSV health report containing:
-- **User input features** (Basic or Advanced mode)
-- **Predicted obesity class** and **confidence percentage**
-- **Full personalised Nutrition Plan** (Breakfast, Lunch, Dinner, Snacks, Foods to Avoid, Health Tips)
-- **Full Exercise Plan** (exercises with type, duration, and intensity; exercises to avoid; expert tips)
-- **Disclaimer** for clinical use
+All inputs are validated **server-side** in `app.py` and `src/predict.py`.
+
+| Field | Type | Accepted Range / Values |
+|---|---|---|
+| Age | Integer | 10 – 80 years |
+| Gender | String | `Male` or `Female` |
+| Height | Float | 100 – 220 cm |
+| Weight | Float | 20 – 250 kg |
+| Physical Activity | String | `Sedentary`, `Light`, `Moderate`, `Active`, `Very Active` |
+| Family History | String | `Yes` or `No` |
+| FCVC *(Advanced)* | Float | 1.0 – 3.0 |
+| NCP *(Advanced)* | Float | 1.0 – 6.0 |
+| CH2O *(Advanced)* | Float | 0.0 – 3.0 |
+| TUE *(Advanced)* | Float | 0.0 – 3.0 |
 
 ---
 
-## Mentor Details
-**Prof. Amiya Kumar Das** — School of Computer Engineering, KIIT University, Bhubaneswar
+## 🧪 Running Tests
+
+A unit test file is included to verify the Nutrition AI module behaves correctly:
+
+```bash
+python -m pytest test_nutrition_ai.py -v
+```
+
+Or run it directly:
+```bash
+python test_nutrition_ai.py
+```
+
+> **Note:** Run `python main.py` first to ensure model files exist before running tests.
+
+---
+
+## 🚢 Production Deployment
+
+For production use, replace Flask's built-in server with **Gunicorn** (already included in `requirements.txt`):
+
+```bash
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+```
+
+| Flag | Value | Meaning |
+|---|---|---|
+| `-w` | `4` | 4 worker processes (adjust based on server CPU cores) |
+| `-b` | `0.0.0.0:5000` | Bind address and port |
+
+> **Security reminder:** Always set `FLASK_SECRET_KEY` to a strong, random string and keep `FLASK_DEBUG=0` in production.
+
+---
+
+## 🔧 Troubleshooting
+
+| Problem | Cause | Solution |
+|---|---|---|
+| `FileNotFoundError: obesity_model.pkl` | Models haven't been trained yet | Run `python main.py` first |
+| `ModuleNotFoundError` | Dependencies not installed | Run `pip install -r requirements.txt` |
+| Port 5000 already in use | Another process is using port 5000 | Set `FLASK_PORT=5001` or kill the conflicting process |
+| `X does not have valid feature names` warning | Minor scikit-learn version mismatch | Safe to ignore; predictions still work correctly |
+| Low prediction confidence (<50%) | Unusual or borderline input values | Try the Advanced mode with more detailed inputs |
+| Charts not loading on `/statistics` | Model stats file missing | Run `python main.py` to regenerate `outputs/model_stats.json` |
+
+---
+
+## 🙏 Acknowledgements
+
+- **Dataset:** Inspired by the [UCI Obesity Dataset](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition) — "Estimation of Obesity Levels Based on Eating Habits and Physical Condition" by Fabio Mendoza Palechor & Alexis de la Hoz Manotas (2019).
+- **Visualization:** [Chart.js](https://www.chartjs.org/) — Interactive charts on the Statistics dashboard.
+- **ML Framework:** [Scikit-learn](https://scikit-learn.org/) — The backbone of the entire ML pipeline.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👥 Authors
+
+**Amardeep** — Developer & ML Engineer  
+GitHub: [@AAmardeep15](https://github.com/AAmardeep15)
+
+**Mentor:** Prof. Amiya Kumar Das  
+School of Computer Engineering, KIIT University, Bhubaneswar
