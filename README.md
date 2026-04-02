@@ -13,23 +13,33 @@ A machine learning web application that classifies obesity levels and generates 
 
 > **Prerequisite:** Python 3.10+
 
+**Step 1 — Clone the repository**
 ```bash
-# 1. Clone and enter the project
 git clone https://github.com/AAmardeep15/obesity-ai-detection.git
 cd obesity-ai-detection
+```
 
-# 2. Create a virtual environment
+**Step 2 — Create a virtual environment**
+```bash
 python -m venv .venv
-.venv\Scripts\activate        # Windows
-# source .venv/bin/activate   # macOS / Linux
+```
+```bash
+.venv\Scripts\activate
+```
+> macOS/Linux: `source .venv/bin/activate`
 
-# 3. Install dependencies
+**Step 3 — Install dependencies**
+```bash
 pip install -r requirements.txt
+```
 
-# 4. Train the models (run once)
+**Step 4 — Train the models** *(only once)*
+```bash
 python main.py
+```
 
-# 5. Start the app
+**Step 5 — Start the app**
+```bash
 python app.py
 ```
 
